@@ -1,5 +1,3 @@
-
-
 CREATE TABLE roles (
     id SERIAL NOT NULL,
     role VARCHAR(255) NOT NULL,
