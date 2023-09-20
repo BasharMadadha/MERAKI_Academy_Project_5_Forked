@@ -1,19 +1,15 @@
-const { Pool } = require("pg");
 
-
-const connectionString = process.env.CONNECTION_STRING;
-
+const { Pool } =require('pg')
+const bcrypt= require('bcrypt')
+const connectionString = process.env.CONNECTION_STRING
+ 
 const pool = new Pool({
  
-  connectionString,
-});
-pool.on('connect', () => {
-    console.log('Connected to PostgreSQL');
+    connectionString,
   });
   
-  pool.on('error', (err) => {
-    console.error('PostgreSQL error:', err);
-  });
-
-
-module.exports = pool;
+  
+  
+  
+  
+  module.exports = {pool,bcrypt};
