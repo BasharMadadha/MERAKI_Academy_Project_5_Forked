@@ -1,13 +1,15 @@
 const {pool} = require("../models/db");
 
 const createNewPost = (req, res) => {
-  const { title, body } = req.body;
+  const { title, content } = req.body;
   const user_id = req.token.userId;
-  const query = `INSERT INTO posts (title, body, user_id) VALUES ($1,$2,$3) RETURNING *;`;
-  const data = [title, body, user_id];
+ 
+  const query = `INSERT INTO posts (title, content, user_id) VALUES ($1,$2,$3) RETURNING *;`;
+  const data = [title, content, user_id];
   pool
     .query(query, data)
     .then((result) => {
+      
       res.status(200).json({
         success: true,
         message: "Post created successfully",
@@ -18,7 +20,7 @@ const createNewPost = (req, res) => {
       res.status(500).json({
         success: false,
         message: "Server error",
-        err: err,
+        err: err.message,
       });
     });
 };
@@ -75,9 +77,16 @@ const getPostsByUser = (req, res) => {
 };
 
 const getPostById = (req, res) => {
-  const id = req.params.id;
-  const query = `SELECT title,body,user_id FROM users INNER JOIN posts ON users.id=posts.user_id WHERE posts.id=$1 AND posts.is_deleted=0;`;
-  const data = [id];
+  const post_id = req.params.id;
+  const query = `SELECT
+  posts.title,
+  posts.content,
+  posts.user_id,
+  posts.image_url
+FROM posts
+INNER JOIN users ON posts.user_id = users.id
+WHERE posts.post_id = $1 AND posts.is_deleted = 0`;
+  const data = [post_id];
 
   pool
     .query(query, data)
@@ -85,7 +94,7 @@ const getPostById = (req, res) => {
       if (result.rows.length !== 0) {
         res.status(200).json({
           success: true,
-          message: `The posts with id: ${id}`,
+          message: `The posts with id: ${post_id}`,
           result: result.rows,
         });
       } else {
