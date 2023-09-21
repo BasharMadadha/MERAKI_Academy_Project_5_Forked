@@ -1,14 +1,16 @@
-const { Pool } =require('pg')
-const bcrypt= require('bcrypt')
-const connectionString = process.env.CONNECTION_STRING
- 
+const { Pool } = require("pg");
+const bcrypt = require("bcrypt");
+const connectionString = process.env.CONNECTION_STRING;
+
 const pool = new Pool({
- 
-    connectionString,
-  });
+  connectionString,
+});
+pool.connect((err, pool) => {
+  if (err) {
+    console.error("Pool error: ", err.message, err.stack);
+    return;
+  }
+  console.error("Pool connected on: ", pool.user);
+});
 
-
-
-
-
-  module.exports = {pool,bcrypt};
+module.exports = { pool, bcrypt };
