@@ -1,10 +1,12 @@
 const { pool } = require("../models/db");
 
 const createNewPost = (req, res) => {
-  const { title, content, image_url } = req.body;
+  const { title, content } = req.body;
+
   const user_id = req.token.userId;
-  const query = `INSERT INTO posts (title, content, user_id,image_url) VALUES ($1,$2,$3,$4) RETURNING *;`;
-  const data = [title, content, user_id, image_url];
+
+  const query = `INSERT INTO posts (title, content , user_id) VALUES ($1,$2,$3) RETURNING *;`;
+  const data = [title, content, user_id];
   pool
     .query(query, data)
     .then((result) => {
@@ -18,7 +20,7 @@ const createNewPost = (req, res) => {
       res.status(500).json({
         success: false,
         message: "Server error",
-        err: err.message,
+        err: err,
       });
     });
 };
@@ -39,13 +41,13 @@ const getAllPosts = (req, res) => {
       res.status(500).json({
         success: false,
         message: "Server error",
-        err: err.message,
+        err: err,
       });
     });
 };
 
 const getPostsByUser = (req, res) => {
-  const user_id = req.params.user_id;
+  const user_id = req.params.id;
   const query = `SELECT * FROM posts WHERE user_id = $1 AND is_deleted=0;`;
   const data = [user_id];
 
@@ -69,7 +71,7 @@ const getPostsByUser = (req, res) => {
       res.status(500).json({
         success: false,
         message: "Server error",
-        err: err.message,
+        err: err,
       });
     });
 };
@@ -81,9 +83,9 @@ const getPostById = (req, res) => {
   posts.content,
   posts.user_id,
   posts.image_url
-  FROM posts
-  INNER JOIN users ON posts.user_id = users.id
-  WHERE posts.post_id = $1 AND posts.is_deleted = 0;`;
+FROM posts
+INNER JOIN users ON posts.user_id = users.id
+WHERE posts.post_id = $1 AND posts.is_deleted = 0;`;
   const data = [id];
 
   pool
@@ -110,10 +112,15 @@ const getPostById = (req, res) => {
 
 const updatePostById = (req, res) => {
   const post_id = req.params.id;
-  let { title, content } = req.body;
+  console.log(post_id);
+  const { title, content } = req.body;
 
-  const query = `UPDATE posts SET title = COALESCE($1,title), content = COALESCE($2, content) WHERE post_id=$3 AND is_deleted = 0  RETURNING *;`;
+  const query = `UPDATE posts
+   SET
+    title = COALESCE($1,title), content = COALESCE($2, content)
+     WHERE post_id = $3 AND is_deleted = 0  RETURNING *;`;
   const data = [title || null, content || null, post_id];
+  console.log(data);
   pool
     .query(query, data)
     .then((result) => {
@@ -147,7 +154,7 @@ const deletePostById = (req, res) => {
       if (result.rowCount !== 0) {
         res.status(200).json({
           success: true,
-          message: `posts with id: ${post_id} deleted successfully`,
+          message: `posts with id:  deleted successfully`,
         });
       } else {
         throw new Error("Error happened while deleting post");
@@ -182,7 +189,7 @@ const deletePostByUser = (req, res) => {
       res.status(500).json({
         success: false,
         message: "Server error",
-        err: err.message,
+        err: err,
       });
     });
 };

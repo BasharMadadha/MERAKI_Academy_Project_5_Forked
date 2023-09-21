@@ -15,7 +15,9 @@ const authorization = require("../middleware/authorization");
 const postsRouter = express.Router();
 
 postsRouter.get("/",authentication, getAllPosts);
-postsRouter.get("/search_1/:user_id", getPostsByUser);
+
+postsRouter.get("/search_1/:id", getPostsByUser);
+
 postsRouter.get("/search_2/:id", getPostById);
 
 postsRouter.post("/",authentication, createNewPost);
