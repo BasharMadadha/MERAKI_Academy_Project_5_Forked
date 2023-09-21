@@ -1,4 +1,3 @@
-// This function checks if the user logged in
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -31,4 +30,3 @@ const authentication = (req, res, next) => {
 };
 
 module.exports = authentication;
-
