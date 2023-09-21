@@ -6,9 +6,11 @@ app.use(express.json());
 
 const postsRouter = require("./routes/posts");
 const roleRouter = require("./routes/role");
+const permissionRouter = require("./routes/permission");
 const userRouter = require("./routes/User");
 const friendRoutes = require('./routes/friends');
 
+app.use("/permission", permissionRouter);
 app.use("/posts", postsRouter);
 app.use("/role", roleRouter);
 app.use("/", userRouter);
