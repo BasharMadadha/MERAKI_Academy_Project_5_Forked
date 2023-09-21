@@ -1,33 +1,30 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-// This function checks if the user logged in
-const authentication = (req, res, next) => {
-  try {
-    if (!req.headers.authorization) {
-      return res.status(403).json({
-        success: false,
-        message: Forbidden,
-      });
-    }
-    const token = req.headers.authorization.split(" ").pop();
 
-    jwt.verify(token, process.env.SECRET, (err, result) => {
-      if (err) {
-        res.status(403).json({
-          success: false,
-          message: "The token is invalid or expired",
-         err: err.message
-        });
-      } else {
-        req.token = result;
-        next();
-      }
-    });
-  } catch (err) {
-    res.status(500).json({
+const authentication = (req, res, next) => {
+  const token = req.headers.authorization.split(" ").pop();
+ 
+
+  if (!token) {
+    return res.status(403).json({
       success: false,
-      message: "Server Error",
-      err: err.message,
+      message: "Forbidden",
+    });
+  }
+
+  try {
+    const trueToken = jwt.verify(token, process.env.SECRET);
+    console.log(trueToken);
+
+    if (trueToken) {
+      req.token = trueToken;
+
+      next();
+    }
+  } catch (error) {
+    return res.status(403).json({
+      success: false,
+      message: "The token is invalid or expired",
     });
   }
 };
