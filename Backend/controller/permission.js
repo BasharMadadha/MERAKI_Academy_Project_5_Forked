@@ -1,18 +1,17 @@
 const {pool}= require("../models/db")
 
-const addrole = async (req, res, next) => {
+const addpermissions = async (req, res, next) => {
     try {
         
-      const {role_name} = req.body;
-  
-      const query = `INSERT INTO role (role_name) VALUES ($1) RETURNING *`;
-      const values = [role_name];
+      const {permission} = req.body;
+      const query = `INSERT INTO permission (permission) VALUES ($1) RETURNING *`;
+      const values = [permission];
       const response = await pool.query(query, values);
   
       if (response.rowCount) {
         res.status(201).json({
           success: true,
-          message: "role created successfully",
+          message: "permission created successfully",
           response: response.rows,
         });
       }
@@ -25,16 +24,15 @@ const addrole = async (req, res, next) => {
       });
     }
   };
-
-  const getAllRoles = (req, res) => {
-    const query = `SELECT * FROM role;`;
+  const getAllPermissions = (req, res) => {
+    const query = `SELECT * FROM permission;`;
   
     pool
       .query(query)
       .then((result) => {
         res.status(200).json({
           success: true,
-          message: "All the roles",
+          message: "All the permission",
           result: result,
         });
       })
@@ -47,8 +45,8 @@ const addrole = async (req, res, next) => {
       });
   };
 
-  
+
   module.exports={
-addrole,
-getAllRoles
+    addpermissions,
+    getAllPermissions
   }
