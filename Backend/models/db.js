@@ -1,12 +1,11 @@
-const { Pool } =require('pg')
-require("dotenv").config()
-const connectionString = process.env.CONNECTION_STRING
-console.log(connectionString );
-const pool = new Pool({
-    connectionString,
-  });
+const { Pool } = require("pg");
+const bcrypt = require("bcrypt");
+const connectionString = process.env.CONNECTION_STRING;
 
-// check the connection 
+
+const pool = new Pool({
+  connectionString,
+});
 pool.connect((err, pool) => {
   if (err) {
     console.error("Pool error: ", err.message, err.stack);
@@ -16,8 +15,5 @@ pool.connect((err, pool) => {
 });
 
 
-  
-module.exports = {pool};
-
-
+module.exports = { pool, bcrypt };
 
