@@ -1,0 +1,25 @@
+
+.NavBar {
+  background-color: #000000;
+  padding: 10px; 
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+}
+
+.NavBar .Link {
+  text-decoration: none;
+  color: #fff;
+  margin-right: 20px; 
+  font-size: 18px; 
+}
+
+.NavBar .logout {
+  background-color: #b5b5b5;
+  color: #fff; 
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px; 
+}
