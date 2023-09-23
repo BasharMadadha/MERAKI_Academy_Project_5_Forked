@@ -3,6 +3,20 @@ const app = express();
 require("dotenv").config();
 require("./models/db");
 app.use(express.json());
+const cors = require("cors");
+
+
+const allowedOrigins = ['http://localhost:5173'];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
 
 const postsRouter = require("./routes/posts");
 const roleRouter = require("./routes/role");
@@ -10,6 +24,8 @@ const permissionRouter = require("./routes/permission");
 const userRouter = require("./routes/User");
 const friendRoutes = require('./routes/friends');
 
+
+app.use(cors(corsOptions));
 app.use("/permission", permissionRouter);
 app.use("/posts", postsRouter);
 app.use("/role", roleRouter);
