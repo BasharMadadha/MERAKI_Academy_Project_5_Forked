@@ -44,7 +44,7 @@ CREATE TABLE likes (
     like_id serial PRIMARY KEY,
     user_id integer REFERENCES users(id),
     post_id integer REFERENCES posts(post_id),
-     created_at TIMESTAMP,
+    created_at TIMESTAMP,
 );
 
 CREATE TABLE "role" (
