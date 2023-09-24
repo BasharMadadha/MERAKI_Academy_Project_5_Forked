@@ -1,12 +1,12 @@
 const { pool } = require("../models/db");
 
 const createNewPost = (req, res) => {
-  const { title, content } = req.body;
+  const { title, content, image_url } = req.body;
 
   const user_id = req.token.userId;
 
-  const query = `INSERT INTO posts (title, content , user_id) VALUES ($1,$2,$3) RETURNING *;`;
-  const data = [title, content, user_id];
+  const query = `INSERT INTO posts (title, content ,image_url , user_id) VALUES ($1,$2,$3,$4) RETURNING *;`;
+  const data = [title, content, image_url, user_id];
   pool
     .query(query, data)
     .then((result) => {

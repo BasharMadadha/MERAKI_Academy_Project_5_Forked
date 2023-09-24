@@ -76,6 +76,7 @@ const login = async (req, res) => {
       token: token,
       userId: user.id,
       role: user.role,
+      user: user
     });
   } catch (error) {
     console.error(`Error creating acount`, error);
