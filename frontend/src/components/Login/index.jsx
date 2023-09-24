@@ -5,7 +5,7 @@ import {
   setUserId,
   setEmail,
   setPassword,
-  setUserInfo
+  setUserInfo,
 } from "../redux/authSlicer/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -40,7 +40,7 @@ const Login = () => {
       });
 console.log("result",result);
       if (result.data && result.data.token) {
-        console.log(result.data);
+        console.log(result);
         dispatch(setLogin(result.data.token));
         dispatch(setUserId(result.data.userId));
         dispatch(setUserInfo(result.data.user));

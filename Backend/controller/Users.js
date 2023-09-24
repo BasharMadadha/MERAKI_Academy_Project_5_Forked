@@ -78,6 +78,7 @@ const login = async (req, res) => {
       userId: user.id,
       role: user.role,
       user:user
+
     });
   } catch (error) {
     console.error(`Error creating acount`, error);
@@ -87,6 +88,7 @@ const login = async (req, res) => {
     });
   }
 };
+
 
 const getAllUsers = (req, res) => {
   try{
@@ -102,13 +104,45 @@ const getAllUsers = (req, res) => {
 }
 
 
+const userById = (req, res) => {
+    
+try{
+  const username = req.params.username;
+  const query = `SELECT * FROM users WHERE username LIKE $1`
+  const data = ['%'+username+'%'];
+  console.log(username);
+    pool
+      .query(query, data)
+      .then((result) => {
+        if (result) { 
+          res.status(201).json({
+            success: true,
+            data: result.rows,
+            // name: result,
+          });
+        } 
+        
+      })
+}
+
+      catch(err) {
+        res.status(401);
+        res.json({
+          success: false,
+          message: err.message,
+        });
+      }
 
 
+ };
+ 
 
+ 
 
 
 module.exports = {
   register,
   login,
-  getAllUsers
+  getAllUsers,
+  userById,
 };
