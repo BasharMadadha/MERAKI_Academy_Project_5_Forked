@@ -53,7 +53,7 @@ const login = async (req, res) => {
     }
     console.log(findUser.rows[0]);
     const user = findUser.rows[0];
-    console.log(user);
+    console.log("user",user);
     const thePassword = await bcrypt.compare(password, user.password);
     if (!thePassword) {
       return res.status(403).json({
@@ -66,6 +66,7 @@ const login = async (req, res) => {
       userId: user.id.toString(),
       role: user.role,
       username: user.username,
+      user:user
     };
     const secretKey = process.env.SECRET || "dark";
     const token = jwt.sign(payload, secretKey, { expiresIn: "60m" });
@@ -76,7 +77,8 @@ const login = async (req, res) => {
       token: token,
       userId: user.id,
       role: user.role,
-      user: user
+      user:user
+
     });
   } catch (error) {
     console.error(`Error creating acount`, error);
@@ -86,6 +88,21 @@ const login = async (req, res) => {
     });
   }
 };
+
+
+const getAllUsers = (req, res) => {
+  try{
+    const getAllUsers = `SELECT * FROM users`;
+    pool.query(getAllUsers, (error, results) => {
+      if (error) throw error;
+      res.status(200).json(results.rows);
+    });
+  } catch (err){
+    console.error(err.message);
+    res.status(500).json(err);
+  }
+}
+
 
 const userById = (req, res) => {
     
@@ -122,8 +139,10 @@ try{
 
  
 
+
 module.exports = {
   register,
   login,
-  userById
+  getAllUsers,
+  userById,
 };

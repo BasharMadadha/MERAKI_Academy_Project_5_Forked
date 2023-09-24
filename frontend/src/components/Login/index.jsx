@@ -38,7 +38,7 @@ const Login = () => {
         email,
         password,
       });
-
+console.log("result",result);
       if (result.data && result.data.token) {
         console.log(result);
         dispatch(setLogin(result.data.token));

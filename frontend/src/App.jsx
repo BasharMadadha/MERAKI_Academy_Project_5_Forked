@@ -5,7 +5,9 @@ import Login from "./components/Login";
 import { ChakraProvider } from "@chakra-ui/react";
 import NavBar from "./components/Navbar/index";
 import HomePage from "./components/HomePage";
-
+import ProfilePage from "./components/PofilePage";
+import EditePage from "./components/EditeProfile";
+import Friends from "./components/Friends";
 function App() {
   return (
     <ChakraProvider>
@@ -14,7 +16,10 @@ function App() {
         <Route path="/" element={<Register />} />
         <Route path="/HomePage" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-      </Routes>
+        <Route path="/ProfilePage" element={<ProfilePage />} />
+        <Route path="/EditePage" element={<EditePage />} />
+        <Route path="/Friends" element={<Friends />} />
+        </Routes>
     </ChakraProvider>
   );
 }
