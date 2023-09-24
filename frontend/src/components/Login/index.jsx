@@ -5,6 +5,7 @@ import {
   setUserId,
   setEmail,
   setPassword,
+  setUserInfo
 } from "../redux/authSlicer/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -37,11 +38,12 @@ const Login = () => {
         email,
         password,
       });
-
+console.log("result",result);
       if (result.data && result.data.token) {
         console.log(result.data);
         dispatch(setLogin(result.data.token));
         dispatch(setUserId(result.data.userId));
+        dispatch(setUserInfo(result.data.user));
         navigate("/Homepage");
       } else {
         throw new Error("Login failed");
