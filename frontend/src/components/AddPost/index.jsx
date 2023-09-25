@@ -49,11 +49,11 @@ const AddPost = () => {
       <div className="containerA">
         <div className="userA">
           <div className="userInfoA">
-            <img src={user.image} alt="" />
+            <img src={user?.image} alt="" />
           </div>
           <input
             className="tt"
-            placeholder={`What's on your mind ${user.username} . . . .`}
+            placeholder={`What's on your mind ${user?.username} . . . .`}
             value={content}
             onChange={(e) => {
               setContent(e.target.value);

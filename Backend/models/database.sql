@@ -22,6 +22,7 @@ CREATE TABLE friend_list (
     status varchar, 
     created_at TIMESTAMP
 );
+
 CREATE TABLE posts (
     post_id serial PRIMARY KEY,
     user_id integer REFERENCES users(id),
@@ -31,7 +32,6 @@ CREATE TABLE posts (
     created_at TIMESTAMP,
     is_deleted SMALLINT DEFAULT 0
 );
-
 
 CREATE TABLE comments (
     comment_id serial PRIMARY KEY,
