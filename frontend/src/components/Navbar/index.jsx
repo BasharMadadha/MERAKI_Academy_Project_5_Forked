@@ -6,25 +6,33 @@ import { setLogout } from "../redux/authSlicer/auth";
 import { setUsersSearch } from "../redux/navSlicer/nav";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Typeahead, withAsync } from 'react-bootstrap-typeahead';
+
+const AsyncTypeahead = withAsync(Typeahead);
 
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
-  const [userSearch, setuserSearch] = useState("");
 
-const searchandle = () =>{
+
+const searchandle = (query) =>{
   axios
-  .get(`http://localhost:5000/user/${userSearch}`)
+  .get(`http://localhost:5000/user/${query}`)
   .then((response) => {
-    console.log(response.data.data);
-    // dispatch(setUsersSearch(response.data))
+    dispatch(setUsersSearch(response.data.data))
   })
   .catch((err) => {
     console.log(err);
   });
 }
+
+const selectedHandle = (option)=> {
+    console.log(option);
+    // navigate("")
+}
+
   const handleLogout = () => {
     dispatch(setLogout());
   };
@@ -33,6 +41,19 @@ const searchandle = () =>{
       navigate("/login");
     }
   }, [isLogged]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const nav = useSelector((state) => {
+  
+    return state.nav
+
+  });
+
+
+
+  const filterBy = () => true;
+
+
   return (
     <>
       <div className="NavBar">
@@ -46,10 +67,30 @@ const searchandle = () =>{
               Logout
             </button>
             <>
-            <input type="text" onChange={(e)=>{
-               setuserSearch(e.target.value)
-            }}/>
-            <button onClick={searchandle}>search</button>
+            <AsyncTypeahead
+      filterBy={filterBy}
+      id="async-example"
+      isLoading={isLoading}
+      labelKey="username"
+      minLength={2}
+      onSearch={searchandle}
+      onChange={selectedHandle}
+      options={nav.usersSearch}
+      placeholder="Search for a user..."
+      renderMenuItemChildren={(option) => (
+        <>
+          {/* <img
+            src={option.image}
+            style={{
+              height: '24px',
+              marginRight: '10px',
+              width: '24px',
+            }}
+          /> */}
+          <div>{option.username}</div>
+        </>
+      )}
+    />
             </>
           </>
         ) : (
