@@ -10,6 +10,7 @@ const AddPost = () => {
   const token = useSelector((state) => state.auth.token);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state.auth.userInfo);
+  const users = useSelector((state) => state.auth.users);
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
@@ -44,16 +45,18 @@ const AddPost = () => {
     }, 1500);
   };
 
+  const userP = users.find((user1) => user.id === user1.id);
+
   return (
     <div className="add-post">
       <div className="containerA">
-        <div className="userA">
+        <div className="userAa">
           <div className="userInfoA">
-            {user && user.image && <img src={user.image} alt="" />}
+            <img className="userInfoA_img" src={userP?.image} alt="" />
           </div>
           <input
             className="tt"
-            placeholder={`What's on your mind ${user?.username} . . . .`}
+            placeholder={`What's on your mind ${userP?.username} . . . .`}
             value={content}
             onChange={(e) => {
               setContent(e.target.value);
