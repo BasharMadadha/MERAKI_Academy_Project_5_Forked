@@ -7,14 +7,17 @@ import { setUsersSearch } from "../redux/navSlicer/nav";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Typeahead, withAsync } from 'react-bootstrap-typeahead';
+import SideBar from "../SideBar";
+import { TbMoneybag } from 'react-icons/Tb';
 
 const AsyncTypeahead = withAsync(Typeahead);
-
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
+  const userInfo = useSelector((state) => state.auth.userInfo);
+
 
 
 const searchandle = (query) =>{
@@ -28,14 +31,17 @@ const searchandle = (query) =>{
   });
 }
 
+
 const selectedHandle = (option)=> {
     console.log(option);
-    // navigate("")
+    navigate("/ProfilePage")
+    setUsers(option)
 }
 
   const handleLogout = () => {
     dispatch(setLogout());
   };
+
   useEffect(() => {
     if (!isLogged) {
       navigate("/login");
@@ -53,21 +59,29 @@ const selectedHandle = (option)=> {
 
   const filterBy = () => true;
 
-
+  
   return (
+
+
     <>
+    {/* <SideBar /> */}
       <div className="NavBar">
+      
         {isLogged ? (
           <>
-            <Link className="Link" to="/dashboard">
+            <Link className="Link" to="/HomePage">
               Homepage
             </Link>
-          
             <button className="logout" onClick={handleLogout}>
               Logout
             </button>
             <>
-            <AsyncTypeahead
+           
+            <span onClick={()=>{alert("hello")}} className="crypto_amount"><TbMoneybag/>&nbsp;{userInfo.crypto_amount}</span>
+
+
+
+  <AsyncTypeahead
       filterBy={filterBy}
       id="async-example"
       isLoading={isLoading}
@@ -79,14 +93,14 @@ const selectedHandle = (option)=> {
       placeholder="Search for a user..."
       renderMenuItemChildren={(option) => (
         <>
-          {/* <img
+          <img
             src={option.image}
             style={{
               height: '24px',
               marginRight: '10px',
               width: '24px',
             }}
-          /> */}
+          />
           <div>{option.username}</div>
         </>
       )}
