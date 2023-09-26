@@ -15,12 +15,11 @@ import {
 import { HamburgerIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
 
 const Post = () => {
-
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState("");
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.userInfo);
- 
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };

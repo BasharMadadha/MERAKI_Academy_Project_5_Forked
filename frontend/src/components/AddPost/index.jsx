@@ -49,11 +49,7 @@ const AddPost = () => {
       <div className="containerA">
         <div className="userA">
           <div className="userInfoA">
-
-          {user && user.image && <img src={user.image} alt="" />}
-
-            <img src={user?.image} alt="" />
-
+            {user && user.image && <img src={user.image} alt="" />}
           </div>
           <input
             className="tt"

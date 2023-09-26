@@ -59,9 +59,13 @@ const selectedHandle = (option)=> {
       <div className="NavBar">
         {isLogged ? (
           <>
-            <Link className="Link" to="/dashboard">
+            <Link className="Link" to="/HomePage">
               Homepage
             </Link>
+            <Link className="Link" to="/ProfilePage">
+            ProfilePage
+            </Link>
+          
           
             <button className="logout" onClick={handleLogout}>
               Logout
