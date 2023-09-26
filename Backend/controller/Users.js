@@ -110,7 +110,6 @@ try{
   const username = req.params.username;
   const query = `SELECT * FROM users WHERE username LIKE $1`
   const data = ['%'+username+'%'];
-  console.log(username);
     pool
       .query(query, data)
       .then((result) => {
@@ -118,7 +117,6 @@ try{
           res.status(201).json({
             success: true,
             data: result.rows,
-            // name: result,
           });
         } 
         
