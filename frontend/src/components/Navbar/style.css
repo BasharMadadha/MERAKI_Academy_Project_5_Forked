@@ -24,3 +24,10 @@
   border-radius: 5px; 
 }
 
+.crypto_amount{
+  color: rgb(47, 255, 0);
+  display: inline-flex;
+}
+.crypto_amount:hover{
+  cursor: pointer;
+}

@@ -53,7 +53,7 @@ const login = async (req, res) => {
     }
     console.log(findUser.rows[0]);
     const user = findUser.rows[0];
-    console.log("user",user);
+    console.log("user", user);
     const thePassword = await bcrypt.compare(password, user.password);
     if (!thePassword) {
       return res.status(403).json({
@@ -66,7 +66,7 @@ const login = async (req, res) => {
       userId: user.id.toString(),
       role: user.role,
       username: user.username,
-      user:user
+      user: user,
     };
     const secretKey = process.env.SECRET || "dark";
     const token = jwt.sign(payload, secretKey, { expiresIn: "60m" });
@@ -77,8 +77,7 @@ const login = async (req, res) => {
       token: token,
       userId: user.id,
       role: user.role,
-      user:user
-
+      user: user,
     });
   } catch (error) {
     console.error(`Error creating acount`, error);
@@ -89,20 +88,20 @@ const login = async (req, res) => {
   }
 };
 
-
 const getAllUsers = (req, res) => {
-  try{
+  try {
     const getAllUsers = `SELECT * FROM users`;
     pool.query(getAllUsers, (error, results) => {
       if (error) throw error;
       res.status(200).json(results.rows);
     });
-  } catch (err){
+  } catch (err) {
     console.error(err.message);
     res.status(500).json(err);
   }
-}
+};
 
+<<<<<<< HEAD
 
 const userById = (req, res) => {
     
@@ -128,19 +127,59 @@ try{
         res.json({
           success: false,
           message: err.message,
+=======
+const userByUserName = (req, res) => {
+  try {
+    const username = req.params.username;
+    const query = `SELECT * FROM users WHERE username LIKE $1`;
+    const data = ["%" + username + "%"];
+    pool.query(query, data).then((result) => {
+      if (result) {
+        res.status(201).json({
+          success: true,
+          data: result.rows,
+          // name: result,
+>>>>>>> 1d5df75d9f3e1993238c4cca6f2f4b112af1f90c
         });
       }
+    });
+  } catch (err) {
+    res.status(401);
+    res.json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
 
-
- };
- 
-
- 
-
+const getUserById = (req, res) => {
+  try {
+    const id = req.params.id;
+    const query = `SELECT * FROM users WHERE id = $1`;
+    const data = [id];
+    pool.query(query, data).then((result) => {
+      if (result) {
+        res.status(201).json({
+          success: true,
+          message: `The posts with id: ${id}`,
+          data: result.rows[0],
+        });
+      }
+    });
+  } catch (err) {
+    res.status(401);
+    res.json({
+      success: false,
+      message: "Server error",
+      message: err.message,
+    });
+  }
+};
 
 module.exports = {
   register,
   login,
   getAllUsers,
-  userById,
+  userByUserName,
+  getUserById
 };

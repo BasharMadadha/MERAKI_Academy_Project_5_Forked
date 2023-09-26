@@ -2,7 +2,7 @@ const { pool } = require("../models/db");
 
 const sendFreindReq = async (req, res) => {
   try {
-    const { reqsFrom, reqsTo  } = req.body;
+    const { reqsFrom, reqsTo } = req.body;
 
     const existingFriendship = await pool.query(
       "SELECT * FROM friend_list WHERE (user_id = $1 AND friend_user_id = $2) OR (user_id = $2 AND friend_user_id = $1)",
@@ -16,21 +16,38 @@ const sendFreindReq = async (req, res) => {
       throw new Error("Cannot add yourself as a friend");
     }
 
-    const result = await pool.query(
+    const insertResult = await pool.query(
       `INSERT INTO friend_list (user_id, friend_user_id, status, created_at) 
-        VALUES ($1, $2, $3, NOW())`,
+        VALUES ($1, $2, $3, NOW()) RETURNING friend_user_id`,
       [reqsFrom, reqsTo, "pending"]
     );
 
-    console.log(result.rows);
-    if (result.rows) {
-     
+    const userDataFrom = await pool.query(
+      "SELECT username, image FROM users WHERE id = $1",
+      [reqsFrom]
+    );
+
+    const userDataTo = await pool.query(
+      "SELECT username, image FROM users WHERE id = $1",
+      [reqsTo]
+    );
+
+    if (userDataFrom.rows.length > 0 && userDataTo.rows.length > 0) {
+      const { username: usernameFrom, image: imageFrom } = userDataFrom.rows[0];
+      const { username: usernameTo, image: imageTo } = userDataTo.rows[0];
 
       res.status(201).json({
         success: true,
         message: "Friend request sent successfully",
-        result: result.rows[0], 
+        result: {
+          usernameFrom,
+          imageFrom,
+          usernameTo,
+          imageTo,
+        },
       });
+    } else {
+      throw new Error("User not found");
     }
   } catch (error) {
     console.error("Error sending friend request:", error.message);
@@ -46,9 +63,23 @@ const getUserFriends = async (req, res) => {
     const { userId } = req.params;
 
     const result = await pool.query(
-      `SELECT u.username AS friend_username, u.image AS friend_image, f.status
+      `SELECT
+       CASE
+         WHEN f.user_id = $1 THEN u.id
+         WHEN f.friend_user_id = $1 THEN u2.id
+       END AS friend_id,
+       CASE
+         WHEN f.user_id = $1 THEN u.username
+         WHEN f.friend_user_id = $1 THEN u2.username
+       END AS friend_username,
+       CASE
+         WHEN f.user_id = $1 THEN u.image
+         WHEN f.friend_user_id = $1 THEN u2.image
+       END AS friend_image,
+       f.status
        FROM friend_list AS f
        JOIN users AS u ON f.friend_user_id = u.id
+       JOIN users AS u2 ON f.user_id = u2.id
        WHERE (f.user_id = $1 OR f.friend_user_id = $1) AND f.status = 'friend'`,
       [userId]
     );
@@ -98,10 +129,10 @@ const updateFriendRequest = async (req, res) => {
 };
 const removeFriend = async (req, res) => {
   try {
-    const { userId, friendId } = req.body;
+    const { userId, friendId } = req.query;
 
     const existingFriendship = await pool.query(
-      "SELECT * FROM friend_list WHERE user_id = $1 AND friend_user_id = $2",
+      "SELECT * FROM friend_list WHERE (user_id = $1 OR friend_user_id = $1) AND (user_id = $2 OR friend_user_id = $2)",
       [userId, friendId]
     );
 
@@ -113,7 +144,7 @@ const removeFriend = async (req, res) => {
     }
 
     await pool.query(
-      "DELETE FROM friend_list WHERE user_id = $1 AND friend_user_id = $2",
+      "DELETE FROM friend_list WHERE (user_id = $1 OR friend_user_id = $1) AND (user_id = $2 OR friend_user_id = $2)",
       [userId, friendId]
     );
 
@@ -130,14 +161,18 @@ const removeFriend = async (req, res) => {
   }
 };
 const showFriendRequest = async (req, res) => {
-  try{
+  try {
     const { userId } = req.params;
     const loggedInUser = userId;
-    console.log(loggedInUser);
-    console.log(userId);
-        const result = await pool.query(
-      "SELECT * FROM friend_list WHERE friend_user_id = $1 AND status = 'pending' AND user_id != $2",
-    [userId,loggedInUser])
+
+    const result = await pool.query(
+      `SELECT f.*, u.username, u.image
+       FROM friend_list f
+       JOIN users u ON f.user_id = u.id
+       WHERE f.friend_user_id = $1 AND f.status = 'pending' AND f.user_id != $2`,
+      [userId, loggedInUser]
+    );
+
     res.status(200).json({
       success: true,
       requests: result.rows,
@@ -150,12 +185,12 @@ const showFriendRequest = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 module.exports = {
   sendFreindReq,
   getUserFriends,
   updateFriendRequest,
   removeFriend,
-  showFriendRequest
+  showFriendRequest,
 };

@@ -1,10 +1,12 @@
 import "./style.css";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import TextsmsOutlinedIcon from "@mui/icons-material/TextsmsOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import { setUser_id, setToggleProf } from "../redux/authSlicer/auth";
 import {
   Menu,
   MenuButton,
@@ -15,25 +17,44 @@ import {
 import { HamburgerIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
 
 const Post = () => {
-
+  const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState("");
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.userInfo);
- 
+  const users = useSelector((state) => state.auth.users);
+  const user_id = useSelector((state) => state.auth.user_id);
+  const toggleProf = useSelector((state) => state.auth.toggleProf);
+
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
   useEffect(() => {
-    getPosts();
+    setTimeout(() => {
+      toggleProf ? getPostsByUser(user_id) : getPosts();
+    }, 1000);
   }, []);
 
   const getPosts = async () => {
     await axios
       .get(`http://localhost:5000/posts/`, config)
       .then((res) => {
-        setPosts(res.data.result);
+        const rever = res.data.result;
+        setPosts([...rever].reverse());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const getPostsByUser = async (id) => {
+    await axios
+      .get(`http://localhost:5000/posts/search_1/${id}`)
+      .then((res) => {
+        const rever = res.data.result;
+        setPosts([...rever].reverse());
       })
       .catch((error) => {
         console.log(error);
@@ -44,7 +65,7 @@ const Post = () => {
     await axios
       .delete(`http://localhost:5000/posts/${id}`)
       .then((res) => {
-        getPosts();
+        toggleProf ? getPostsByUser(user_id) : getPosts();
       })
       .catch((error) => {
         console.log(error);
@@ -57,7 +78,7 @@ const Post = () => {
         content,
       })
       .then((res) => {
-        getPosts();
+        toggleProf ? getPostsByUser(user_id) : getPosts();
       })
       .catch((error) => {
         console.log(error);
@@ -68,24 +89,40 @@ const Post = () => {
     <div className="post">
       <div className="containerP">
         {posts.map((post) => {
+          const userPost = users.find((user1) => post.user_id === user1.id);
           return (
             <div key={post.post_id} className="postA">
               <div className="userP">
-                <div className="userInfoP">
-                  <img src={post.user_id} alt="" />
-                  <div className="details">
-                    <span className="name">{post.user_id}</span>
-                    <span className="date">{post.created_at}</span>
+                <Link
+                  to="/ProfilePage"
+                  onClick={() => {
+                    dispatch(setToggleProf(true));
+                    dispatch(setUser_id(post.user_id));
+                  }}
+                >
+                  <div className="userInfoP">
+                    <img
+                      className="userInfoP_img"
+                      src={userPost.image}
+                      alt=""
+                    />
+                    <div className="details">
+                      <span className="name">{userPost.username}</span>
+                      <span className="date">{post.created_at}</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </div>
               <div className="content">
                 <p>{post.content}</p>
-                <img
-                  src={post.image_url}
-                  alt=""
-                  style={{ borderRadius: "10px" }}
-                />
+                {post.image_url && (
+                  <img
+                    className="content_img"
+                    src={post.image_url}
+                    alt=""
+                    style={{ borderRadius: "10px" }}
+                  />
+                )}
               </div>
               <div className="itemP">
                 {/* <Likes /> */}
@@ -101,7 +138,6 @@ const Post = () => {
                       as={IconButton}
                       aria-label="Options"
                       icon={<HamburgerIcon />}
-                      // variant="outline"
                       onClick={() => {
                         setPostId(post.post_id);
                       }}
