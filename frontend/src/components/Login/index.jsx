@@ -45,7 +45,7 @@ const Login = () => {
         dispatch(setUserId(result.data.userId));
         dispatch(setUserInfo(result.data.user));
         navigate("/Homepage");
-        setUser()
+        setUser();
       } else {
         throw new Error("Login failed");
       }
@@ -53,7 +53,7 @@ const Login = () => {
       console.error("Login error:", err.message);
     }
   };
- 
+
 
   const handleEmailChange = (e) => {
     setEmailState(e.target.value);
@@ -116,7 +116,6 @@ const Login = () => {
             <Link color="blue.500" href="/register">
               Sign Up
             </Link>
-            .
           </Text>
         )}
       </Box>

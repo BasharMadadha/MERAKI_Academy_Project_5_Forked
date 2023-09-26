@@ -26,6 +26,7 @@ const Post = () => {
   const user_id = useSelector((state) => state.auth.user_id);
   const toggleProf = useSelector((state) => state.auth.toggleProf);
 
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
