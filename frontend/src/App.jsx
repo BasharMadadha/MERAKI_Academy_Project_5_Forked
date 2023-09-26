@@ -8,7 +8,9 @@ import SideBar from "./components/SideBar/index";
 import HomePage from "./components/HomePage";
 import ProfilePage from "./components/PofilePage";
 import EditePage from "./components/EditeProfile";
-import Friends from "./components/Friends";
+import Friends from "./components/Friends/index";
+import Users from "./components/Friends/usres";
+import Shop from "./components/Shop/index"
 function App() {
   return (
     <ChakraProvider>
@@ -21,6 +23,8 @@ function App() {
         <Route path="/ProfilePage" element={<ProfilePage />} />
         <Route path="/EditePage" element={<EditePage />} />
         <Route path="/Friends" element={<Friends />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="Shop" element={<Shop/>} />
         </Routes>
     </ChakraProvider>
   );

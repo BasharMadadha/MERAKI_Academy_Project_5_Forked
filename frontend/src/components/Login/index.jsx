@@ -6,7 +6,6 @@ import {
   setEmail,
   setPassword,
   setUserInfo,
-  setUsers,
 } from "../redux/authSlicer/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -46,7 +45,7 @@ const Login = () => {
         dispatch(setUserId(result.data.userId));
         dispatch(setUserInfo(result.data.user));
         navigate("/Homepage");
-        setUser()
+        setUser();
       } else {
         throw new Error("Login failed");
       }
@@ -54,17 +53,7 @@ const Login = () => {
       console.error("Login error:", err.message);
     }
   };
-  const setUser =async ()=>{
-    try{
-      const result = await axios.get("http://localhost:5000/users/getAllUser")
-      if (result.data){
-        dispatch(setUsers(result.data))
-        console.log("here",result.data);
-      }
-    } catch(error) {
-      console.error(error.message)
-    }
-  }
+
 
   const handleEmailChange = (e) => {
     setEmailState(e.target.value);
@@ -127,7 +116,6 @@ const Login = () => {
             <Link color="blue.500" href="/register">
               Sign Up
             </Link>
-            .
           </Text>
         )}
       </Box>
