@@ -15,6 +15,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 const Users = () => {
+  const userId = useSelector((state) => state.auth.userId);
   const users = useSelector((state) => state.auth.users);
   const friends = useSelector((state) => state.friends.friends);
 

@@ -4,18 +4,19 @@ import AddPost from "../AddPost/index";
 import Post from "../Post/index";
 import Users from "../Friends/usres";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import {
   Box,
   Heading,
   Container,
-  Divider,
-  VStack,
-  Flex,
+  GridItem,
+  Grid
 } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
 const HomePage = () => {
-  
+  const userId = useSelector((state) => state.auth.userId);
+
   const dispatch = useDispatch();
   dispatch(setToggleProf(false));
 
@@ -38,18 +39,23 @@ const HomePage = () => {
       <Heading as="h1" mb={4}>
         Home Page
       </Heading>
-      <Container maxW="100%">
-        <Flex>
-          <Box flex={1}>
+      <GridItem colSpan={1} >
             <AddPost />
-          </Box>
-          <Box flex={2} ml={4}>
+          </GridItem>
+      <Container maxW="100%">
+        <Grid
+          h="200px"
+          templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(5, 1fr)"
+          gap={4}
+        >
+          <GridItem rowSpan={2} colSpan={1}>
+            <Users userId={userId} />
+          </GridItem>
+          <GridItem colSpan={4} >
             <Post />
-          </Box>
-          <Box flex={3} ml={4}>
-            <Users />
-          </Box>
-        </Flex>
+          </GridItem>
+        </Grid>
       </Container>
     </Box>
   );

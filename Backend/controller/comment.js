@@ -26,17 +26,26 @@ const addcomment = (req, res) => {
     });
 };
 
-const getAllComments = (req, res) => {
-  const query = `SELECT * FROM comments;`;
+const getCommentByPost = (req, res) => {
+  const post_id = req.params.id;
+  const query = `SELECT * FROM comments WHERE post_id = $1;`;
+  const data = [post_id];
 
   pool
-    .query(query)
+    .query(query, data)
     .then((result) => {
-      res.status(200).json({
-        success: true,
-        message: "All the comments",
-        result: result.rows,
-      });
+      if (result.rows.length === 0) {
+        res.status(404).json({
+          success: false,
+          message: `The post: ${post_id} has no comments`,
+        });
+      } else {
+        res.status(200).json({
+          success: true,
+          message: `All comments for the post: ${post_id}`,
+          result: result.rows,
+        });
+      }
     })
     .catch((err) => {
       res.status(500).json({
@@ -100,7 +109,7 @@ const deleteCommentById = (req, res) => {
 
 module.exports = {
     addcomment,
-    getAllComments,
+    getCommentByPost,
     updateCommentsById,
     deleteCommentById
 };

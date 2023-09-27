@@ -1,7 +1,7 @@
 const express = require("express");
 const {
     addcomment,
-    getAllComments,
+    getCommentByPost,
     updateCommentsById,
     deleteCommentById
 } = require("../controller/comment");
@@ -12,9 +12,9 @@ const authorization = require("../middleware/authorization");
 const commentRouter = express.Router();
 
 commentRouter.post("/:id",authentication, addcomment);
-commentRouter.get("/",authentication, getAllComments);
-commentRouter.put("/:id",authentication, updateCommentsById);
-commentRouter.delete("/:id",authentication, deleteCommentById);
+commentRouter.get("/:id",authentication, getCommentByPost);
+commentRouter.put("/:id", updateCommentsById);
+commentRouter.delete("/:id",deleteCommentById);
 
 
 module.exports = commentRouter;
