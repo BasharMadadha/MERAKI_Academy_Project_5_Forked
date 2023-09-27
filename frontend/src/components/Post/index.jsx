@@ -7,6 +7,8 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { setUser_id, setToggleProf } from "../redux/authSlicer/auth";
+import Comment from "./Comment/comment";
+import Like from "./Like/like";
 import {
   Menu,
   MenuButton,
@@ -20,13 +22,13 @@ const Post = () => {
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState("");
+  const [commentUP, setCommentUP] = useState(false);
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.userInfo);
   const users = useSelector((state) => state.auth.users);
   const user_id = useSelector((state) => state.auth.user_id);
   const toggleProf = useSelector((state) => state.auth.toggleProf);
-
-
+  console.log(posts);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -125,12 +127,20 @@ const Post = () => {
                 )}
               </div>
               <div className="itemP">
-                {/* <Likes /> */}
-                <TextsmsOutlinedIcon />
+                 <Like /> 
+                <TextsmsOutlinedIcon
+                  onClick={() => {
+                    setCommentUP((show) => !show);
+                    setPostId(post.post_id);
+                  }}
+                />
                 Comments
                 <ShareOutlinedIcon />
                 Share
               </div>
+              {commentUP && post.post_id === postId && (
+                <Comment post_id={post.post_id}/>
+              )}
               {user?.id === post.user_id && (
                 <div className="menuP">
                   <Menu>

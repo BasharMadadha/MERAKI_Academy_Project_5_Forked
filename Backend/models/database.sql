@@ -19,7 +19,7 @@ CREATE TABLE friend_list (
     id serial PRIMARY KEY,
     user_id integer REFERENCES users(id),
     friend_user_id integer REFERENCES users(id),
-    status varchar, 
+    status varchar,
     created_at TIMESTAMP
 );
 

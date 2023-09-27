@@ -16,6 +16,7 @@ import {
 
 
 const Users = () => {
+  const userId = useSelector((state) => state.auth.userId);
   const users = useSelector((state) => state.auth.users);
   const friends = useSelector((state) => state.friends.friends);
   const userId = useSelector((state) => state.auth.userId);

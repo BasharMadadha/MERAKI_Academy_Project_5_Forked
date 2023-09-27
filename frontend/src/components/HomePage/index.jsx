@@ -4,6 +4,7 @@ import Post from "../Post/index";
 import Users from "../Friends/usres";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import {
   Box,
   Heading,
@@ -76,9 +77,6 @@ const HomePage = () => {
           <GridItem rowSpan={2} colSpan={1}>
             <Users userId={userId} />
           </GridItem>
-
-
-
           <GridItem colSpan={4} >
             <Post />
           </GridItem>
