@@ -45,7 +45,7 @@ const AddPost = () => {
     }, 1500);
   };
 
-  const userP = users.find((user1) => user.id === user1.id);
+  const userP = users?.find((user1) => user?.id === user1.id);
 
   return (
     <div className="add-post">
