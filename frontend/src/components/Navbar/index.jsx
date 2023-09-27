@@ -1,15 +1,32 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setLogout } from "../redux/authSlicer/auth";
+import { setLogout, setUser_id, setToggleProf } from "../redux/authSlicer/auth";
 import { setUsersSearch } from "../redux/navSlicer/nav";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { Typeahead, withAsync } from 'react-bootstrap-typeahead';
+import { Typeahead, withAsync } from "react-bootstrap-typeahead";
 import SideBar from "../SideBar";
-import { TbMoneybag } from 'react-icons/Tb';
-
+import {
+  Box,
+  Flex,
+  Avatar,
+  HStack,
+  Text,
+  IconButton,
+  Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuDivider,
+  useDisclosure,
+  useColorModeValue,
+  Stack,
+} from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { TbMoneybag } from "react-icons/Tb";
+import "./style.css";
+import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
 const NavBar = () => {
@@ -17,26 +34,22 @@ const NavBar = () => {
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const toggleProf = useSelector((state) => state.auth.toggleProf);
 
+  const searchandle = (query) => {
+    axios
+      .get(`http://localhost:5000/user/${query}`)
+      .then((response) => {
+        dispatch(setUsersSearch(response.data.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
-
-const searchandle = (query) =>{
-  axios
-  .get(`http://localhost:5000/user/${query}`)
-  .then((response) => {
-    dispatch(setUsersSearch(response.data.data))
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-}
-
-
-const selectedHandle = (option)=> {
+  const selectedHandle = (option) => {
     console.log(option);
-    navigate("/ProfilePage")
-    setUsers(option)
-}
+  };
 
   const handleLogout = () => {
     dispatch(setLogout());
@@ -47,76 +60,96 @@ const selectedHandle = (option)=> {
       navigate("/login");
     }
   }, [isLogged]);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const nav = useSelector((state) => {
-  
-    return state.nav
-
+    return state.nav;
   });
+  const filterBy = (option, props) => {
+    return option.username.toLowerCase().includes(props.text.toLowerCase());
+  };
 
-
-
-  const filterBy = () => true;
-
-  
   return (
-
-
     <>
-    {/* <SideBar /> */}
-      <div className="NavBar">
-      
-        {isLogged ? (
-          <>
-            <Link className="Link" to="/HomePage">
-              Homepage
-            </Link>
-            <button className="logout" onClick={handleLogout}>
-              Logout
-            </button>
+      {/* <SideBar /> */}
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          {isLogged ? (
             <>
-           
-            <span onClick={()=>{alert("hello")}} className="crypto_amount"><TbMoneybag/>&nbsp;{userInfo.crypto_amount}</span>
+              <HStack spacing={8} alignItems={"center"}>
+                <Box>Logo</Box>
+                <HStack
+                  as={"nav"}
+                  spacing={4}
+                  display={{ base: "none", md: "flex" }}
+                >
+                  <Link className="Link" to="/HomePage">
+                    Homepage
+                  </Link>
+                  <Link
+                    to="/ProfilePage"
+                    onClick={() => {
+                      dispatch(setToggleProf(true));
+                      dispatch(setUser_id(userInfo.id));
+                    }}
+                  >
+                    Profile
+                  </Link>
+                  <span>
+                    <TbMoneybag />
+                    &nbsp;{userInfo.crypto_amount}
+                  </span>
+                </HStack>
+              </HStack>
+              <>
+                <AsyncTypeahead
+                  filterBy={filterBy}
+                  id="async-example"
+                  isLoading={isLoading}
+                  labelKey="username"
+                  minLength={2}
+                  onSearch={searchandle}
+                  onChange={selectedHandle}
+                  options={nav.usersSearch}
+                  placeholder="Search for a user..."
+                  renderMenuItemChildren={(option) => (
+                    <Link
+                      to="/ProfilePage"
+                      onClick={() => {
+                        dispatch(setToggleProf(true));
+                        dispatch(setUser_id(option.id));
+                      }}
+                    >
+                      <Avatar
+                        size={"sm"}
+                        src={option.image}
+                        style={{
+                          height: "24px",
+                          marginRight: "10px",
+                          width: "24px",
+                        }}
+                      />
+                      <p>{option.username}</p>
+                    </Link>
+                  )}
+                />
 
-
-
-  <AsyncTypeahead
-      filterBy={filterBy}
-      id="async-example"
-      isLoading={isLoading}
-      labelKey="username"
-      minLength={2}
-      onSearch={searchandle}
-      onChange={selectedHandle}
-      options={nav.usersSearch}
-      placeholder="Search for a user..."
-      renderMenuItemChildren={(option) => (
-        <>
-          <img
-            src={option.image}
-            style={{
-              height: '24px',
-              marginRight: '10px',
-              width: '24px',
-            }}
-          />
-          <div>{option.username}</div>
-        </>
-      )}
-    />
+                <button className="logout" onClick={handleLogout}>
+                  Logout
+                </button>
+              </>
             </>
-          </>
-        ) : (
-          <>
-            <Link className="Link" to="/">
-              Register
-            </Link>
-            <Link to="/login">Login</Link>
-          </>
-          
-        )}
-      </div>
+          ) : (
+            <>
+              <Link className="Link" to="/">
+                Register
+              </Link>
+              <Link to="/login">Login</Link>
+            </>
+          )}
+        </Flex>
+      </Box>
     </>
   );
 };
