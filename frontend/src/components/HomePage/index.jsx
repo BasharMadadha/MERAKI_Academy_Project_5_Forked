@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import AddPost from "../AddPost/index";
 import Post from "../Post/index";
@@ -12,10 +11,14 @@ import {
   VStack,
   Flex,
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserFriends } from "../redux/frinedSlicer/friends";
+
 const HomePage = () => {
-  
+  const userId = useSelector((state) => state.auth.userId);
+
   const dispatch = useDispatch();
   dispatch(setToggleProf(false));
 
@@ -29,27 +32,50 @@ const HomePage = () => {
       console.error(error.message);
     }
   };
+  const getUserFriend = async () => {
+    try {
+      console.log("Before axios request");
+
+      const response = await axios.get(
+        `http://localhost:5000/userFriends/${userId}`
+      );
+      console.log("After axios request", response.data.userFriends);
+
+      if (response.status === 200) {
+        dispatch(getUserFriends(response.data.userFriends));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     setUser();
+    getUserFriend();
   }, []);
   return (
     <Box p={4}>
       <Heading as="h1" mb={4}>
         Home Page
       </Heading>
-      <Container maxW="100%">
-        <Flex>
-          <Box flex={1}>
+      <GridItem colSpan={1} >
             <AddPost />
-          </Box>
-          <Box flex={2} ml={4}>
+          </GridItem>
+      <Container maxW="100%">
+        <Grid
+          h="200px"
+          templateRows="repeat(2, 1fr)"
+          templateColumns="repeat(5, 1fr)"
+          gap={4}
+        >
+          <GridItem rowSpan={2} colSpan={1}>
+            <Users userId={userId} />
+          </GridItem>
+        
+          <GridItem colSpan={4} >
             <Post />
-          </Box>
-          <Box flex={3} ml={4}>
-            <Users />
-          </Box>
-        </Flex>
+          </GridItem>
+        </Grid>
       </Container>
     </Box>
   );
