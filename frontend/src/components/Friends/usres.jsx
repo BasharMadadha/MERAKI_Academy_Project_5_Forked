@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 const Users = () => {
   const users = useSelector((state) => state.auth.users);
   const friends = useSelector((state) => state.friends.friends);
+  const userId = useSelector((state) => state.auth.userId);
 
   const sendFriendsRequest = async (reqsTo) => {
     try {
@@ -36,6 +37,8 @@ const Users = () => {
   useEffect(() => {
     console.log("fri", friends);
     console.log("users", users);
+    console.log("users", filteredUsers);
+
   });
 
   const filteredUsers = users.filter(
