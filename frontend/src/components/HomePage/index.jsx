@@ -1,19 +1,27 @@
-
 import React, { useEffect } from "react";
 import AddPost from "../AddPost/index";
 import Post from "../Post/index";
 import Users from "../Friends/usres";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import {
   Box,
   Heading,
   Container,
+  Divider,
+  VStack,
+  Flex,
+  Grid,
   GridItem,
-  Grid
+
 } from "@chakra-ui/react";
-import { useDispatch } from "react-redux";
+
+
 import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserFriends } from "../redux/frinedSlicer/friends";
+
 const HomePage = () => {
   const userId = useSelector((state) => state.auth.userId);
 
@@ -30,9 +38,26 @@ const HomePage = () => {
       console.error(error.message);
     }
   };
+  const getUserFriend = async () => {
+    try {
+      console.log("Before axios request");
+
+      const response = await axios.get(
+        `http://localhost:5000/userFriends/${userId}`
+      );
+      console.log("After axios request", response.data.userFriends);
+
+      if (response.status === 200) {
+        dispatch(getUserFriends(response.data.userFriends));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     setUser();
+    getUserFriend();
   }, []);
   return (
     <Box p={4}>

@@ -24,15 +24,17 @@ const permissionRouter = require("./routes/permission");
 const userRouter = require("./routes/User");
 const friendRoutes = require('./routes/friends');
 const commentRouter = require('./routes/comment');
+const notificationRouter = require('./routes/notification');
 
 
 app.use(cors(corsOptions));
 app.use("/permission", permissionRouter);
 app.use("/posts", postsRouter);
-app.use("/role", roleRouter);
+app.use("/", roleRouter);
 app.use("/", userRouter);
 app.use("/", friendRoutes);
 app.use("/comment", commentRouter);
+app.use("/notif", notificationRouter);
 
 app.use("*", (req, res) => res.status(404).json("No content at this path"));
 
