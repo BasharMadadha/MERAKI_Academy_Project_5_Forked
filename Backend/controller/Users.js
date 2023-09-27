@@ -101,33 +101,6 @@ const getAllUsers = (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-
-const userById = (req, res) => {
-    
-try{
-  const username = req.params.username;
-  const query = `SELECT * FROM users WHERE username LIKE $1`
-  const data = ['%'+username+'%'];
-    pool
-      .query(query, data)
-      .then((result) => {
-        if (result) { 
-          res.status(201).json({
-            success: true,
-            data: result.rows,
-          });
-        } 
-        
-      })
-}
-
-      catch(err) {
-        res.status(401);
-        res.json({
-          success: false,
-          message: err.message,
-=======
 const userByUserName = (req, res) => {
   try {
     const username = req.params.username;
@@ -139,7 +112,6 @@ const userByUserName = (req, res) => {
           success: true,
           data: result.rows,
           // name: result,
->>>>>>> 1d5df75d9f3e1993238c4cca6f2f4b112af1f90c
         });
       }
     });

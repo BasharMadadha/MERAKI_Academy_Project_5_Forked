@@ -24,7 +24,7 @@ function App() {
         <Route path="/EditePage" element={<EditePage />} />
         <Route path="/Friends" element={<Friends />} />
         <Route path="/users" element={<Users />} />
-        <Route path="Shop" element={<Shop/>} />
+        <Route path="/Shop" element={<Shop/>} />
         </Routes>
     </ChakraProvider>
   );

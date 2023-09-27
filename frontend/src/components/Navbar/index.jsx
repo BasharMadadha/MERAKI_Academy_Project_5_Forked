@@ -97,7 +97,7 @@ const NavBar = () => {
                     Profile
                   </Link>
                   <span>
-                    <TbMoneybag />
+                    <TbMoneybag onClick={()=>{navigate("/Shop")}}/>
                     &nbsp;{userInfo.crypto_amount}
                   </span>
                 </HStack>

@@ -47,6 +47,22 @@ CREATE TABLE likes (
     created_at TIMESTAMP,
 );
 
+CREATE TABLE notification (
+  id serial PRIMARY KEY,
+  sender_id integer REFERENCES users(id),
+  receiver_id integer REFERENCES users(id),
+  comment_id integer REFERENCES comments(comment_id),
+  like_id integer REFERENCES likes(like_id),
+  friend_request integer REFERENCES friend_list(id),
+  created_at TIMESTAMP DEFAULT NOW(),
+  is_deleted SMALLINT DEFAULT 0
+);
+
+
+
+
+
+
 CREATE TABLE "role" (
   "id" serial PRIMARY KEY,
   "role_name" varchar
@@ -56,6 +72,9 @@ CREATE TABLE "permission" (
   "id" serial PRIMARY KEY,
   "permission" varchar
 );
+
+
+
 
 CREATE TABLE "role_permission" (
   "id" SERIAL PRIMARY KEY,
