@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import {
   Center,
   Box,
@@ -12,7 +13,7 @@ import {
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useDispatch, useSelector } from "react-redux";
+
 
 const Users = () => {
   const users = useSelector((state) => state.auth.users);

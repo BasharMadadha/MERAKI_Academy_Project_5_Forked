@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import AddPost from "../AddPost/index";
 import Post from "../Post/index";
 import Users from "../Friends/usres";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import {
   Box,
@@ -10,8 +11,12 @@ import {
   Divider,
   VStack,
   Flex,
+  Grid,
+  GridItem,
+
 } from "@chakra-ui/react";
-import { Grid, GridItem } from "@chakra-ui/react";
+
+
 import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserFriends } from "../redux/frinedSlicer/friends";
@@ -71,7 +76,9 @@ const HomePage = () => {
           <GridItem rowSpan={2} colSpan={1}>
             <Users userId={userId} />
           </GridItem>
-        
+
+
+
           <GridItem colSpan={4} >
             <Post />
           </GridItem>
