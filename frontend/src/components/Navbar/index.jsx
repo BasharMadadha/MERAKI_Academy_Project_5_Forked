@@ -23,7 +23,6 @@ import {
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { TbMoneybag } from "react-icons/Tb";
 import "./style.css";
 import axios from "axios";
@@ -88,7 +87,7 @@ const NavBar = () => {
                     Homepage
                   </Link>
                   <Link
-                    to="/ProfilePage"
+                    to={userInfo.role_id === 2 ? "/Admin" : "/ProfilePage"}
                     onClick={() => {
                       dispatch(setToggleProf(true));
                       dispatch(setUser_id(userInfo.id));

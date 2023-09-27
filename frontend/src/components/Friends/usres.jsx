@@ -38,6 +38,8 @@ const Users = () => {
   useEffect(() => {
     console.log("fri", friends);
     console.log("users", users);
+    console.log("users", filteredUsers);
+
   });
 
   const filteredUsers = users.filter(

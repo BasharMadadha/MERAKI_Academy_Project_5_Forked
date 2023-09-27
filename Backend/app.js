@@ -30,7 +30,7 @@ const notificationRouter = require('./routes/notification');
 app.use(cors(corsOptions));
 app.use("/permission", permissionRouter);
 app.use("/posts", postsRouter);
-app.use("/role", roleRouter);
+app.use("/", roleRouter);
 app.use("/", userRouter);
 app.use("/", friendRoutes);
 app.use("/comment", commentRouter);

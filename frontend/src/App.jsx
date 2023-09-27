@@ -11,6 +11,7 @@ import EditePage from "./components/EditeProfile";
 import Friends from "./components/Friends/index";
 import Users from "./components/Friends/usres";
 import Shop from "./components/Shop/index"
+import Admin from './components/AdminBoard/index'
 function App() {
   return (
     <ChakraProvider>
@@ -25,6 +26,8 @@ function App() {
         <Route path="/Friends" element={<Friends />} />
         <Route path="/users" element={<Users />} />
         <Route path="/Shop" element={<Shop/>} />
+
+        <Route path="/Admin" element={<Admin />} />
         </Routes>
     </ChakraProvider>
   );

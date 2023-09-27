@@ -44,6 +44,7 @@ const sendFreindReq = async (req, res) => {
           imageFrom,
           usernameTo,
           imageTo,
+          userId:reqsTo
         },
       });
     } else {
