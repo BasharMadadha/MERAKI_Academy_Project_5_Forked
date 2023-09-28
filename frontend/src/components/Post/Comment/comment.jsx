@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./Comment.css";
 import Swal from "sweetalert2";
@@ -13,37 +12,24 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
 
-const Comment = ({ post_id }) => {
+const Comment = ({ post, getPosts, getPostsByUser }) => {
+
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.userInfo);
   const users = useSelector((state) => state.auth.users);
-  const [comments, setComments] = useState([]);
+  const user_id = useSelector((state) => state.auth.user_id);
+  const toggleProf = useSelector((state) => state.auth.toggleProf);
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  useEffect(() => {
-    getCommentsByPost(post_id);
-  }, []);
-
-  const getCommentsByPost = async (id) => {
-    await axios
-      .get(`http://localhost:5000/comment/${id}`, config)
-      .then((res) => {
-        console.log(res.data.result);
-        setComments(res.data.result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+  
   const createComment = async (id, content) => {
     await axios
       .post(`http://localhost:5000/comment/${id}`, { content }, config)
       .then((res) => {
-        getCommentsByPost(post_id);
+        toggleProf ? getPostsByUser(user_id) : getPosts();
       })
       .catch((error) => {
         console.log(error);
@@ -54,7 +40,7 @@ const Comment = ({ post_id }) => {
     await axios
       .delete(`http://localhost:5000/comment/${id}`)
       .then((res) => {
-        getCommentsByPost(post_id);
+        toggleProf ? getPostsByUser(user_id) : getPosts();
       })
       .catch((error) => {
         console.log(error);
@@ -67,7 +53,7 @@ const Comment = ({ post_id }) => {
         content,
       })
       .then((res) => {
-        getCommentsByPost(post_id);
+        toggleProf ? getPostsByUser(user_id) : getPosts();
       })
       .catch((error) => {
         console.log(error);
@@ -86,7 +72,7 @@ const Comment = ({ post_id }) => {
     })
       .then((result) => {
         if (result.value) {
-          createComment(post_id, result.value);
+          createComment(post.post_id, result.value);
         }
       })
       .catch((error) => {
@@ -96,7 +82,7 @@ const Comment = ({ post_id }) => {
 
   return (
     <div>
-      {comments.map((comment) => {
+      {post.comments?.map((comment) => {
         const userComment = users.find((user1) => comment.user_id === user1.id);
         return (
           userComment.id === comment.user_id && (
