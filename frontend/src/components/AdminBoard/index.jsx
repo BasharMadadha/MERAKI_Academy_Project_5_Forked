@@ -34,11 +34,11 @@ const Admin = () => {
 
   const data = async () => {
     try {
-      const response = await axios.put("http://localhost:3000/admin/users", {
+      const response = await axios.put("http://localhost:5000/beAdmin", {
         formData: formData,
       });
-      const data = await response.json();
-      return data;
+     
+      return response;
     } catch (err) {
       console.log(err.message);
     }
