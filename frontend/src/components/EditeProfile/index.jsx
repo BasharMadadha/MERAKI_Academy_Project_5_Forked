@@ -10,12 +10,61 @@ import {
   faAddressCard,
 } from "@fortawesome/free-solid-svg-icons";
 import { Input } from "@chakra-ui/react";
+import Swal from "sweetalert2";
+import axios from "axios";
+import { useSelector } from "react-redux";
 import { IconButton, Button } from "@chakra-ui/react";
-import {  faImage } from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
 
 const EditePage = () => {
   const [selectedTab, setSelectedTab] = useState("GENERAL");
+  const [password, setPassword] = useState({
+    password: "",
+    old_password: "",
+    confirm_password: "",
+  });
+  const [email, setEmail] = useState({
+    email: "",
+    confirm_email: "",
+  });
+  const [image, setImage] = useState("");
+  const token = useSelector((state) => state.auth.token);
+  const [loading, setLoading] = useState(false);
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
+  const processFile = async (files) => {
+    setLoading(true);
+    const CLOUD_NAME = "dv7ygzpv8";
+    const UNSIGNED_UPLOAD_PRESET = "dpybqbgc";
+    const file = files;
+    const FETCH_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`;
+
+    const DATA = new FormData();
+
+    DATA.append("file", file);
+    DATA.append("cloud_name", CLOUD_NAME);
+    DATA.append("upload_preset", UNSIGNED_UPLOAD_PRESET);
+    await fetch(FETCH_URL, {
+      method: "post",
+      mode: "cors",
+      body: DATA,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setImage(data.url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
   const tabs = {
     GENERAL: (
       <div className="tabContent">
@@ -24,47 +73,215 @@ const EditePage = () => {
           <div className="option">
             <h3>Change Password</h3>
             <div className="passwordChangeForm">
-              <Input type="password" placeholder="Old Password" />
-              <Input type="password" placeholder="New Password" />
-              <Input type="password" placeholder="Confirm New Password" />
-              <Button colorScheme="teal" size="md">
+              <Input
+                type="password"
+                placeholder="Old Password"
+                value={password.old_password}
+                onChange={(e) => {
+                  setPassword({ ...password, old_password: e.target.value });
+                }}
+              />
+              <Input
+                type="password"
+                placeholder="New Password"
+                value={password.password}
+                onChange={(e) => {
+                  setPassword({ ...password, password: e.target.value });
+                }}
+              />
+              <Input
+                type="password"
+                placeholder="Confirm New Password"
+                value={password.confirm_password}
+                onChange={(e) => {
+                  setPassword({
+                    ...password,
+                    confirm_password: e.target.value,
+                  });
+                }}
+              />
+              <Button
+                colorScheme="teal"
+                size="md"
+                onClick={() => {
+                  axios
+                    .put(
+                      "http://localhost:5000/users",
+                      {
+                        old_password: password.old_password,
+                        password: password.password,
+                        confirm_password: password.confirm_password,
+                      },
+                      config
+                    )
+                    .then((result) => {
+                      setPassword({
+                        ...password,
+                        old_password: "",
+                        password: "",
+                        confirm_password: "",
+                      });
+                      <>
+                        {Swal.fire({
+                          position: "top",
+                          icon: "success",
+                          title: result.data.message,
+                          showConfirmButton: false,
+                          timer: 1500,
+                        })}
+                      </>;
+                    })
+                    .catch((error) => {
+                      <>
+                        {Swal.fire({
+                          position: "top",
+                          icon: "warning",
+                          title: "Password Not Match",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        })}
+                      </>;
+                    });
+                }}
+              >
                 Change Password
               </Button>
             </div>
           </div>
-
           <div className="option">
             <h3>Change Email</h3>
             <div className="emailChangeForm">
-              <Input type="email" placeholder="Old Email" />
-              <Input type="email" placeholder="New Email" />
-              <Input type="password" placeholder="Password" />
-              <Button colorScheme="teal" size="md">
+              
+              <Input
+                type="email"
+                placeholder="New Email"
+                value={email.email}
+                onChange={(e) => {
+                  setEmail({ ...email, email: e.target.value });
+                }}
+              />
+              <Input
+                type="email"
+                placeholder="Confirm New Email"
+                value={email.confirm_email}
+                onChange={(e) => {
+                  setEmail({ ...email, confirm_email: e.target.value });
+                }}
+              />
+              <Button
+                colorScheme="teal"
+                size="md"
+                onClick={() => {
+                  axios
+                    .put(
+                      "http://localhost:5000/users",
+                      {
+                        email: email.email,
+                        confirm_email: email.confirm_email,
+                      },
+                      config
+                    )
+                    .then((result) => {
+                      setEmail({
+                        ...email,
+                        email: "",
+                        confirm_email: "",
+                      });
+                      <>
+                        {Swal.fire({
+                          position: "top",
+                          icon: "success",
+                          title: result.data.message,
+                          showConfirmButton: false,
+                          timer: 1500,
+                        })}
+                      </>;
+                    })
+                    .catch((error) => {
+                      <>
+                        {Swal.fire({
+                          position: "top",
+                          icon: "warning",
+                          title: "Email Not Match",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        })}
+                      </>;
+                    });
+                }}
+              >
                 Change Email
               </Button>
             </div>
           </div>
-
           <div className="option">
             <h3>Change Profile Image</h3>
             <div className="profileImageChangeForm">
+              {image.length > 0 && <img src={image} alt="" className="picU" />}
               <label htmlFor="file-input">
                 <IconButton
                   as="span"
                   fontSize="30px"
                   aria-label="Upload Image"
-                  icon={<FontAwesomeIcon icon={faImage} />}
-                />
-
-                <input
-                  type="file"
-                  id="file-input"
-                  name="image"
-                  accept="image/*"
-                  style={{ display: "none" }}
+                  icon={
+                    <FontAwesomeIcon
+                      icon={faImage}
+                      onClick={() => {
+                        (async () => {
+                          const { value: file } = await Swal.fire({
+                            title: "Select image",
+                            input: "file",
+                            inputAttributes: {
+                              accept: "image/*",
+                              "aria-label": "Upload your profile picture",
+                            },
+                          });
+                          if (file) {
+                            processFile(file);
+                          }
+                        })();
+                      }}
+                    />
+                  }
                 />
               </label>
-              <Button colorScheme="teal" size="md">
+              <Button
+                colorScheme="teal"
+                size="md"
+                onClick={() => {
+                  axios
+                    .put(
+                      "http://localhost:5000/users/image",
+                      {
+                        image,
+                      },
+                      config
+                    )
+                    .then((result) => {
+                      setImage("");
+                      <>
+                        {Swal.fire({
+                          position: "top",
+                          icon: "success",
+                          title: result.data.message,
+                          showConfirmButton: false,
+                          timer: 1500,
+                        })}
+                      </>;
+                    })
+                    .catch((error) => {
+                      <>
+                        {Swal.fire({
+                          position: "top",
+                          icon: "warning",
+                          title: "Please Add",
+                          showConfirmButton: false,
+                          timer: 1500,
+                        })}
+                      </>;
+                    });
+                }}
+              >
                 Change Profile Image
               </Button>
             </div>

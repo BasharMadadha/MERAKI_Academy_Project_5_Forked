@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserFriends } from "../redux/frinedSlicer/friends";
 import axios from "axios";
-
 import {
   Heading,
   Avatar,
@@ -22,7 +21,7 @@ const Friends = () => {
   const friends = useSelector((state) => state.friends.friends);
   const userId = useSelector((state) => state.auth.userId);
   const [pendingRequests, setPendingRequests] = useState([]);
-
+  
   useEffect(() => {
     friendsRequest();
     console.log("req", pendingRequests);
@@ -108,15 +107,12 @@ const Friends = () => {
             boxShadow={"2xl"}
             rounded={"md"}
             overflow={"hidden"}
-           
           >
             {friends.map((friend) => (
-              
               <Box 
               key={friend.friend_id}
               mt={"50px"}
-              >
-                
+              >   
                 <Flex justify={"center"} mt={-12}>
                   <Avatar
                     size={"xl"}
@@ -151,9 +147,7 @@ const Friends = () => {
                     Remove
                   </Button>
                 </Box>
-                
-              </Box>
-              
+              </Box> 
             ))}
           </Box>
         </Center>
@@ -163,7 +157,6 @@ const Friends = () => {
           <li key={request.id}>
             <p> {request.username}</p>
             <img src={request.image} alt={"image"} />
-
             <button
               className="reqbtn"
               onClick={() => acceptFriendRequest(request.user_id)}

@@ -28,7 +28,7 @@ const Post = () => {
   const users = useSelector((state) => state.auth.users);
   const user_id = useSelector((state) => state.auth.user_id);
   const toggleProf = useSelector((state) => state.auth.toggleProf);
-
+  // console.log(token);
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -127,19 +127,28 @@ const Post = () => {
                 )}
               </div>
               <div className="itemP">
-                 <Like post={post} getPostsByUser={getPostsByUser} getPosts={getPosts}/> 
-                <TextsmsOutlinedIcon
+                <Like
+                  post={post}
+                  getPostsByUser={getPostsByUser}
+                  getPosts={getPosts}
+                />
+                <div
                   onClick={() => {
                     setCommentUP((show) => !show);
                     setPostId(post.post_id);
                   }}
-                />
-                Comments
+                >
+                  <TextsmsOutlinedIcon /> {post.comments?.length} Comments
+                </div>
                 <ShareOutlinedIcon />
                 Share
               </div>
               {commentUP && post.post_id === postId && (
-                <Comment post_id={post.post_id}/>
+                <Comment
+                  post={post}
+                  getPostsByUser={getPostsByUser}
+                  getPosts={getPosts}
+                />
               )}
               {user?.id === post.user_id && (
                 <div className="menuP">

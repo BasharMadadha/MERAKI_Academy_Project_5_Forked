@@ -51,9 +51,8 @@ const login = async (req, res) => {
           "The email doesn’t exist or the password you’ve entered is incorrect",
       });
     }
-    console.log(findUser.rows[0]);
     const user = findUser.rows[0];
-    console.log("user", user);
+
     const thePassword = await bcrypt.compare(password, user.password);
     if (!thePassword) {
       return res.status(403).json({
@@ -148,10 +147,110 @@ const getUserById = (req, res) => {
   }
 };
 
+const updateUserById = (req, res) => {
+  const user_id = req.token.userId;
+  const { password, confirm_password, old_password } = req.body;
+
+  // Check if new_password and confirm_password match.
+  if (password !== confirm_password) {
+    return res.status(400).json({
+      success: false,
+      message: 'New password and confirm password do not match',
+    });
+  }
+
+  // First, check if old_password matches the current hashed password for the user.
+  pool
+    .query('SELECT password FROM users WHERE id = $1', [user_id])
+    .then((result) => {
+      if (result.rows.length === 1) {
+        const currentHashedPassword = result.rows[0].password;
+        
+        // Use bcrypt to compare old_password with the hashed password.
+        return bcrypt.compare(old_password, currentHashedPassword);
+      } else {
+        throw new Error('User not found');
+      }
+    })
+    .then((passwordsMatch) => {
+      if (passwordsMatch) {
+        // Hash the new password before updating the database.
+        return bcrypt.hash(password, 10); // Adjust the number of salt rounds as needed.
+      } else {
+        throw new Error('Old password does not match the current password');
+      }
+    })
+    .then((hashedPassword) => {
+      // Now, we have the hashed new password, and we can proceed with the update.
+      const updateQuery = `
+        UPDATE users
+        SET
+        password = COALESCE($1, password)
+        WHERE id = $2
+        RETURNING *;
+      `;
+      const data = [ hashedPassword || null, user_id];
+
+      return pool.query(updateQuery, data);
+    })
+    .then((result) => {
+      if (result.rows.length !== 0) {
+        res.status(200).json({
+          success: true,
+          message: `User with id: ${user_id} updated successfully`,
+          result: result.rows[0],
+        });
+      } else {
+        throw new Error('Error happened while updating user');
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: 'Server error',
+        err: err.message,
+      });
+    });
+};
+
+const updateUserImage = (req, res) => {
+  const user_id = req.token.userId;
+  const { image } = req.body;
+
+  const query = `UPDATE users
+  SET
+  image = COALESCE($1, image)
+  WHERE id = $2
+  RETURNING *;`;
+  const data = [image || null, user_id];
+  pool
+    .query(query, data)
+    .then((result) => {
+      if (result.rows.length !== 0) {
+        res.status(200).json({
+          success: true,
+          message: `post with id: ${user_id} updated successfully `,
+          result: result.rows[0],
+        });
+      } else {
+        throw new Error("Error happened while updating post");
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err.message,
+      });
+    });
+};
+
 module.exports = {
   register,
   login,
   getAllUsers,
   userByUserName,
-  getUserById
+  getUserById,
+  updateUserById,
+  updateUserImage
 };
