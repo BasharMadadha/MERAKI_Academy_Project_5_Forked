@@ -42,6 +42,7 @@ CREATE TABLE comments (
     is_deleted SMALLINT DEFAULT 0
 
 );
+
 CREATE TABLE likes (
     like_id serial PRIMARY KEY,
     user_id integer REFERENCES users(id),

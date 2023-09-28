@@ -1,6 +1,6 @@
 const { pool } = require("../models/db");
 
-const addcomment = (req, res) => {
+const addcomment = (req, res,next) => {
   const { content } = req.body;
 
   const user_id = req.token.userId;
@@ -11,13 +11,11 @@ const addcomment = (req, res) => {
   pool
     .query(query, data)
     .then((result) => {
-      res.status(200).json({
-        success: true,
-        message: "comment created successfully",
-        result: result.rows[0],
-      });
+      // req.body ={result.rows[0].comment_id}
+      next();
     })
     .catch((err) => {
+      console.log(err);
       res.status(500).json({
         success: false,
         message: "Server error",
