@@ -40,6 +40,7 @@ CREATE TABLE comments (
     content text,
     created_at TIMESTAMP,
 );
+
 CREATE TABLE likes (
     like_id serial PRIMARY KEY,
     user_id integer REFERENCES users(id),

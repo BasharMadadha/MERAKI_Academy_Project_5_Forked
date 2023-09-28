@@ -4,7 +4,6 @@ import Post from "../Post/index";
 import Users from "../Friends/usres";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { useSelector } from "react-redux";
 import {
   Box,
   Heading,
@@ -19,7 +18,6 @@ import {
 
 
 import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
-import { useDispatch, useSelector } from "react-redux";
 import { getUserFriends } from "../redux/frinedSlicer/friends";
 
 const HomePage = () => {

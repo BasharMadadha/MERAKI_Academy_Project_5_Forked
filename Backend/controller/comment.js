@@ -11,11 +11,9 @@ const addcomment = (req, res) => {
   pool
     .query(query, data)
     .then((result) => {
-      res.status(200).json({
-        success: true,
-        message: "comment created successfully",
-        result: result.rows[0],
-      });
+      
+      // res.status(200)
+      next();
     })
     .catch((err) => {
       res.status(500).json({
