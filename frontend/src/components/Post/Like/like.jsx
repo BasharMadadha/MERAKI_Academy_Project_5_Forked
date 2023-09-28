@@ -48,7 +48,6 @@ const Like = ({ post, getPosts, getPostsByUser }) => {
   };
 
   const userLike = post.likes?.find((like) => like.user_id === user?.id);
-  console.log(post.likes);
   return (
     <div style={{ display: "flex", alignItems: "center" }}>
       {post.likes?.length === 0 ? (
