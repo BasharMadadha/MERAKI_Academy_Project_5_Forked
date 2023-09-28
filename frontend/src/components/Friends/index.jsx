@@ -22,7 +22,6 @@ const Friends = () => {
   const friends = useSelector((state) => state.friends.friends);
   const userId = useSelector((state) => state.auth.userId);
   const [pendingRequests, setPendingRequests] = useState([]);
-
   useEffect(() => {
     friendsRequest();
     console.log("req", pendingRequests);
