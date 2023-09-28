@@ -28,7 +28,8 @@ const createNewPost = (req, res) => {
 const getAllPosts = (req, res) => {
   const query = `SELECT
   posts.*  ,
-  (SELECT JSON_AGG(likes.*) FROM likes WHERE likes.post_id = posts.post_id) AS likes
+  (SELECT JSON_AGG(likes.*) FROM likes WHERE likes.post_id = posts.post_id) AS likes ,
+  (SELECT JSON_AGG(comments.*) FROM comments WHERE comments.post_id = posts.post_id) AS comments
 FROM
   posts
   WHERE posts.is_deleted = 0;`;
@@ -53,7 +54,12 @@ FROM
 
 const getPostsByUser = (req, res) => {
   const user_id = req.params.id;
-  const query = `SELECT * FROM posts WHERE user_id = $1 AND is_deleted=0;`;
+  const query = `SELECT * ,
+   (SELECT JSON_AGG(likes.*) FROM likes WHERE likes.post_id = posts.post_id)
+    AS likes ,
+    (SELECT JSON_AGG(comments.*) FROM comments WHERE comments.post_id = posts.post_id)
+     AS comments
+    FROM posts WHERE user_id = $1 AND is_deleted=0;`;
   const data = [user_id];
 
   pool
@@ -124,7 +130,6 @@ const updatePostById = (req, res) => {
     title = COALESCE($1,title), content = COALESCE($2, content)
      WHERE post_id = $3 AND is_deleted = 0  RETURNING *;`;
   const data = [title || null, content || null, post_id];
-  console.log(data);
   pool
     .query(query, data)
     .then((result) => {

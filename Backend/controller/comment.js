@@ -24,7 +24,6 @@ const addcomment = (req, res,next) => {
     });
 };
 
-
 const updateCommentsById = (req, res) => {
   const comment_id = req.params.id;
   const { content } = req.body;

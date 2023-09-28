@@ -50,7 +50,7 @@ const Login = () => {
         throw new Error("Login failed");
       }
     } catch (error) {
-      console.error("Login error:", err.message);
+      console.error("Login error:", error.message);
     }
   };
 
