@@ -14,6 +14,7 @@ const commentRouter = express.Router();
 
 commentRouter.post("/:id",authentication, addcomment,);
 commentRouter.get("/:id",authentication, getCommentByPost);
+
 commentRouter.put("/:id", updateCommentsById);
 commentRouter.delete("/:id",deleteCommentById);
 
