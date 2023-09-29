@@ -155,21 +155,21 @@ const updateUserById = (req, res) => {
   if (password !== confirm_password) {
     return res.status(400).json({
       success: false,
-      message: 'New password and confirm password do not match',
+      message: "New password and confirm password do not match",
     });
   }
 
   // First, check if old_password matches the current hashed password for the user.
   pool
-    .query('SELECT password FROM users WHERE id = $1', [user_id])
+    .query("SELECT password FROM users WHERE id = $1", [user_id])
     .then((result) => {
       if (result.rows.length === 1) {
         const currentHashedPassword = result.rows[0].password;
-        
+
         // Use bcrypt to compare old_password with the hashed password.
         return bcrypt.compare(old_password, currentHashedPassword);
       } else {
-        throw new Error('User not found');
+        throw new Error("User not found");
       }
     })
     .then((passwordsMatch) => {
@@ -177,7 +177,7 @@ const updateUserById = (req, res) => {
         // Hash the new password before updating the database.
         return bcrypt.hash(password, 10); // Adjust the number of salt rounds as needed.
       } else {
-        throw new Error('Old password does not match the current password');
+        throw new Error("Old password does not match the current password");
       }
     })
     .then((hashedPassword) => {
@@ -189,7 +189,7 @@ const updateUserById = (req, res) => {
         WHERE id = $2
         RETURNING *;
       `;
-      const data = [ hashedPassword || null, user_id];
+      const data = [hashedPassword || null, user_id];
 
       return pool.query(updateQuery, data);
     })
@@ -201,13 +201,13 @@ const updateUserById = (req, res) => {
           result: result.rows[0],
         });
       } else {
-        throw new Error('Error happened while updating user');
+        throw new Error("Error happened while updating user");
       }
     })
     .catch((err) => {
       res.status(500).json({
         success: false,
-        message: 'Server error',
+        message: "Server error",
         err: err.message,
       });
     });
@@ -215,25 +215,34 @@ const updateUserById = (req, res) => {
 
 const updateUserImage = (req, res) => {
   const user_id = req.token.userId;
-  const { image } = req.body;
+  const { image, username, confirm_username } = req.body;
+
+  if (username !== confirm_username) {
+    return res.status(400).json({
+      success: false,
+      message: "New username and confirm username do not match",
+    });
+  }
 
   const query = `UPDATE users
-  SET
-  image = COALESCE($1, image)
-  WHERE id = $2
-  RETURNING *;`;
-  const data = [image || null, user_id];
+                 SET
+                 image = COALESCE($1, image),
+                 username = COALESCE($2, username)
+                 WHERE id = $3
+                 RETURNING *;`;
+  const data = [image || null, username || null, user_id];
+
   pool
     .query(query, data)
     .then((result) => {
       if (result.rows.length !== 0) {
         res.status(200).json({
           success: true,
-          message: `post with id: ${user_id} updated successfully `,
+          message: `User with id: ${user_id} updated successfully`,
           result: result.rows[0],
         });
       } else {
-        throw new Error("Error happened while updating post");
+        throw new Error("Error happened while updating user");
       }
     })
     .catch((err) => {
@@ -252,5 +261,5 @@ module.exports = {
   userByUserName,
   getUserById,
   updateUserById,
-  updateUserImage
+  updateUserImage,
 };

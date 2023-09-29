@@ -13,7 +13,6 @@ import {
 import { HamburgerIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
 
 const Comment = ({ post, getPosts, getPostsByUser }) => {
-
   const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.userInfo);
   const users = useSelector((state) => state.auth.users);
@@ -24,7 +23,6 @@ const Comment = ({ post, getPosts, getPostsByUser }) => {
     headers: { Authorization: `Bearer ${token}` },
   };
 
-  
   const createComment = async (id, content) => {
     await axios
       .post(`http://localhost:5000/comment/${id}`, { content }, config)
@@ -97,63 +95,65 @@ const Comment = ({ post, getPosts, getPostsByUser }) => {
                 </div>
                 <span>{comment.content}</span>
               </div>
-              <Menu>
-                <MenuButton
-                className="menuBtn"
-                  as={IconButton}
-                  aria-label="Options"
-                  icon={<HamburgerIcon />}
-                />
-                <MenuList>
-                  <MenuItem
-                    icon={<RepeatIcon />}
-                    command="⌘⇧N"
-                    onClick={() => {
-                      Swal.fire({
-                        title: "Are you sure?",
-                        text: "You won't be able to revert this!",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#d33",
-                        cancelButtonColor: "#3085d6",
-                        confirmButtonText: "Yes, delete it!",
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                            deleteComment(comment.comment_id);
-                          Swal.fire(
-                            "Deleted!",
-                            "Your file has been deleted.",
-                            "success"
-                          );
-                        }
-                      });
-                    }}
-                  >
-                    Delete
-                  </MenuItem>
-                  <MenuItem
-                    icon={<EditIcon />}
-                    command="⌘O"
-                    onClick={() => {
-                      (() => {
+              {user?.id === comment.user_id && (
+                <Menu>
+                  <MenuButton
+                    className="menuBtn"
+                    as={IconButton}
+                    aria-label="Options"
+                    icon={<HamburgerIcon />}
+                  />
+                  <MenuList>
+                    <MenuItem
+                      icon={<RepeatIcon />}
+                      command="⌘⇧N"
+                      onClick={() => {
                         Swal.fire({
-                          input: "textarea",
-                          inputLabel: ` What's on your mind ${user?.username} ...`,
-                          inputPlaceholder: "Type in your mind here...",
-                          inputAttributes: {
-                            "aria-label": "Type your message here",
-                          },
+                          title: "Are you sure?",
+                          text: "You won't be able to revert this!",
+                          icon: "warning",
                           showCancelButton: true,
+                          confirmButtonColor: "#d33",
+                          cancelButtonColor: "#3085d6",
+                          confirmButtonText: "Yes, delete it!",
                         }).then((result) => {
-                          UpdatePost(comment.comment_id, result.value);
+                          if (result.isConfirmed) {
+                            deleteComment(comment.comment_id);
+                            Swal.fire(
+                              "Deleted!",
+                              "Your file has been deleted.",
+                              "success"
+                            );
+                          }
                         });
-                      })();
-                    }}
-                  >
-                    Update
-                  </MenuItem>
-                </MenuList>
-              </Menu>
+                      }}
+                    >
+                      Delete
+                    </MenuItem>
+                    <MenuItem
+                      icon={<EditIcon />}
+                      command="⌘O"
+                      onClick={() => {
+                        (() => {
+                          Swal.fire({
+                            input: "textarea",
+                            inputLabel: ` What's on your mind ${user?.username} ...`,
+                            inputPlaceholder: "Type in your mind here...",
+                            inputAttributes: {
+                              "aria-label": "Type your message here",
+                            },
+                            showCancelButton: true,
+                          }).then((result) => {
+                            UpdatePost(comment.comment_id, result.value);
+                          });
+                        })();
+                      }}
+                    >
+                      Update
+                    </MenuItem>
+                  </MenuList>
+                </Menu>
+              )}
             </div>
           )
         );

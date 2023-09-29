@@ -24,9 +24,9 @@ const EditePage = () => {
     old_password: "",
     confirm_password: "",
   });
-  const [email, setEmail] = useState({
-    email: "",
-    confirm_email: "",
+  const [username, setUsername] = useState({
+    username: "",
+    confirm_username: "",
   });
   const [image, setImage] = useState("");
   const token = useSelector((state) => state.auth.token);
@@ -64,7 +64,7 @@ const EditePage = () => {
       setLoading(false);
     }, 1000);
   };
-
+  
   const tabs = {
     GENERAL: (
       <div className="tabContent">
@@ -149,23 +149,23 @@ const EditePage = () => {
             </div>
           </div>
           <div className="option">
-            <h3>Change Email</h3>
+            <h3>Change User Name</h3>
             <div className="emailChangeForm">
               
               <Input
-                type="email"
-                placeholder="New Email"
-                value={email.email}
+                type="text"
+                placeholder="New User Name"
+                value={username.username}
                 onChange={(e) => {
-                  setEmail({ ...email, email: e.target.value });
+                  setUsername({ ...username, username: e.target.value });
                 }}
               />
               <Input
-                type="email"
-                placeholder="Confirm New Email"
-                value={email.confirm_email}
+                type="text"
+                placeholder="Confirm New User Name"
+                value={username.confirm_username}
                 onChange={(e) => {
-                  setEmail({ ...email, confirm_email: e.target.value });
+                  setUsername({ ...username, confirm_username: e.target.value });
                 }}
               />
               <Button
@@ -174,18 +174,18 @@ const EditePage = () => {
                 onClick={() => {
                   axios
                     .put(
-                      "http://localhost:5000/users",
+                      "http://localhost:5000/users/image",
                       {
-                        email: email.email,
-                        confirm_email: email.confirm_email,
+                        username: username.username,
+                        confirm_username: username.confirm_username,
                       },
                       config
                     )
                     .then((result) => {
-                      setEmail({
-                        ...email,
-                        email: "",
-                        confirm_email: "",
+                      setUsername({
+                        ...username,
+                        username: "",
+                        confirm_username: "",
                       });
                       <>
                         {Swal.fire({
@@ -210,7 +210,7 @@ const EditePage = () => {
                     });
                 }}
               >
-                Change Email
+                Change User Name
               </Button>
             </div>
           </div>
