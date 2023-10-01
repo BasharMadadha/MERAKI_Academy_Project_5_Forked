@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./style.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout, setUser_id, setToggleProf } from "../redux/authSlicer/auth";
@@ -24,7 +25,8 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { TbMoneybag } from "react-icons/Tb";
-import "./style.css";
+import { HiOutlineBell } from "react-icons/Hi";
+
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
@@ -71,13 +73,16 @@ const NavBar = () => {
 
   return (
     <>
+    
       {/* <SideBar /> */}
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           {isLogged ? (
             <>
+              
               <HStack spacing={8} alignItems={"center"}>
                 <Box>Logo</Box>
+
                 <HStack
                   as={"nav"}
                   spacing={4}
@@ -102,6 +107,12 @@ const NavBar = () => {
                 </HStack>
               </HStack>
               <>
+              <ul className="navUl">
+                <li>
+                   <HiOutlineBell onClick={()=>{alert("notification")}}/>
+                </li>
+              </ul>
+             
                 <AsyncTypeahead
                   filterBy={filterBy}
                   id="async-example"

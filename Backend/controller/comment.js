@@ -11,7 +11,10 @@ const addcomment = (req, res,next) => {
   pool
     .query(query, data)
     .then((result) => {
-      // req.body ={result.rows[0].comment_id}
+      console.log(result);
+      req.body.comment_id = result.rows[0].comment_id;
+      req.body.sender_id = result.rows[0].user_id;
+      req.body.post_id = result.rows[0].post_id;
       next();
     })
     .catch((err) => {
