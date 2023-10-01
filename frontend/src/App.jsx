@@ -12,6 +12,7 @@ import Friends from "./components/Friends/index";
 import Users from "./components/Friends/usres";
 import Shop from "./components/Shop/index"
 import Admin from './components/AdminBoard/index'
+import CardList from './components/Shop/card'
 function App() {
   return (
     <ChakraProvider>
@@ -27,6 +28,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/Shop" element={<Shop/>} />
         <Route path="/Admin" element={<Admin />} />
+        <Route path="/card"element={<CardList />} />
         </Routes>
     </ChakraProvider>
   );
