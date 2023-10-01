@@ -1,13 +1,13 @@
 const { pool } = require("../models/db");
 
-const addcomment = (req, res,next) => {
+const addcomment = (req, res, next) => {
   const { content } = req.body;
 
   const user_id = req.token.userId;
   const post_id = req.params.id;
 
   const query = `INSERT INTO comments (content,user_id,post_id) VALUES ($1,$2,$3) RETURNING *;`;
-  const data = [content,user_id,post_id];
+  const data = [content, user_id, post_id];
   pool
     .query(query, data)
     .then((result) => {
@@ -35,18 +35,16 @@ const updateCommentsById = (req, res) => {
    SET
      content = COALESCE($1, content)
      WHERE comment_id = $2 RETURNING *;`;
-  const data = [ content || null, comment_id];
+  const data = [content || null, comment_id];
   console.log(data);
   pool
     .query(query, data)
     .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: `comment with id: ${comment_id} updated successfully `,
-          result: result.rows[0],
-        });
-    
-      
+      res.status(200).json({
+        success: true,
+        message: `comment with id: ${comment_id} updated successfully `,
+        result: result.rows[0],
+      });
     })
     .catch((err) => {
       res.status(500).json({
@@ -64,10 +62,10 @@ const deleteCommentById = (req, res) => {
   pool
     .query(query, data)
     .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: `comment with id:${comment_id} deleted successfully`,
-        });
+      res.status(200).json({
+        success: true,
+        message: `comment with id:${comment_id} deleted successfully`,
+      });
     })
     .catch((err) => {
       res.status(500).json({
@@ -79,7 +77,7 @@ const deleteCommentById = (req, res) => {
 };
 
 module.exports = {
-    addcomment,
-    updateCommentsById,
-    deleteCommentById
+  addcomment,
+  updateCommentsById,
+  deleteCommentById,
 };
