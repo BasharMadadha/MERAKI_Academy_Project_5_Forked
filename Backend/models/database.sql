@@ -40,7 +40,6 @@ CREATE TABLE comments (
     content text,
     created_at TIMESTAMP DEFAULT NOW(),
     is_deleted SMALLINT DEFAULT 0
-
 );
 
 CREATE TABLE likes (
@@ -61,10 +60,21 @@ CREATE TABLE notification (
   is_deleted SMALLINT DEFAULT 0
 );
 
+CREATE TABLE app_cards (
+    card_id serial PRIMARY KEY,
+    card_name VARCHAR(255),
+    card_description TEXT,
+    card_image VARCHAR(255),
+    archetype VARCHAR(255),
+    attack INTEGER,
+    card_prices INTEGER 
+);
 
-
-
-
+CREATE TABLE user_cards (
+    user_card_id serial PRIMARY KEY,
+    user_id integer REFERENCES users(id),
+    card_id integer REFERENCES app_cards(card_id)
+);
 
 CREATE TABLE "role" (
   "id" serial PRIMARY KEY,
@@ -75,9 +85,6 @@ CREATE TABLE "permission" (
   "id" serial PRIMARY KEY,
   "permission" varchar
 );
-
-
-
 
 CREATE TABLE "role_permission" (
   "id" SERIAL PRIMARY KEY,

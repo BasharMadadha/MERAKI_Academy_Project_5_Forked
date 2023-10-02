@@ -69,6 +69,6 @@ export const {
   setPassword,
   setUserInfo,
   setUser_id,
-  setToggleProf
+  setToggleProf,
 } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,4 +1,11 @@
-.navUl li{
-    text-decoration: none;
+.navUl li {
+  text-decoration: none;
+}
 
+.nav {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
