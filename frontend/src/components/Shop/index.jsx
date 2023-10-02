@@ -6,7 +6,7 @@ const Shope = () => {
 
   useEffect(() => {
     axios
-      .get("")
+      .get("https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Blue-Eyes")
       .then((response) => {
         const filteredCards = response.data.data.filter(
           (card) => card.type !== "Spell Card" && card.type !== "Trap Card"
@@ -16,20 +16,23 @@ const Shope = () => {
       .catch((error) => {
         console.log(error);
       });
+    
   }, []);
 
   return (
-    <h1>SHOPE</h1>
-    // <div>
-    //   {cards.map((card) => {
-    //     return (
-    //       <div key={card.id}>
-    //         <img src={card.card_images[0].image_url} alt={card.name} />
-    //         <h2>{card.name}</h2>
-    //       </div>
-    //     );
-    //   })}
-    // </div>
+    
+    <div>
+      <h1>SHOPE</h1>
+      {cards.map((card) => {
+        return (
+          
+          <div key={card.id}>
+            <img src={card.card_images[0].image_url} alt={card.name} />
+            <h2>{console.log(card)}</h2>
+          </div>
+        );
+      })}
+    </div>
   )
 };
 
