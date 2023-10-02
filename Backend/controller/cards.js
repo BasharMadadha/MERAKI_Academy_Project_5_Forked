@@ -1,5 +1,6 @@
 const { pool } = require("../models/db");
 
+
 const addCardsFromApi = (req, res) => {
   const api_url =
     "https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Blue-Eyes";
@@ -189,11 +190,38 @@ const buyCard = async (req, res) => {
   }
 };
 
+ const getCardById = async (req, res) => {
+    const cardId = req.params.id;
+  
+    try {
+      const { rows } = await pool.query('SELECT * FROM app_cards WHERE card_id = $1', [cardId]);
+  
+      if (rows.length === 0) {
+        res.status(404).json({ error: 'Card not found' });
+      } else {
+        res.json(rows[0]);
+      }
+    } catch (error) {
+        console.error(error.message);
+              res.status(500).json({ error: 'Internal server error' });
+    }
+  };
+
 
 module.exports = {
   addCardsFromApi,
   getAllCards,
   deleteCardById,
   addCard,
+  getCardById,
   buyCard
 };
+
+
+  
+ 
+
+
+
+
+

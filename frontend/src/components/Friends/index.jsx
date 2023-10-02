@@ -62,6 +62,7 @@ const Friends = () => {
       console.log(error.message);
     }
   };
+  
   const removeFriend = async (friendId) => {
     try {
       const response = await axios.delete(

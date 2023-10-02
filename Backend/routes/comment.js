@@ -11,7 +11,7 @@ const {notification} = require("../controller/notification")
 
 
 const commentRouter = express.Router();
-commentRouter.post("/:id",authentication, addcomment, notification);
+commentRouter.post("/:id",authentication, addcomment);
 
 commentRouter.put("/:id", updateCommentsById);
 commentRouter.delete("/:id",deleteCommentById);

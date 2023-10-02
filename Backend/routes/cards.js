@@ -1,10 +1,12 @@
 const express = require("express");
+
 const {
   addCardsFromApi,
   getAllCards,
   deleteCardById,
   addCard,
   buyCard,
+  getCardById
 } = require("../controller/cards");
 const authentication = require("../middleware/authentication");
 
@@ -15,5 +17,6 @@ cardRouter.post("/", addCard);
 cardRouter.get("/", getAllCards);
 cardRouter.delete("/:id", deleteCardById);
 cardRouter.post("/buy", authentication, buyCard);
+cardRouter.get('/cardWithId',getCardById)
 
-module.exports = cardRouter;
+

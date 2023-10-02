@@ -30,6 +30,7 @@ const cardRouter = require('./routes/cards');
 
 
 
+
 app.use(cors(corsOptions));
 app.use("/permission", permissionRouter);
 app.use("/posts", postsRouter);
@@ -40,6 +41,7 @@ app.use("/comment", commentRouter);
 app.use("/notif", notificationRouter);
 app.use("/like", likeRouter);
 app.use("/card", cardRouter);
+
 
 
 app.use("*", (req, res) => res.status(404).json("No content at this path"));

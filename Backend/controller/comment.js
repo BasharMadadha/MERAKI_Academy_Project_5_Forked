@@ -1,10 +1,10 @@
 const { pool } = require("../models/db");
 
-const addcomment = (req, res,next) => {
+const addcomment = async (req, res) => {
   const { content } = req.body;
-
   const user_id = req.token.userId;
   const post_id = req.params.id;
+
 
   const query = `INSERT INTO comments (content,user_id,post_id) VALUES ($1,$2,$3) RETURNING *;`;
   const data = [content,user_id,post_id];
@@ -24,8 +24,40 @@ const addcomment = (req, res,next) => {
         message: "Server error",
         err: err.message,
       });
+
+
+  const insertCommentQuery = 
+  `  INSERT INTO comments (content, user_id, post_id)
+    VALUES ($1, $2, $3)
+    RETURNING *;`
+  ;
+  const insertNotificationQuery = 
+`    INSERT INTO notification (sender_id, receiver_id,comment_id)
+    VALUES ($1,$2, $3);
+  ;`
+
+  const postUser = `SELECT user_id FROM posts WHERE post_id = ${post_id}`
+
+  const commentData = [content, user_id, post_id];
+  try {
+    const postUserResult = await pool.query(postUser);
+    const commentResult = await pool.query(insertCommentQuery, commentData);
+    const notificationData = [user_id, postUserResult.rows[0].user_id, commentResult.rows[0].comment_id];
+    await pool.query(insertNotificationQuery, notificationData);
+    res.status(200).json({
+      success: true,
+      message: 'Comment added successfully',
     });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      err: err.message,
+    });
+  }
 };
+
 
 const updateCommentsById = (req, res) => {
   const comment_id = req.params.id;

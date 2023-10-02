@@ -4,9 +4,10 @@ const sendFreindReq = async (req, res) => {
   try {
     const { reqsFrom, reqsTo } = req.body;
 
+
     const existingFriendship = await pool.query(
       "SELECT * FROM friend_list WHERE (user_id = $1 AND friend_user_id = $2) OR (user_id = $2 AND friend_user_id = $1)",
-      [reqsFrom, reqsTo]
+      [reqsFrom, reqsTo ]
     );
 
     if (existingFriendship.rows.length > 0) {
@@ -16,12 +17,13 @@ const sendFreindReq = async (req, res) => {
       throw new Error("Cannot add yourself as a friend");
     }
 
-    const insertResult = await pool.query(
+    const {rows} = await pool.query(
       `INSERT INTO friend_list (user_id, friend_user_id, status, created_at) 
-        VALUES ($1, $2, $3, NOW()) RETURNING friend_user_id`,
+        VALUES ($1, $2, $3, NOW()) RETURNING *`,
       [reqsFrom, reqsTo, "pending"]
     );
-
+    const friendRequestId = rows[0].id
+      
     const userDataFrom = await pool.query(
       "SELECT username, image FROM users WHERE id = $1",
       [reqsFrom]
@@ -32,10 +34,24 @@ const sendFreindReq = async (req, res) => {
       [reqsTo]
     );
 
+console.log(friendRequestId);
+
+
+    const insertNotificationQuery = `INSERT INTO notification (sender_id, receiver_id,friend_request) VALUES ($1,$2,$3);`
+    const notificationData = [reqsFrom, reqsTo,friendRequestId];
+
+    const notificatioResult = await pool.query(insertNotificationQuery, notificationData);
+
+
+
+
+
+
+
     if (userDataFrom.rows.length > 0 && userDataTo.rows.length > 0) {
       const { username: usernameFrom, image: imageFrom } = userDataFrom.rows[0];
       const { username: usernameTo, image: imageTo } = userDataTo.rows[0];
-
+ 
       res.status(201).json({
         success: true,
         message: "Friend request sent successfully",
@@ -44,7 +60,7 @@ const sendFreindReq = async (req, res) => {
           imageFrom,
           usernameTo,
           imageTo,
-          userId:reqsTo
+          userId:reqsTo,
         },
       });
     } else {
@@ -59,6 +75,19 @@ const sendFreindReq = async (req, res) => {
     });
   }
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
 const getUserFriends = async (req, res) => {
   try {
     const { userId } = req.params;

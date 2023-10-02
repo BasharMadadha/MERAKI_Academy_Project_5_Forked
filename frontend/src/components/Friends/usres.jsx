@@ -19,7 +19,7 @@ const Users = () => {
   const userId = useSelector((state) => state.auth.userId);
   const users = useSelector((state) => state.auth.users);
   const friends = useSelector((state) => state.friends.friends);
-
+console.log(users);
   const sendFriendsRequest = async (reqsTo) => {
     try {
       const response = await axios.post(`http://localhost:5000/addFriends`, {
