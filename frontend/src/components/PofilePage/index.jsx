@@ -47,7 +47,7 @@ const ProfilePage = () => {
             <p>{userPorfile.bio}</p>
           </div>
         </div>
-        {userId === `${userPorfile.id}` && (
+        {userId === userPorfile.id && (
           <div className="settings-button">
             <Link to="/EditePage">
               <button>Settings</button>
