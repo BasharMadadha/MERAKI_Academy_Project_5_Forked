@@ -42,14 +42,14 @@ console.log(users);
 
   // });
 
-  const filteredUsers = users.filter(
+  const filteredUsers = users?.filter(
     (user) => !friends.some((friend) => friend.friend_id === user.id)
   );
 
   return (
     <div>
       <h1 className="users">
-        {filteredUsers.map((user) => (
+        {filteredUsers?.map((user) => (
           <Center key={user.id} py={6}>
             <Box
               maxW={"270px"}

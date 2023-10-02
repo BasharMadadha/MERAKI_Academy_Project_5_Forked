@@ -6,6 +6,26 @@ const addcomment = async (req, res) => {
   const post_id = req.params.id;
 
 
+  const query = `INSERT INTO comments (content,user_id,post_id) VALUES ($1,$2,$3) RETURNING *;`;
+  const data = [content,user_id,post_id];
+  pool
+    .query(query, data)
+    .then((result) => {
+      console.log(result);
+      req.body.comment_id = result.rows[0].comment_id;
+      req.body.sender_id = result.rows[0].user_id;
+      // req.body.post_id = result.rows[0].post_id;
+      next();
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        success: false,
+        message: "Server error",
+        err: err.message,
+      });
+
+
   const insertCommentQuery = 
   `  INSERT INTO comments (content, user_id, post_id)
     VALUES ($1, $2, $3)
@@ -18,16 +38,12 @@ const addcomment = async (req, res) => {
 
   const postUser = `SELECT user_id FROM posts WHERE post_id = ${post_id}`
 
-
   const commentData = [content, user_id, post_id];
-
   try {
     const postUserResult = await pool.query(postUser);
     const commentResult = await pool.query(insertCommentQuery, commentData);
     const notificationData = [user_id, postUserResult.rows[0].user_id, commentResult.rows[0].comment_id];
     await pool.query(insertNotificationQuery, notificationData);
-
- 
     res.status(200).json({
       success: true,
       message: 'Comment added successfully',
