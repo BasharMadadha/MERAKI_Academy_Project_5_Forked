@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-    notification,
+    // notification,
     getAllnotification
 } = require("../controller/notification");
 const authentication = require("../middleware/authentication");
@@ -9,7 +9,7 @@ const authorization = require("../middleware/authorization");
 
 const notificationRouter = express.Router();
 
-notificationRouter.post("/add", authentication, notification);
+// notificationRouter.post("/add", authentication, notification);
 notificationRouter.get("/", getAllnotification);
 
 

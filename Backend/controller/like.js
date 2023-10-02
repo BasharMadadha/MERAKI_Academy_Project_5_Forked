@@ -8,12 +8,24 @@ const addLike = async (req, res) => {
     const likeQuery = `INSERT INTO likes (user_id, post_id) VALUES ($1, $2) RETURNING *`;
     const likeData = [user_id, post_id];
     const likeResult = await pool.query(likeQuery, likeData);
-    const result = likeResult.rows[0];
+
+    // const result = likeResult.rows[0];
+
+
+    const postUser = `SELECT user_id FROM posts WHERE post_id = ${post_id}`
+    const postUserResult = await pool.query(postUser);
+
+
+
+    const insertNotificationQuery = `INSERT INTO notification (sender_id, receiver_id,like_id)VALUES ($1,$2, $3);`
+    const notificationData = [user_id, postUserResult.rows[0].user_id, likeResult.rows[0].like_id];
+
+    const notificatioResult = await pool.query(insertNotificationQuery, notificationData);
 
     res.status(200).json({
       success: true,
       message: "Like created successfully",
-      result: result,
+      // result: result,
     });
   } catch (err) {
     res.status(500).json({
