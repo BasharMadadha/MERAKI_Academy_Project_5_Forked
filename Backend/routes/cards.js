@@ -19,4 +19,5 @@ cardRouter.delete("/:id", deleteCardById);
 cardRouter.post("/buy", authentication, buyCard);
 cardRouter.get('/cardWithId',getCardById)
 
+module.exports = cardRouter;
 

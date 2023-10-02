@@ -27,7 +27,6 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/Admin" element={<Admin />} />
-      </Routes>
         <Route path="/card"element={<CardList />} />
         </Routes>
     </ChakraProvider>
