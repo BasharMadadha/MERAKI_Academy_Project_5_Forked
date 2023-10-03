@@ -20,6 +20,7 @@ import { getUserFriends } from "../redux/frinedSlicer/friends";
 
 const HomePage = () => {
   const userId = useSelector((state) => state.auth.userId);
+  const online = useSelector((state) => state.auth.onlineUsers);
 
   const dispatch = useDispatch();
   dispatch(setToggleProf(false));
@@ -36,12 +37,10 @@ const HomePage = () => {
   };
   const getUserFriend = async () => {
     try {
-      console.log("Before axios request");
 
       const response = await axios.get(
         `http://localhost:5000/userFriends/${userId}`
       );
-      console.log("After axios request", response.data.userFriends);
 
       if (response.status === 200) {
         dispatch(getUserFriends(response.data.userFriends));
@@ -54,6 +53,7 @@ const HomePage = () => {
   useEffect(() => {
     setUser();
     getUserFriend();
+    console.log("22",online);
   }, []);
   return (
     <Box p={4}>

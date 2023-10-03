@@ -26,7 +26,8 @@ import {
 } from "@chakra-ui/react";
 import { TbMoneybag } from "react-icons/Tb";
 import { HiOutlineBell } from "react-icons/Hi";
-
+import io from "socket.io-client";
+const socket = io("http://localhost:5001");
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
@@ -35,6 +36,7 @@ const NavBar = () => {
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const userId = useSelector((state) => state.auth.userId);
   const toggleProf = useSelector((state) => state.auth.toggleProf);
 
   const searchandle = (query) => {
@@ -53,6 +55,9 @@ const NavBar = () => {
   };
 
   const handleLogout = () => {
+    if (userId) {
+      socket.emit("user-logout", userId);
+    }
     dispatch(setLogout());
   };
 
@@ -90,6 +95,9 @@ const NavBar = () => {
                 >
                   <Link className="Link" to="/HomePage">
                     Homepage
+                  </Link>
+                  <Link className="Link" to="/map">
+                    map
                   </Link>
                   <Link
                     to={userInfo.role_id === 2 ? "/Admin" : "/ProfilePage"}

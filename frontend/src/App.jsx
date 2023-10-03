@@ -13,6 +13,8 @@ import Users from "./components/Friends/usres";
 import Shop from "./components/Shop/index"
 import Admin from './components/AdminBoard/index'
 import CardList from './components/Shop/card'
+import Map from './components/Game/map'
+import Game from './components/Game/game'
 function App() {
   return (
     <ChakraProvider>
@@ -29,6 +31,8 @@ function App() {
         <Route path="/Shop" element={<Shop/>} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/card"element={<CardList />} />
+        <Route path='/map' element={<Map/>} />
+        <Route path='/game' element={<Game/>} />
         </Routes>
     </ChakraProvider>
   );

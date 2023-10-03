@@ -10,6 +10,7 @@ const initialState = {
   users: JSON.parse(localStorage.getItem("users")) || null,
   user_id: localStorage.getItem("user_id") || null,
   toggleProf: localStorage.getItem("toggleProf") ? true : false,
+  onlineUsers: JSON.parse(localStorage.getItem("onlineUsers")) || [],
 };
 
 const authSlice = createSlice({
@@ -47,15 +48,22 @@ const authSlice = createSlice({
       state.userId = null;
       state.userInfo = null;
       state.toggleProf = false;
+      state.onlineUsers = [];
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
       localStorage.removeItem("userInfo");
+      localStorage.removeItem("onlineUsers");
     },
     setEmail: (state, action) => {
       state.email = action.payload;
     },
     setPassword: (state, action) => {
       state.password = action.payload;
+    },
+    setOnlineUsers: (state, action) => {
+      state.onlineUsers = action.payload;
+      localStorage.setItem("onlineUsers", JSON.stringify(action.payload)); // Save onlineUsers to local storage
+
     },
   },
 });
@@ -69,6 +77,7 @@ export const {
   setPassword,
   setUserInfo,
   setUser_id,
-  setToggleProf
+  setToggleProf,
+  setOnlineUsers
 } = authSlice.actions;
 export default authSlice.reducer;

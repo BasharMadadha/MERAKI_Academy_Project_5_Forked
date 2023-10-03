@@ -19,14 +19,12 @@ const Users = () => {
   const userId = useSelector((state) => state.auth.userId);
   const users = useSelector((state) => state.auth.users);
   const friends = useSelector((state) => state.friends.friends);
-console.log(users);
   const sendFriendsRequest = async (reqsTo) => {
     try {
       const response = await axios.post(`http://localhost:5000/addFriends`, {
         reqsFrom: userId,
         reqsTo: reqsTo,
       });
-      console.log(response);
       if (response.data.success) {
         console.log(response.data.message);
       }
@@ -42,14 +40,14 @@ console.log(users);
 
   // });
 
-  const filteredUsers = users.filter(
+  const filteredUsers = users?.filter(
     (user) => !friends.some((friend) => friend.friend_id === user.id)
   );
 
   return (
     <div>
       <h1 className="users">
-        {filteredUsers.map((user) => (
+        {filteredUsers?.map((user) => (
           <Center key={user.id} py={6}>
             <Box
               maxW={"270px"}
