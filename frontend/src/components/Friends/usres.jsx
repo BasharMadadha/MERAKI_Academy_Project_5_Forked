@@ -35,12 +35,7 @@ console.log(users);
     }
   };
 
-  // useEffect(() => {
-  //   console.log("fri", friends);
-  //   console.log("users", users);
-  //   console.log("users", filteredUsers);
 
-  // });
 
   const filteredUsers = users?.filter(
     (user) => !friends.some((friend) => friend.friend_id === user.id)

@@ -114,6 +114,15 @@ const NavBar = ({users}) => {
                 </HStack>
               </HStack>
               <>
+
+       <div className="bell" onClick={()=>{alert("notification")}}>
+
+       <HiOutlineBell className="bellicon" />
+        <div className="counter"><span>3</span></div>
+       </div>
+           
+             
+
                 <ul className="navUl">
                   <li>
                     <HiOutlineBell
@@ -123,6 +132,7 @@ const NavBar = ({users}) => {
                     />
                   </li>
                 </ul>
+
 
                 <AsyncTypeahead
                   filterBy={filterBy}
