@@ -5,6 +5,7 @@ import navReducer from "./redux/navSlicer/nav";
 import friendReducer from "./redux/frinedSlicer/friends";
 import notifReducer from "./redux/notifSlicer/notif";
 import cardsReducer  from "./redux/cardSlicer/card";
+import postsReducer from "./redux/postSlicer/post"
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -13,6 +14,7 @@ const store = configureStore({
     friends: friendReducer,
     notif: notifReducer,
     cards: cardsReducer,
+    posts: postsReducer
   },
 });
 

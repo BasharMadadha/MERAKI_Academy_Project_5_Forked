@@ -30,13 +30,14 @@ import { HiOutlineBell } from "react-icons/Hi";
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
-const NavBar = ({ users }) => {
+
+const NavBar = ({ users, getUserByID, getPostsByUser }) => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
   const userInfo = useSelector((state) => state.auth.userInfo);
   const userss = useSelector((state) => state.auth.users);
-
   const userNav = users?.find((user1) => userInfo?.id === user1.id);
   const userNav1 = userss?.find((user1) => userInfo?.id === user1.id);
 
@@ -85,7 +86,6 @@ const NavBar = ({ users }) => {
             <>
               <HStack spacing={8} alignItems={"center"}>
                 <Box>Logo</Box>
-
                 <HStack
                   as={"nav"}
                   spacing={4}
@@ -99,6 +99,8 @@ const NavBar = ({ users }) => {
                     onClick={() => {
                       dispatch(setToggleProf(true));
                       dispatch(setUser_id(userInfo?.id));
+                      getUserByID(userInfo?.id);
+                      getPostsByUser(userInfo?.id);
                     }}
                   >
                     Profile
@@ -128,6 +130,16 @@ const NavBar = ({ users }) => {
                   </div>
                 </div>
 
+                <ul className="navUl">
+                  <li>
+                    <HiOutlineBell
+                      onClick={() => {
+                        alert("notification");
+                      }}
+                    />
+                  </li>
+                </ul>
+
                 <AsyncTypeahead
                   filterBy={filterBy}
                   id="async-example"
@@ -143,9 +155,14 @@ const NavBar = ({ users }) => {
                     <p
                       // to="/ProfilePage"
                       onClick={() => {
-                        dispatch(setToggleProf(true));
-                        dispatch(setUser_id(option.id));
                         navigate("/ProfilePage")
+                        dispatch(setToggleProf(true));
+
+                        dispatch(setUser_id(option?.id));
+                        getUserByID(option?.id);
+                        getPostsByUser(option?.id);
+
+                    
                       }}
                     >
                       <Avatar

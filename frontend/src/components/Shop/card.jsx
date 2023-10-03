@@ -1,48 +1,55 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCards } from "../redux/cardSlicer/card";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
+import Navbar from "../Navbar/index";
 
 const CardList = () => {
-  const dispatch = useDispatch();
-  const cards= useSelector((state) => state.cards.cards);
+  const users = useSelector((state) => state.auth.users);
+  const user = useSelector((state) => state.auth.userInfo);
+  const [cards, setCards] = useState([]);
 
-  useEffect(()=>{
-    getCards()
-    console.log(cards);
-  },[])
+  const userCard = users?.find((user1) => user?.id === user1.id);
+  const userCards = userCard.user_cards;
+
+  useEffect(() => {
+    getCards();
+  }, []);
+
   const getCards = async () => {
-    try {
-      const result = await axios.get("http://localhost:5000/getcard");
-      if (result.data) {
-        console.log(result.data);
-        dispatch(setCards(result.data));
-      }
-    } catch (error) {
-      console.error(error.message);
-    }
+    await axios
+      .get(`http://localhost:5000/card`)
+      .then((res) => {
+        setCards(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
- 
-
   return (
     <div>
-      <h1>All Cards</h1>
-      <ul>
-        {cards?.map((card) => (
-          <li key={card.card_id}>
-            <div>
-              <img src={card.card_image} alt={card.card_name} />
-            </div>
-            <div>
-              <h3>{card.card_name}</h3>
-              <p>{card.card_description}</p>
-              <p>Attack: {card.attack}</p>
-              <p>Archetype: {card.archetype}</p>
-              <p>Price: {card.card_prices}</p>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <Navbar />
+      <div style={{ marginTop: "70px" }}>
+        <h1>My Cards</h1>
+        <ul>
+          {cards?.map(
+            (card) =>
+              userCards?.find((card1) => card.card_id === card1.card_id) && (
+                <li key={card.card_id}>
+                  <div>
+                    <img src={card.card_image} alt={card.card_name} />
+                  </div>
+                  <div>
+                    <h3>{card.card_name}</h3>
+                    <p>{card.card_description}</p>
+                    <p>Attack: {card.attack}</p>
+                    <p>Archetype: {card.archetype}</p>
+                    <p>Price: {card.card_prices}</p>
+                  </div>
+                </li>
+              )
+          )}
+        </ul>
+      </div>
     </div>
   );
 };

@@ -7,6 +7,7 @@ import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import { setUser_id, setToggleProf } from "../redux/authSlicer/auth";
+import { setPosts } from "../redux/postSlicer/post";
 import Comment from "./Comment/comment";
 import Like from "./Like/like";
 import {
@@ -18,9 +19,8 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
 
-const Post = () => {
+const Post = ({getPostsByUser}) => {
   const dispatch = useDispatch();
-  const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState("");
   const [commentUP, setCommentUP] = useState(false);
   const token = useSelector((state) => state.auth.token);
@@ -28,15 +28,14 @@ const Post = () => {
   const users = useSelector((state) => state.auth.users);
   const user_id = useSelector((state) => state.auth.user_id);
   const toggleProf = useSelector((state) => state.auth.toggleProf);
-   console.log(users);
+  const posts = useSelector((state) => state.posts.posts);
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      toggleProf ? getPostsByUser(user_id) : getPosts();
-    }, 1000);
+    toggleProf ? getPostsByUser(user_id) : getPosts();
   }, []);
 
   const getPosts = async () => {
@@ -44,25 +43,14 @@ const Post = () => {
       .get(`http://localhost:5000/posts/`, config)
       .then((res) => {
         const rever = res.data.result;
-        setPosts([...rever].reverse());
+        dispatch(setPosts([...rever].reverse()));
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
-  const getPostsByUser = async (id) => {
-    await axios
-      .get(`http://localhost:5000/posts/search_1/${id}`)
-      .then((res) => {
-        const rever = res.data.result;
-        setPosts([...rever].reverse());
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
+  
   const DeletePost = async (id) => {
     await axios
       .delete(`http://localhost:5000/posts/${id}`)
