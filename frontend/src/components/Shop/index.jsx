@@ -15,11 +15,14 @@ import {
   Input,
   Box,
 } from "@chakra-ui/react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setCards } from "../redux/cardSlicer/card";
 import NavBar from "../Navbar";
+import { useNavigate } from "react-router-dom";
+
 
 const Shope = () => {
-  const [cards, setCards] = useState([]);
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [card, setCard] = useState({
     card_name: "",
@@ -29,11 +32,12 @@ const Shope = () => {
     attack: "",
     card_prices: "",
   });
-
   const [users, setUsers] = useState([]);
+  const cards= useSelector((state) => state.cards.cards);
   const user = useSelector((state) => state.auth.userInfo);
   const token = useSelector((state) => state.auth.token);
-  
+  const navigate = useNavigate();
+
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
@@ -49,7 +53,7 @@ const Shope = () => {
     await axios
       .get(`http://localhost:5000/card`)
       .then((res) => {
-        setCards(res.data);
+        dispatch(setCards(res.data));
       })
       .catch((error) => {
         console.log(error);
@@ -69,9 +73,8 @@ const Shope = () => {
 
   return (
     <div>
-      <NavBar users={users}/>
-      <h1>SHOPE</h1>
-      <Box w="80%" p={4} color="black">
+      <NavBar users={users} />
+      <Box w="80%" p={4} color="black" marginTop="70px">
         {user?.role_id === 2 && (
           <Button
             variant="solid"
@@ -152,7 +155,7 @@ const Shope = () => {
                       card_name: "",
                       card_description: "",
                       card_image: "",
-                      card_prices:"",
+                      card_prices: "",
                       attack: "",
                       archetype: "",
                     });
@@ -183,8 +186,10 @@ const Shope = () => {
             </Button>
           </Stack>
         )}
+        <Button variant="solid" colorScheme="orange" left="100%" onClick={()=>{
+          navigate("/card")
+        }}>My Cards</Button>
       </Box>
-
       {cards.map((card) => {
         return (
           <div

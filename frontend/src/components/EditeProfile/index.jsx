@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { IconButton, Button } from "@chakra-ui/react";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import "./style.css";
+import NavBar from "../Navbar";
 
 const EditePage = () => {
   const [selectedTab, setSelectedTab] = useState("GENERAL");
@@ -64,10 +65,11 @@ const EditePage = () => {
       setLoading(false);
     }, 1000);
   };
-  
+
   const tabs = {
     GENERAL: (
       <div className="tabContent">
+        <NavBar />
         <h2>General Settings</h2>
         <div className="generalOptions">
           <div className="option">
@@ -151,7 +153,6 @@ const EditePage = () => {
           <div className="option">
             <h3>Change User Name</h3>
             <div className="emailChangeForm">
-              
               <Input
                 type="text"
                 placeholder="New User Name"
@@ -165,7 +166,10 @@ const EditePage = () => {
                 placeholder="Confirm New User Name"
                 value={username.confirm_username}
                 onChange={(e) => {
-                  setUsername({ ...username, confirm_username: e.target.value });
+                  setUsername({
+                    ...username,
+                    confirm_username: e.target.value,
+                  });
                 }}
               />
               <Button

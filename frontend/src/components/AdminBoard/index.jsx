@@ -38,7 +38,6 @@ const Admin = () => {
       const response = await axios.put("http://localhost:5000/beAdmin", {
         formData: formData,
       });
-
       return response;
     } catch (err) {
       console.log(err.message);
