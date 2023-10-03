@@ -211,8 +211,8 @@ const Shope = () => {
               <Divider />
               <CardFooter>
                 <ButtonGroup spacing="2">
-                  {userShop?.user_cards.find(
-                    (card1) => card.card_id === card1.card_id
+                  {userShop?.user_cards?.find(
+                    (card1) => card?.card_id === card1.card_id
                   ) ? (
                     <Button variant="solid" colorScheme="red">
                       X

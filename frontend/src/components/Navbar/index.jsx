@@ -30,12 +30,12 @@ import { HiOutlineBell } from "react-icons/Hi";
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
-const NavBar = ({users}) => {
+const NavBar = ({ users }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
   const userInfo = useSelector((state) => state.auth.userInfo);
-   const userss = useSelector((state) => state.auth.users);
+  const userss = useSelector((state) => state.auth.users);
 
   const userNav = users?.find((user1) => userInfo?.id === user1.id);
   const userNav1 = userss?.find((user1) => userInfo?.id === user1.id);
@@ -70,8 +70,10 @@ const NavBar = ({users}) => {
   const nav = useSelector((state) => {
     return state.nav;
   });
+  console.log(nav);
   const filterBy = (option, props) => {
-    return option.username.toLowerCase().includes(props.text.toLowerCase());
+    console.log(option, props);
+    return option.username.toLowerCase();
   };
 
   return (
@@ -109,30 +111,22 @@ const NavBar = ({users}) => {
                         navigate("/Shop");
                       }}
                     />
-                    &nbsp;{userNav?.crypto_amount||userNav1?.crypto_amount}
+                    &nbsp;{userNav?.crypto_amount || userNav1?.crypto_amount}
                   </span>
                 </HStack>
               </HStack>
               <>
-
-       <div className="bell" onClick={()=>{alert("notification")}}>
-
-       <HiOutlineBell className="bellicon" />
-        <div className="counter"><span>3</span></div>
-       </div>
-           
-             
-
-                <ul className="navUl">
-                  <li>
-                    <HiOutlineBell
-                      onClick={() => {
-                        alert("notification");
-                      }}
-                    />
-                  </li>
-                </ul>
-
+                <div
+                  className="bell"
+                  onClick={() => {
+                    alert("notification");
+                  }}
+                >
+                  <HiOutlineBell className="bellicon" />
+                  <div className="counter">
+                    <span>3</span>
+                  </div>
+                </div>
 
                 <AsyncTypeahead
                   filterBy={filterBy}
@@ -142,14 +136,16 @@ const NavBar = ({users}) => {
                   minLength={2}
                   onSearch={searchandle}
                   onChange={selectedHandle}
+                
                   options={nav.usersSearch}
                   placeholder="Search for a user..."
                   renderMenuItemChildren={(option) => (
-                    <Link
-                      to="/ProfilePage"
+                    <p
+                      // to="/ProfilePage"
                       onClick={() => {
                         dispatch(setToggleProf(true));
                         dispatch(setUser_id(option.id));
+                        navigate("/ProfilePage")
                       }}
                     >
                       <Avatar
@@ -162,7 +158,7 @@ const NavBar = ({users}) => {
                         }}
                       />
                       <p>{option.username}</p>
-                    </Link>
+                    </p>
                   )}
                 />
 
