@@ -89,7 +89,9 @@ const login = async (req, res) => {
 
 const getAllUsers = (req, res) => {
   try {
-    const getAllUsers = `SELECT * FROM users`;
+    const getAllUsers = `SELECT users.* ,  
+    (SELECT JSON_AGG(user_cards.*) FROM user_cards WHERE user_cards.user_id = users.id) AS user_cards 
+    FROM users`;
     pool.query(getAllUsers, (error, results) => {
       if (error) throw error;
       res.status(200).json(results.rows);

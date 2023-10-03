@@ -5,29 +5,28 @@ const addcomment = async (req, res) => {
   const user_id = req.token.userId;
   const post_id = req.params.id;
 
+  const insertCommentQuery =
+    "INSERT INTO comments (content, user_id, post_id) VALUES ($1, $2, $3) RETURNING *";
 
-  const insertCommentQuery = 
-  `  INSERT INTO comments (content, user_id, post_id)
-    VALUES ($1, $2, $3)
-    RETURNING *;`
-  ;
-  const insertNotificationQuery = 
-`    INSERT INTO notification (sender_id, receiver_id,comment_id)
-    VALUES ($1,$2, $3);
-  ;`
+  const insertNotificationQuery =
+    "INSERT INTO notification (sender_id, receiver_id, comment_id) VALUES ($1, $2, $3)";
 
-  const postUser = `SELECT user_id FROM posts WHERE post_id = ${post_id}`
-
+  const postUserQuery = "SELECT user_id FROM posts WHERE post_id = $1";
 
   const commentData = [content, user_id, post_id];
 
   try {
-    const postUserResult = await pool.query(postUser);
+
+    const postUserResult = await pool.query(postUserQuery, [post_id]);
+    const postUser = postUserResult.rows[0].user_id;
+
+
     const commentResult = await pool.query(insertCommentQuery, commentData);
-    const notificationData = [user_id, postUserResult.rows[0].user_id, commentResult.rows[0].comment_id];
+
+
+    const notificationData = [user_id, postUser, commentResult.rows[0].comment_id];
     await pool.query(insertNotificationQuery, notificationData);
 
- 
     res.status(200).json({
       success: true,
       message: 'Comment added successfully',

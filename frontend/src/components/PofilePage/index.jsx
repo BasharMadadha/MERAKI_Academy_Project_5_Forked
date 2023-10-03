@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./style.css";
 import Post from "../Post";
+import NavBar from "../Navbar";
 
 const ProfilePage = () => {
   const [userPorfile, setUserPorfile] = useState({});
@@ -27,43 +28,50 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="profile-container">
-      <div className="cover-photo">
-        <img  className="cover" src="https://c4.wallpaperflare.com/wallpaper/753/398/573/digital-art-artwork-sekiro-shadows-die-twice-video-games-video-game-art-hd-wallpaper-preview.jpg" alt="https://c4.wallpaperflare.com/wallpaper/753/398/573/digital-art-artwork-sekiro-shadows-die-twice-video-games-video-game-art-hd-wallpaper-preview.jpg" />
+    <>
+      <NavBar />
+      <div className="profile-container">
+        <div className="cover-photo">
+          <img
+            className="cover"
+            src="https://c4.wallpaperflare.com/wallpaper/753/398/573/digital-art-artwork-sekiro-shadows-die-twice-video-games-video-game-art-hd-wallpaper-preview.jpg"
+            alt="https://c4.wallpaperflare.com/wallpaper/753/398/573/digital-art-artwork-sekiro-shadows-die-twice-video-games-video-game-art-hd-wallpaper-preview.jpg"
+          />
+        </div>
+        <div className="profile-info">
+          <div className="profile-picture">
+            <img src={userPorfile.image} alt="Profile Picture" />
+          </div>
+          <div className="user-details">
+            <h1>{userPorfile.username}</h1>
+            <p>{userPorfile.bio}</p>
+          </div>
+        </div>
+        {userId === userPorfile.id && (
+          <div className="settings-button">
+            <Link to="/EditePage">
+              <button>Settings</button>
+            </Link>
+          </div>
+        )}
+        <div className="user-stats">
+          <div className="stat">
+            <Link to="/Friends">
+              <button>Friends</button>
+            </Link>
+          </div>
+          <div className="stat">
+            <h2>Followers</h2>
+            <p>{userPorfile.followersCount}</p>
+          </div>
+          <div className="stat">
+            <h2>Posts</h2>
+            <p>{userPorfile.postsCount}</p>
+          </div>
+        </div>
+        <Post />
       </div>
-      <div className="profile-info">
-        <div className="profile-picture">
-          <img src={userPorfile.image} alt="Profile Picture" />
-        </div>
-        <div className="user-details">
-          <h1>{userPorfile.username}</h1>
-          <p>{userPorfile.bio}</p>
-        </div>
-      </div>
-      {userId === `${userPorfile.id}` && (
-        <div className="settings-button">
-          <Link to="/EditePage">
-            <button>Settings</button>
-          </Link>
-        </div>
-      )}
-      <div className="user-stats">
-        <div className="stat">
-          <Link to="/Friends">
-            <button>Friends</button>
-          </Link>
-        </div>
-        <div className="stat">
-          <h2>Followers</h2>
-          <p>{userPorfile.followersCount}</p>
-        </div>
-        <div className="stat">
-          <h2>Posts</h2>
-          <p>{userPorfile.postsCount}</p>
-        </div>
-      </div>
-      <Post/>
-    </div>
+    </>
   );
 };
 

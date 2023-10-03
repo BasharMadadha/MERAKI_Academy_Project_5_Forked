@@ -1,3 +1,4 @@
+
 .counter{
     width: 14px;
     height: 14px;
@@ -28,3 +29,16 @@
 .bellicon{
     font-size: 20px;
 }
+
+.navUl li {
+  text-decoration: none;
+}
+
+.nav {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
