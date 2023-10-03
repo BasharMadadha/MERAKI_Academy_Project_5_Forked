@@ -26,7 +26,8 @@ import {
 } from "@chakra-ui/react";
 import { TbMoneybag } from "react-icons/Tb";
 import { HiOutlineBell } from "react-icons/Hi";
-
+import io from "socket.io-client";
+const socket = io("http://localhost:5001");
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
@@ -37,10 +38,11 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const userId = useSelector((state) => state.auth.userId);
+  const toggleProf = useSelector((state) => state.auth.toggleProf);
   const userss = useSelector((state) => state.auth.users);
   const userNav = users?.find((user1) => userInfo?.id === user1.id);
   const userNav1 = userss?.find((user1) => userInfo?.id === user1.id);
-
   const searchandle = (query) => {
     axios
       .get(`http://localhost:5000/user/${query}`)
@@ -57,6 +59,9 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   };
 
   const handleLogout = () => {
+    if (userId) {
+      socket.emit("user-logout", userId);
+    }
     dispatch(setLogout());
   };
 
@@ -93,6 +98,9 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                 >
                   <Link className="Link" to="/HomePage">
                     Homepage
+                  </Link>
+                  <Link className="Link" to="/map">
+                    map
                   </Link>
                   <Link
                     to={"/ProfilePage"}

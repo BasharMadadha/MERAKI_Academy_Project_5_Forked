@@ -20,12 +20,10 @@ import NavBar from "../Navbar";
 
 const HomePage = () => {
   const userId = useSelector((state) => state.auth.userId);
+  const online = useSelector((state) => state.auth.onlineUsers);
   const isLogged = useSelector((state) => state.auth.isLogged);
-
-
   const dispatch = useDispatch();
   dispatch(setToggleProf(false));
-
   const setUserH = async () => {
     try {
       const result = await axios.get("http://localhost:5000/users/getAllUser");
@@ -39,9 +37,11 @@ const HomePage = () => {
 
   const getUserFriend = async () => {
     try {
+
       const response = await axios.get(
         `http://localhost:5000/userFriends/${userId}`
       );
+
       if (response.status === 200) {
         dispatch(getUserFriends(response.data.userFriends));
       }

@@ -25,7 +25,7 @@ const Users = () => {
         reqsFrom: userId,
         reqsTo: reqsTo,
       });
-      // console.log(response);
+
       if (response.data.success) {
         // console.log(response.data.message);
       }

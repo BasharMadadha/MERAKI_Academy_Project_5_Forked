@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setLogin,
@@ -6,6 +6,7 @@ import {
   setEmail,
   setPassword,
   setUserInfo,
+  setOnlineUsers,
 } from "../redux/authSlicer/auth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -20,16 +21,29 @@ import {
   Text,
   Link,
 } from "@chakra-ui/react";
-
+import io from "socket.io-client";
+const socket = io("http://localhost:5001");
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const emailFromStore = useSelector((state) => state.auth.email);
   const passwordFromStore = useSelector((state) => state.auth.password);
   const isLogged = useSelector((state) => state.auth.isLogged);
-  console.log("123", isLogged);
+  const userId = useSelector((state) => state.auth.userId);
+  const online = useSelector((state) => state.auth.onlineUsers);
+  console.log("123", userId);
   const [email, setEmailState] = useState(emailFromStore);
   const [password, setPasswordState] = useState(passwordFromStore);
+
+  useEffect(() => {
+    socket.on("online-users", (users) => {
+      dispatch(setOnlineUsers(users)); 
+      console.log("online", users);
+    });
+    return()=>{
+      socket.off("online-users")
+     }
+  }, [])
 
   const login = async (e) => {
     e.preventDefault();
@@ -45,6 +59,8 @@ const Login = () => {
         dispatch(setUserId(result.data.userId));
         dispatch(setUserInfo(result.data.user));
         navigate("/Homepage");
+        const loggedInUserId = result.data.userId;
+        socket.emit("user-login", loggedInUserId);
         setUser();
       } else {
         throw new Error("Login failed");
@@ -53,7 +69,6 @@ const Login = () => {
       console.error("Login error:", error.message);
     }
   };
-
 
   const handleEmailChange = (e) => {
     setEmailState(e.target.value);

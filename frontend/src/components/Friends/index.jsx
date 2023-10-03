@@ -35,12 +35,10 @@ const Friends = () => {
   const getUserFriend = async () => {
     try {
       // console.log("Before axios request");
-
       const response = await axios.get(
         `http://localhost:5000/userFriends/${userId}`
       );
       // console.log("After axios request", response.data.userFriends);
-
       if (response.status === 200) {
         dispatch(getUserFriends(response.data.userFriends));
       }
