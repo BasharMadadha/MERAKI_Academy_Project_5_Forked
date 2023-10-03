@@ -30,7 +30,9 @@ import { HiOutlineBell } from "react-icons/Hi";
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
+
 const NavBar = ({ users, getUserByID, getPostsByUser }) => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
@@ -69,8 +71,10 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   const nav = useSelector((state) => {
     return state.nav;
   });
+  console.log(nav);
   const filterBy = (option, props) => {
-    return option.username.toLowerCase().includes(props.text.toLowerCase());
+    console.log(option, props);
+    return option.username.toLowerCase();
   };
 
   return (
@@ -125,6 +129,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                     <span>3</span>
                   </div>
                 </div>
+
                 <ul className="navUl">
                   <li>
                     <HiOutlineBell
@@ -134,6 +139,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                     />
                   </li>
                 </ul>
+
                 <AsyncTypeahead
                   filterBy={filterBy}
                   id="async-example"
@@ -142,17 +148,21 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   minLength={2}
                   onSearch={searchandle}
                   onChange={selectedHandle}
+                
                   options={nav.usersSearch}
                   placeholder="Search for a user..."
                   renderMenuItemChildren={(option) => (
-                    <Link
-                      to="/ProfilePage"
+                    <p
+                      // to="/ProfilePage"
                       onClick={() => {
                         navigate("/ProfilePage")
                         dispatch(setToggleProf(true));
+
                         dispatch(setUser_id(option?.id));
                         getUserByID(option?.id);
                         getPostsByUser(option?.id);
+
+                    
                       }}
                     >
                       <Avatar
@@ -165,7 +175,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                         }}
                       />
                       <p>{option.username}</p>
-                    </Link>
+                    </p>
                   )}
                 />
 

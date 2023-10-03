@@ -18,9 +18,9 @@ function App() {
     <ChakraProvider>
       <Routes>
         <Route path="/sidebar" element={<SideBar />} />
-        <Route path="/" element={<Register />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/HomePage" element={<HomePage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/ProfilePage" element={<ProfilePage />} />
         <Route path="/EditePage" element={<EditePage />} />
         <Route path="/Friends" element={<Friends />} />
