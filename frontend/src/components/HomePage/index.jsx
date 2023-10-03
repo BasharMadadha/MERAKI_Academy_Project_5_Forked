@@ -13,19 +13,18 @@ import {
   Flex,
   Grid,
   GridItem,
-
 } from "@chakra-ui/react";
 import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
 import { getUserFriends } from "../redux/frinedSlicer/friends";
+import NavBar from "../Navbar";
 
 const HomePage = () => {
   const userId = useSelector((state) => state.auth.userId);
   const online = useSelector((state) => state.auth.onlineUsers);
-
+  const isLogged = useSelector((state) => state.auth.isLogged);
   const dispatch = useDispatch();
   dispatch(setToggleProf(false));
-
-  const setUser = async () => {
+  const setUserH = async () => {
     try {
       const result = await axios.get("http://localhost:5000/users/getAllUser");
       if (result.data) {
@@ -35,6 +34,7 @@ const HomePage = () => {
       console.error(error.message);
     }
   };
+
   const getUserFriend = async () => {
     try {
 
@@ -51,34 +51,40 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    setUser();
+    setUserH();
     getUserFriend();
-    console.log("22",online);
+    if (!isLogged) {
+      navigate("/login");
+    }
   }, []);
+
   return (
-    <Box p={4}>
-      <Heading as="h1" mb={4}>
-        Home Page
-      </Heading>
-      <GridItem colSpan={1} >
-            <AddPost />
-          </GridItem>
-      <Container maxW="100%">
-        <Grid
-          h="200px"
-          templateRows="repeat(2, 1fr)"
-          templateColumns="repeat(5, 1fr)"
-          gap={4}
-        >
-          <GridItem rowSpan={2} colSpan={1}>
-            <Users userId={userId} />
-          </GridItem>
-          <GridItem colSpan={4} >
-            <Post />
-          </GridItem>
-        </Grid>
-      </Container>
-    </Box>
+    <>
+    <NavBar />
+      <Box p={4}>
+        <Heading as="h1" mb={4}>
+          Home Page
+        </Heading>
+        <GridItem colSpan={1}>
+          <AddPost />
+        </GridItem>
+        <Container maxW="100%">
+          <Grid
+            h="200px"
+            templateRows="repeat(2, 1fr)"
+            templateColumns="repeat(5, 1fr)"
+            gap={4}
+          >
+            <GridItem rowSpan={2} colSpan={1}>
+              <Users userId={userId} />
+            </GridItem>
+            <GridItem colSpan={4}>
+              <Post />
+            </GridItem>
+          </Grid>
+        </Container>
+      </Box>
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ import { setLogout, setUser_id, setToggleProf } from "../redux/authSlicer/auth";
 import { setUsersSearch } from "../redux/navSlicer/nav";
 import { useNavigate } from "react-router-dom";
 import { Typeahead, withAsync } from "react-bootstrap-typeahead";
-import SideBar from "../SideBar";
+// import SideBar from "../SideBar";
 import {
   Box,
   Flex,
@@ -31,14 +31,18 @@ const socket = io("http://localhost:5001");
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
-const NavBar = () => {
+
+const NavBar = ({ users, getUserByID, getPostsByUser }) => {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
   const userInfo = useSelector((state) => state.auth.userInfo);
   const userId = useSelector((state) => state.auth.userId);
   const toggleProf = useSelector((state) => state.auth.toggleProf);
-
+  const userss = useSelector((state) => state.auth.users);
+  const userNav = users?.find((user1) => userInfo?.id === user1.id);
+  const userNav1 = userss?.find((user1) => userInfo?.id === user1.id);
   const searchandle = (query) => {
     axios
       .get(`http://localhost:5000/user/${query}`)
@@ -72,22 +76,21 @@ const NavBar = () => {
   const nav = useSelector((state) => {
     return state.nav;
   });
+  console.log(nav);
   const filterBy = (option, props) => {
-    return option.username.toLowerCase().includes(props.text.toLowerCase());
+    console.log(option, props);
+    return option.username.toLowerCase();
   };
 
   return (
-    <>
-    
+    <div className="nav">
       {/* <SideBar /> */}
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width={"100%"}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           {isLogged ? (
             <>
-              
               <HStack spacing={8} alignItems={"center"}>
                 <Box>Logo</Box>
-
                 <HStack
                   as={"nav"}
                   spacing={4}
@@ -100,27 +103,51 @@ const NavBar = () => {
                     map
                   </Link>
                   <Link
-                    to={userInfo.role_id === 2 ? "/Admin" : "/ProfilePage"}
+                    to={"/ProfilePage"}
                     onClick={() => {
                       dispatch(setToggleProf(true));
-                      dispatch(setUser_id(userInfo.id));
+                      dispatch(setUser_id(userInfo?.id));
+                      getUserByID(userInfo?.id);
+                      getPostsByUser(userInfo?.id);
                     }}
                   >
                     Profile
                   </Link>
+                  {userInfo?.role_id === 2 && <Link to={"/Admin"}>Admin</Link>}
+                  <Link to={"/Shop"}>Shop</Link>
                   <span>
-                    <TbMoneybag onClick={()=>{navigate("/Shop")}}/>
-                    &nbsp;{userInfo.crypto_amount}
+                    <TbMoneybag
+                      onClick={() => {
+                        navigate("/Shop");
+                      }}
+                    />
+                    &nbsp;{userNav?.crypto_amount || userNav1?.crypto_amount}
                   </span>
                 </HStack>
               </HStack>
               <>
-              <ul className="navUl">
-                <li>
-                   <HiOutlineBell onClick={()=>{alert("notification")}}/>
-                </li>
-              </ul>
-             
+                <div
+                  className="bell"
+                  onClick={() => {
+                    alert("notification");
+                  }}
+                >
+                  <HiOutlineBell className="bellicon" />
+                  <div className="counter">
+                    <span>3</span>
+                  </div>
+                </div>
+
+                <ul className="navUl">
+                  <li>
+                    <HiOutlineBell
+                      onClick={() => {
+                        alert("notification");
+                      }}
+                    />
+                  </li>
+                </ul>
+
                 <AsyncTypeahead
                   filterBy={filterBy}
                   id="async-example"
@@ -129,14 +156,21 @@ const NavBar = () => {
                   minLength={2}
                   onSearch={searchandle}
                   onChange={selectedHandle}
+                
                   options={nav.usersSearch}
                   placeholder="Search for a user..."
                   renderMenuItemChildren={(option) => (
-                    <Link
-                      to="/ProfilePage"
+                    <p
+                      // to="/ProfilePage"
                       onClick={() => {
+                        navigate("/ProfilePage")
                         dispatch(setToggleProf(true));
-                        dispatch(setUser_id(option.id));
+
+                        dispatch(setUser_id(option?.id));
+                        getUserByID(option?.id);
+                        getPostsByUser(option?.id);
+
+                    
                       }}
                     >
                       <Avatar
@@ -149,7 +183,7 @@ const NavBar = () => {
                         }}
                       />
                       <p>{option.username}</p>
-                    </Link>
+                    </p>
                   )}
                 />
 
@@ -168,7 +202,7 @@ const NavBar = () => {
           )}
         </Flex>
       </Box>
-    </>
+    </div>
   );
 };
 

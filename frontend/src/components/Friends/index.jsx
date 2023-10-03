@@ -24,19 +24,21 @@ const Friends = () => {
 
   useEffect(() => {
     friendsRequest();
+    // console.log("req", pendingRequests);
   }, [userId]);
 
   useEffect(() => {
     getUserFriend();
+    // console.log("friend", friends);
   }, [dispatch, userId]);
 
   const getUserFriend = async () => {
     try {
-
+      // console.log("Before axios request");
       const response = await axios.get(
         `http://localhost:5000/userFriends/${userId}`
       );
-
+      // console.log("After axios request", response.data.userFriends);
       if (response.status === 200) {
         dispatch(getUserFriends(response.data.userFriends));
       }
@@ -50,6 +52,7 @@ const Friends = () => {
       const response = await axios.get(
         `http://localhost:5000/userRequest/${userId}`
       );
+      // console.log("req1", response);
       if (response.status === 200) {
         setPendingRequests(response.data.requests);
       }
@@ -57,6 +60,7 @@ const Friends = () => {
       console.log(error.message);
     }
   };
+  
   const removeFriend = async (friendId) => {
     try {
       const response = await axios.delete(

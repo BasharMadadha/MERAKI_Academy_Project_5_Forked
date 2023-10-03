@@ -35,8 +35,8 @@ const authSlice = createSlice({
       localStorage.setItem("users", JSON.stringify(action.payload));
     },
     setUser_id: (state, action) => {
-      state.user_id = action.payload;
-      localStorage.setItem("user_id", action.payload);
+      state.user_id = action.payload.toString();
+      localStorage.setItem("user_id", action.payload.toString());
     },
     setToggleProf: (state, action) => {
       state.toggleProf = action.payload;

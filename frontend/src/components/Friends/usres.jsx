@@ -25,20 +25,16 @@ const Users = () => {
         reqsFrom: userId,
         reqsTo: reqsTo,
       });
+
       if (response.data.success) {
-        console.log(response.data.message);
+        // console.log(response.data.message);
       }
     } catch (error) {
       console.log(error.message);
     }
   };
 
-  // useEffect(() => {
-  //   console.log("fri", friends);
-  //   console.log("users", users);
-  //   console.log("users", filteredUsers);
 
-  // });
 
   const filteredUsers = users?.filter(
     (user) => !friends.some((friend) => friend.friend_id === user.id)
