@@ -1,4 +1,30 @@
-.navUl li{
-    text-decoration: none;
+.counter{
+    width: 14px;
+    height: 14px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 11px;
+    left: 10px;
+}
+.counter span{
+   
+    border-radius: 50%;
+    color: white;
+    font-size: 10px;
+    position: relative;
+    left: 4.4px;
+    bottom: 7.5px;
+}
 
+
+
+.bell{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+}
+.bellicon{
+    font-size: 20px;
 }

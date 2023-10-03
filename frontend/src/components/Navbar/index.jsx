@@ -107,11 +107,12 @@ const NavBar = () => {
                 </HStack>
               </HStack>
               <>
-              <ul className="navUl">
-                <li>
-                   <HiOutlineBell onClick={()=>{alert("notification")}}/>
-                </li>
-              </ul>
+       <div className="bell" onClick={()=>{alert("notification")}}>
+
+       <HiOutlineBell className="bellicon" />
+        <div className="counter"><span>3</span></div>
+       </div>
+           
              
                 <AsyncTypeahead
                   filterBy={filterBy}
