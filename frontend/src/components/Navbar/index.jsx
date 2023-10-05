@@ -33,7 +33,7 @@ const AsyncTypeahead = withAsync(Typeahead);
 
 
 const NavBar = ({ users, getUserByID, getPostsByUser }) => {
-
+  const [notification, setNotification] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
@@ -76,14 +76,33 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   const nav = useSelector((state) => {
     return state.nav;
   });
-  console.log(nav);
+
   const filterBy = (option, props) => {
     console.log(option, props);
     return option.username.toLowerCase();
   };
 
+
+  const getnotification = ()=>{
+    axios
+      .get(`http://localhost:5000/notif`)
+      .then((response) => {
+        setNotification(response.data.result)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // const test  = notification.map((elem,i)=>{
+  //     console.log(elem);
+  // })
+  
   return (
+  
     <div className="nav">
+
+      
       {/* <SideBar /> */}
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width={"100%"}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
@@ -126,18 +145,24 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                 </HStack>
               </HStack>
               <>
-                <div
-                  className="bell"
-                  onClick={() => {
-                    alert("notification");
-                  }}
-                >
+
+
+
+            <Menu>
+                <MenuButton onClick={getnotification} as={Button}>
+                <div className="bell">
                   <HiOutlineBell className="bellicon" />
                   <div className="counter">
                     <span>3</span>
                   </div>
                 </div>
-
+                </MenuButton>
+                <MenuList>
+                  <p>notification</p>
+                </MenuList>
+            </Menu>
+            
+{/* 
                 <ul className="navUl">
                   <li>
                     <HiOutlineBell
@@ -146,7 +171,12 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                       }}
                     />
                   </li>
-                </ul>
+                </ul> */}
+
+
+
+
+
 
                 <AsyncTypeahead
                   filterBy={filterBy}
@@ -165,12 +195,9 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                       onClick={() => {
                         navigate("/ProfilePage")
                         dispatch(setToggleProf(true));
-
                         dispatch(setUser_id(option?.id));
                         getUserByID(option?.id);
                         getPostsByUser(option?.id);
-
-                    
                       }}
                     >
                       <Avatar

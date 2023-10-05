@@ -1,5 +1,6 @@
 const { pool } = require("../models/db");
 
+// join,tabels/ user
 const addcomment = async (req, res) => {
   const { content } = req.body;
   const user_id = req.token.userId;

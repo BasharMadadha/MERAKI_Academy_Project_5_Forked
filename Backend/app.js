@@ -133,12 +133,23 @@ io.on("connection", (socket) => {
       selectedCards.clear();
     }
   };
+/*
+Adel is testing
 
+
+
+
+
+*/
   // Handle disconnection
   socket.on("disconnect", () => {
+
     console.log("A user disconnected");
   });
 });
+
+
+
 
 const allowedOrigins = ["http://localhost:5173"];
 const corsOptions = {
