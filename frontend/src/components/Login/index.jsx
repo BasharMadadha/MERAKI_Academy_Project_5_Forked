@@ -40,9 +40,7 @@ const Login = () => {
       dispatch(setOnlineUsers(users)); 
       console.log("online", users);
     });
-    return()=>{
-      socket.off("online-users")
-     }
+   
   }, [])
 
   const login = async (e) => {
@@ -58,9 +56,11 @@ const Login = () => {
         dispatch(setLogin(result.data.token));
         dispatch(setUserId(result.data.userId));
         dispatch(setUserInfo(result.data.user));
-        navigate("/Homepage");
         const loggedInUserId = result.data.userId;
+       
+        console.log(loggedInUserId);
         socket.emit("user-login", loggedInUserId);
+        navigate("/Homepage");
         setUser();
       } else {
         throw new Error("Login failed");

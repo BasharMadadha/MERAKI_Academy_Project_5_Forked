@@ -62,7 +62,7 @@ const authSlice = createSlice({
     },
     setOnlineUsers: (state, action) => {
       state.onlineUsers = action.payload;
-      localStorage.setItem("onlineUsers", JSON.stringify(action.payload)); // Save onlineUsers to local storage
+      localStorage.setItem("onlineUsers", JSON.stringify(action.payload)); 
 
     },
   },

@@ -15,6 +15,7 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { useColorModeValue } from "@chakra-ui/react";
+import GameNavbar from "./onlineUser";
 
 const socket = io("http://localhost:5001");
 
@@ -37,17 +38,15 @@ const Map = () => {
         console.log("test for to ");
       }
     });
-    socket.on("game-start", (connectedPlayers) => {
-      console.log("players-ready to fight ",connectedPlayers);
-      // setConnectedPlayers(connectedPlayers);
-      console.log("test2312312312 ");
+    socket.on("game-start", (roomIdInput) => {
+      console.log("players-ready to fight ", roomIdInput);
+      console.log("test", roomIdInput);
       navigate("/game");
     });
-  
+
     return () => {
       socket.off("room-invite");
       socket.off("game-start");
-
     };
   }, [roomIdInput]);
 
@@ -93,6 +92,7 @@ const Map = () => {
       backgroundColor={bgColor}
       color={textColor}
     >
+      <GameNavbar />
       <List>
         {otherOnlineUsers?.map((selectedUserId) => {
           const user = getUserInfo(selectedUserId);
@@ -104,27 +104,19 @@ const Map = () => {
               mb={2}
               borderRadius="md"
               color="black"
-              backgroundColor="white"
-              boxSize="140px"
+              boxSize="100px"
+              onClick={() => handleSelectUser(selectedUserId)} // Make the whole ListItem clickable
+              style={{ cursor: "pointer" }} // Add a pointer cursor on hover
             >
-              <Avatar src={user?.image} alt={user?.username} mr={2} />
-              <VStack align="start">
-                <Text fontWeight="bold">{user?.username}</Text>
-                {selectedUserId !== userId && (
-                  <Button
-                    onClick={() => handleSelectUser(selectedUserId)}
-                    colorScheme="teal"
-                    size="sm"
-                  >
-                    Select
-                  </Button>
-                )}
+             
+              <VStack  alignItems='center'>
+              <Avatar src={user?.image} alt={user?.username} size='xl' />
+                
               </VStack>
             </ListItem>
           );
         })}
       </List>
-
       {roomInvite && (
         <Box mt={4}>
           <Button onClick={handleJoinRoom}>Join Room</Button>

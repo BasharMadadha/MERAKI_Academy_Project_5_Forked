@@ -89,7 +89,7 @@ const ProfilePage = () => {
             <p>{userPorfile.postsCount}</p>
           </div>
         </div>
-        <Post getPostsByUser={getPostsByUser}/>
+        <Post getPostsByUser={getPostsByUser} />
       </div>
     </>
   );
