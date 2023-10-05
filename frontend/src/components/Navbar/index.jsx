@@ -31,9 +31,7 @@ const socket = io("http://localhost:5001");
 import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
-
 const NavBar = ({ users, getUserByID, getPostsByUser }) => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
@@ -55,7 +53,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   };
 
   const selectedHandle = (option) => {
-    console.log(option);
+    // console.log(option);
   };
 
   const handleLogout = () => {
@@ -67,7 +65,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
 
   useEffect(() => {
     if (!isLogged) {
-      navigate("/login");
+      navigate("/");
     }
   }, [isLogged]);
 
@@ -76,9 +74,9 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   const nav = useSelector((state) => {
     return state.nav;
   });
-  console.log(nav);
+  // console.log(nav);
   const filterBy = (option, props) => {
-    console.log(option, props);
+    // console.log(option, props);
     return option.username.toLowerCase();
   };
 
@@ -96,7 +94,13 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   spacing={4}
                   display={{ base: "none", md: "flex" }}
                 >
-                  <Link className="Link" to="/HomePage">
+                  <Link
+                    className="Link"
+                    to="/HomePage"
+                    onClick={() => {
+                      dispatch(setToggleProf(false));
+                    }}
+                  >
                     Homepage
                   </Link>
                   <Link className="Link" to="/map">
@@ -156,21 +160,21 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   minLength={2}
                   onSearch={searchandle}
                   onChange={selectedHandle}
-                
                   options={nav.usersSearch}
                   placeholder="Search for a user..."
                   renderMenuItemChildren={(option) => (
                     <p
-                      // to="/ProfilePage"
                       onClick={() => {
-                        navigate("/ProfilePage")
-                        dispatch(setToggleProf(true));
-
-                        dispatch(setUser_id(option?.id));
-                        getUserByID(option?.id);
-                        getPostsByUser(option?.id);
-
-                    
+                        if (toggleProf === true) {
+                          navigate("/ProfilePage");
+                          dispatch(setToggleProf(true));
+                          dispatch(setUser_id(option?.id));
+                          getUserByID(option?.id), getPostsByUser(option?.id);
+                        } else {
+                          navigate("/ProfilePage");
+                          dispatch(setToggleProf(true));
+                          dispatch(setUser_id(option?.id));
+                        }
                       }}
                     >
                       <Avatar
@@ -194,10 +198,10 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
             </>
           ) : (
             <>
-              <Link className="Link" to="/">
+              <Link className="Link" to="/register">
                 Register
               </Link>
-              <Link to="/login">Login</Link>
+              <Link to="/">Login</Link>
             </>
           )}
         </Flex>
