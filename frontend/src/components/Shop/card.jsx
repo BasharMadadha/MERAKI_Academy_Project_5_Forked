@@ -17,7 +17,7 @@ const CardList = () => {
 
   const getCards = async () => {
     await axios
-      .get(`http://localhost:5000/card`)
+      .get("http://localhost:5000/card")
       .then((res) => {
         setCards(res.data);
       })

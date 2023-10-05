@@ -14,10 +14,12 @@ import Admin from "./components/AdminBoard/index";
 import CardList from './components/Shop/card'
 import Map from './components/Game/map'
 import Game from './components/Game/game'
+import GameNavbar from './components/Game/onlineUser'
 function App() {
   return (
     <ChakraProvider>
       <Routes>
+        
         <Route path="/sidebar" element={<SideBar />} />
         <Route path="/register" element={<Register />} />
         <Route path="/HomePage" element={<HomePage />} />
@@ -31,6 +33,7 @@ function App() {
         <Route path="/card"element={<CardList />} />
         <Route path='/map' element={<Map/>} />
         <Route path='/game' element={<Game/>} />
+        <Route path='/GameNavbar' element={<GameNavbar/>} />
         </Routes>
     </ChakraProvider>
   );

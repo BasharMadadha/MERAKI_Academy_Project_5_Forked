@@ -1,6 +1,5 @@
 const { pool } = require("../models/db");
 
-
 const addCardsFromApi = (req, res) => {
   const api_url =
     "https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=Blue-Eyes";
@@ -94,13 +93,15 @@ const addCard = (req, res) => {
     });
 };
 
-const getAllCards = (req, res) => {
+const getAllCards = async (req, res) => {
   try {
-    const getAllCards = `SELECT * FROM app_cards`;
-    pool.query(getAllCards, (error, results) => {
-      if (error) throw error;
-      res.status(200).json(results.rows);
-    });
+    const response = await pool.query(`SELECT * FROM app_cards`);
+
+    if (response) {
+      res.status(200).json(response.rows);
+    } else {
+      console.log("err", err.message);
+    }
   } catch (err) {
     console.error(err.message);
     res.status(500).json(err);
@@ -163,7 +164,6 @@ const buyCard = async (req, res) => {
     await pool.query("BEGIN");
 
     if (userCryptoAmount >= cardPrice) {
-
       await pool.query(
         "UPDATE users SET crypto_amount = crypto_amount - $1 WHERE id = $2",
         [cardPrice, user_id]
@@ -178,7 +178,6 @@ const buyCard = async (req, res) => {
 
       res.status(200).json({ message: "Card purchased successfully" });
     } else {
-
       await pool.query("ROLLBACK");
       res
         .status(400)
@@ -190,23 +189,25 @@ const buyCard = async (req, res) => {
   }
 };
 
- const getCardById = async (req, res) => {
-    const cardId = req.params.id;
-  
-    try {
-      const { rows } = await pool.query('SELECT * FROM app_cards WHERE card_id = $1', [cardId]);
-  
-      if (rows.length === 0) {
-        res.status(404).json({ error: 'Card not found' });
-      } else {
-        res.json(rows[0]);
-      }
-    } catch (error) {
-        console.error(error.message);
-              res.status(500).json({ error: 'Internal server error' });
-    }
-  };
+const getCardById = async (req, res) => {
+  const cardId = req.params.id;
 
+  try {
+    const { rows } = await pool.query(
+      "SELECT * FROM app_cards WHERE card_id = $1",
+      [cardId]
+    );
+
+    if (rows.length === 0) {
+      res.status(404).json({ error: "Card not found" });
+    } else {
+      res.json(rows[0]);
+    }
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 module.exports = {
   addCardsFromApi,
@@ -214,14 +215,5 @@ module.exports = {
   deleteCardById,
   addCard,
   getCardById,
-  buyCard
+  buyCard,
 };
-
-
-  
- 
-
-
-
-
-

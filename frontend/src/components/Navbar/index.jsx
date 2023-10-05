@@ -74,7 +74,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   const nav = useSelector((state) => {
     return state.nav;
   });
-  // console.log(nav);
+  
   const filterBy = (option, props) => {
     // console.log(option, props);
     return option.username.toLowerCase();

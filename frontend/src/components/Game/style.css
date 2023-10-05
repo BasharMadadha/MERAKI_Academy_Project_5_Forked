@@ -1,0 +1,20 @@
+
+.wrapper {
+  display: flex;
+	flex-direction: row;
+	justify-content: center;
+  align-items: flex-start;
+ 
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 200px;
+  height: 60px;
+  border-radius: 20px;
+  background-color: white;
+  box-shadow: 0 0 30px rgba(176, 113, 140, 0.35);
+}
