@@ -17,6 +17,7 @@ import {
 import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
 import { getUserFriends } from "../redux/frinedSlicer/friends";
 import NavBar from "../Navbar";
+import { setCards } from "../redux/cardSlicer/card";
 
 const HomePage = () => {
   const userId = useSelector((state) => state.auth.userId);
@@ -37,7 +38,6 @@ const HomePage = () => {
 
   const getUserFriend = async () => {
     try {
-
       const response = await axios.get(
         `http://localhost:5000/userFriends/${userId}`
       );
@@ -49,9 +49,22 @@ const HomePage = () => {
       console.log(error.message);
     }
   };
+  
+  const getCards = async () => {
+    await axios
+      .get(`http://localhost:5000/card`)
+      .then((res) => {
+        dispatch(setCards(res.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   useEffect(() => {
     setUserH();
+    getCards()
     getUserFriend();
     if (!isLogged) {
       navigate("/login");
@@ -60,7 +73,7 @@ const HomePage = () => {
 
   return (
     <>
-    <NavBar />
+      <NavBar />
       <Box p={4}>
         <Heading as="h1" mb={4}>
           Home Page
