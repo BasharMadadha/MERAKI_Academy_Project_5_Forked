@@ -11,16 +11,15 @@ const {
 const authentication = require("../middleware/authentication");
 const authorization = require("../middleware/authorization");
 
-
 const postsRouter = express.Router();
 
-postsRouter.get("/",authentication, getAllPosts);
+postsRouter.get("/", authentication, getAllPosts);
 
 postsRouter.get("/search_1/:id", getPostsByUser);
 
 postsRouter.get("/search_2/:id", getPostById);
 
-postsRouter.post("/",authentication, createNewPost);
+postsRouter.post("/", authentication, createNewPost);
 postsRouter.put("/:id", updatePostById);
 
 postsRouter.delete("/:id/user", deletePostByUser);

@@ -20,7 +20,6 @@ import { setCards } from "../redux/cardSlicer/card";
 import NavBar from "../Navbar";
 import { useNavigate } from "react-router-dom";
 
-
 const Shope = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
@@ -33,8 +32,10 @@ const Shope = () => {
     card_prices: "",
   });
   const [users, setUsers] = useState([]);
-  const cards= useSelector((state) => state.cards.cards);
+  const cards = useSelector((state) => state.cards.cards);
   const user = useSelector((state) => state.auth.userInfo);
+  const userId = useSelector((state) => state.auth.userId);
+
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
@@ -58,9 +59,22 @@ const Shope = () => {
       .catch((error) => {
         console.log(error);
       });
-  };
+  }; 
+  const buyCommenCard = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/card/getRandomCards", {
+        lootPrice:500,
+        userId
+      });
+
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+
+  }
 
   const setUser = async () => {
+   
     try {
       const result = await axios.get("http://localhost:5000/users/getAllUser");
       if (result.data) {
@@ -73,202 +87,43 @@ const Shope = () => {
 
   return (
     <div>
-      <NavBar users={users} />
-      <Box w="80%" p={4} color="black" marginTop="70px">
-        {user?.role_id === 2 && (
-          <Button
-            variant="solid"
-            colorScheme="blue"
-            onClick={() => {
-              setShow((prv) => !prv);
-            }}
-          >
-            Add Cards
-          </Button>
-        )}
-        {show && (
-          <Stack spacing={3}>
-            <Input
-              variant="filled"
-              placeholder="Card Name"
-              value={card.card_name}
-              onChange={(e) => {
-                setCard({ ...card, card_name: e.target.value });
-              }}
-            />
-            <Input
-              variant="filled"
-              placeholder="Card Desc"
-              value={card.card_description}
-              onChange={(e) => {
-                setCard({ ...card, card_description: e.target.value });
-              }}
-            />
-            <Input
-              variant="filled"
-              placeholder="Card Image"
-              value={card.card_image}
-              onChange={(e) => {
-                setCard({ ...card, card_image: e.target.value });
-              }}
-            />
-            <Input
-              variant="filled"
-              placeholder="Card Archetype"
-              value={card.archetype}
-              onChange={(e) => {
-                setCard({ ...card, archetype: e.target.value });
-              }}
-            />
-            <Input
-              variant="filled"
-              placeholder="Card Attack"
-              value={card.attack}
-              onChange={(e) => {
-                setCard({ ...card, attack: e.target.value });
-              }}
-            />
-            <Input
-              variant="filled"
-              placeholder="Card Prices"
-              value={card.card_prices}
-              onChange={(e) => {
-                setCard({ ...card, card_prices: e.target.value });
-              }}
-            />
-            <Button
-              variant="solid"
-              colorScheme="blue"
-              onClick={() => {
-                axios
-                  .post("http://localhost:5000/card", {
-                    card_name: card.card_name,
-                    card_description: card.card_description,
-                    card_image: card.card_image,
-                    card_prices: card.card_prices,
-                    archetype: card.archetype,
-                    attack: card.attack,
-                  })
-                  .then((result) => {
-                    setCard({
-                      ...card,
-                      card_name: "",
-                      card_description: "",
-                      card_image: "",
-                      card_prices: "",
-                      attack: "",
-                      archetype: "",
-                    });
-                    <>
-                      {Swal.fire({
-                        position: "top",
-                        icon: "success",
-                        title: result.data.message,
-                        showConfirmButton: false,
-                        timer: 1500,
-                      })}
-                    </>;
-                  })
-                  .catch((error) => {
-                    <>
-                      {Swal.fire({
-                        position: "top",
-                        icon: "warning",
-                        title: "Password Not Match",
-                        showConfirmButton: false,
-                        timer: 1500,
-                      })}
-                    </>;
-                  });
-              }}
-            >
-              Add Card
-            </Button>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100vh" // You can adjust the height as needed
+      >
+        <Card
+          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          variant="outline"
+          maxW="800px" // Adjust the max width as needed
+        >
+          <Image
+            objectFit="cover"
+            maxW={{ base: "100%", sm: "200px" }}
+            src="http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696741224/dr9kfazuluihrft4zb1f.png"
+          />
+
+          <Stack>
+            <CardBody>
+              <Heading size="md">commen cards</Heading>
+
+              <Text py="2">
+                *****************************************************
+              </Text>
+            </CardBody>
+
+            <CardFooter>
+              <Button
+              onClick={() => buyCommenCard()}
+               variant="solid" colorScheme="blue">
+                Buy "500"
+              </Button>
+            </CardFooter>
           </Stack>
-        )}
-        <Button variant="solid" colorScheme="orange" left="100%" onClick={()=>{
-          navigate("/card")
-        }}>My Cards</Button>
+        </Card>
       </Box>
-      {cards.map((card) => {
-        return (
-          <div
-            key={card.card_id}
-            style={{ display: "-webkit-inline-flex", margin: "20px" }}
-          >
-            <Card maxW="sm">
-              <CardBody>
-                <Image
-                  src={card.card_image}
-                  alt={card.name}
-                  borderRadius="lg"
-                />
-                <Stack mt="6" spacing="3">
-                  <Heading size="md">{card.card_name}</Heading>
-                  {/* <Text>
-              {card.card_description}
-              </Text> */}
-                  <Text color="blue.600" fontSize="2xl">
-                    {card.card_prices}
-                  </Text>
-                </Stack>
-              </CardBody>
-              <Divider />
-              <CardFooter>
-                <ButtonGroup spacing="2">
-                  {userShop?.user_cards?.find(
-                    (card1) => card?.card_id === card1.card_id
-                  ) ? (
-                    <Button variant="solid" colorScheme="red">
-                      X
-                    </Button>
-                  ) : (
-                    <Button
-                      variant="solid"
-                      colorScheme="blue"
-                      onClick={() => {
-                        axios
-                          .post(
-                            "http://localhost:5000/card/buy",
-                            {
-                              card_id: card.card_id,
-                            },
-                            config
-                          )
-                          .then((result) => {
-                            setUser();
-                            <>
-                              {Swal.fire({
-                                position: "top",
-                                icon: "success",
-                                title: result.data.message,
-                                showConfirmButton: false,
-                                timer: 1500,
-                              })}
-                            </>;
-                          })
-                          .catch((error) => {
-                            <>
-                              {Swal.fire({
-                                position: "top",
-                                icon: "warning",
-                                title: error.message,
-                                showConfirmButton: false,
-                                timer: 1500,
-                              })}
-                            </>;
-                          });
-                      }}
-                    >
-                      Buy now
-                    </Button>
-                  )}
-                </ButtonGroup>
-              </CardFooter>
-            </Card>
-          </div>
-        );
-      })}
     </div>
   );
 };

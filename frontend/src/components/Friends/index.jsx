@@ -5,7 +5,6 @@ import axios from "axios";
 import {
   Heading,
   Avatar,
-  Box,
   Center,
   Image,
   Flex,
@@ -14,6 +13,8 @@ import {
   Button,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Box,UnorderedList, ListItem } from "@chakra-ui/react";
+
 import "./style.css";
 
 const Friends = () => {
@@ -151,26 +152,31 @@ const Friends = () => {
           </Box>
         </Center>
       </div>
-      <ul className="request">
-        {pendingRequests.map((request) => (
-          <li key={request.id}>
-            <p> {request.username}</p>
-            <img src={request.image} alt={"image"} />
-            <button
-              className="reqbtn"
-              onClick={() => acceptFriendRequest(request.user_id)}
-            >
-              Accept
-            </button>
-            <button
-              className="reqbtn"
-              onClick={() => removeFriend(request.user_id)}
-            >
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
+      <UnorderedList listStyleType="none">
+    {pendingRequests.map((request) => (
+      <ListItem key={request.id} borderBottom="1px solid #ccc" py={3} display="flex" alignItems="center">
+        <Box marginRight="20px">
+          <Image src={request.image} alt="image" boxSize="50px" borderRadius="50%" />
+        </Box>
+        <Text flex="1">{request.username}</Text>
+        <Button
+          className="reqbtn"
+          colorScheme="blue"
+          marginRight="5px"
+          onClick={() => acceptFriendRequest(request.user_id)}
+        >
+          Accept
+        </Button>
+        <Button
+          className="reqbtn"
+          colorScheme="red"
+          onClick={() => removeFriend(request.user_id)}
+        >
+          Remove
+        </Button>
+      </ListItem>
+    ))}
+  </UnorderedList>
     </div>
   );
 };

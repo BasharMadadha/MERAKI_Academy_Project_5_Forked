@@ -6,7 +6,9 @@ const {
   deleteCardById,
   addCard,
   buyCard,
-  getCardById
+  getCardById,
+  moreCard,
+  getRandomCards
 } = require("../controller/cards");
 const authentication = require("../middleware/authentication");
 
@@ -18,6 +20,9 @@ cardRouter.get("/", getAllCards);
 cardRouter.delete("/:id", deleteCardById);
 cardRouter.post("/buy", authentication, buyCard);
 cardRouter.get('/cardWithId',getCardById)
+cardRouter.post('/moreCard',moreCard)
+cardRouter.post('/getRandomCards',getRandomCards)
+
 
 module.exports = cardRouter;
 
