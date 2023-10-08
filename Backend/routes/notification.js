@@ -1,17 +1,17 @@
 const express = require("express");
 const {
-    // notification,
-    getAllnotification
+  getAllnotification,
+  getNotificationsWithLikeId,
+  getNotificationsWithFriendRequest,
+  getNotificationsWithCommentId,
 } = require("../controller/notification");
-const authentication = require("../middleware/authentication");
-const authorization = require("../middleware/authorization");
-
 
 const notificationRouter = express.Router();
 
 // notificationRouter.post("/add", authentication, notification);
 notificationRouter.get("/", getAllnotification);
-
-
+notificationRouter.get("/withlikeId", getNotificationsWithLikeId);
+notificationRouter.get("/withFriendRequest",getNotificationsWithFriendRequest);
+notificationRouter.get("/withCommentId", getNotificationsWithCommentId);
 
 module.exports = notificationRouter;

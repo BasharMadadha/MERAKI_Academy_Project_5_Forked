@@ -16,31 +16,31 @@ const addcomment = async (req, res) => {
   const commentData = [content, user_id, post_id];
 
   try {
-
     const postUserResult = await pool.query(postUserQuery, [post_id]);
     const postUser = postUserResult.rows[0].user_id;
 
-
     const commentResult = await pool.query(insertCommentQuery, commentData);
 
-
-    const notificationData = [user_id, postUser, commentResult.rows[0].comment_id];
+    const notificationData = [
+      user_id,
+      postUser,
+      commentResult.rows[0].comment_id,
+    ];
     await pool.query(insertNotificationQuery, notificationData);
 
     res.status(200).json({
       success: true,
-      message: 'Comment added successfully',
+      message: "Comment added successfully",
     });
   } catch (err) {
     console.error(err);
     res.status(500).json({
       success: false,
-      message: 'Server error',
+      message: "Server error",
       err: err.message,
     });
   }
 };
-
 
 const updateCommentsById = (req, res) => {
   const comment_id = req.params.id;
@@ -50,18 +50,16 @@ const updateCommentsById = (req, res) => {
    SET
      content = COALESCE($1, content)
      WHERE comment_id = $2 RETURNING *;`;
-  const data = [ content || null, comment_id];
+  const data = [content || null, comment_id];
   console.log(data);
   pool
     .query(query, data)
     .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: `comment with id: ${comment_id} updated successfully `,
-          result: result.rows[0],
-        });
-    
-      
+      res.status(200).json({
+        success: true,
+        message: `comment with id: ${comment_id} updated successfully `,
+        result: result.rows[0],
+      });
     })
     .catch((err) => {
       res.status(500).json({
@@ -79,10 +77,10 @@ const deleteCommentById = (req, res) => {
   pool
     .query(query, data)
     .then((result) => {
-        res.status(200).json({
-          success: true,
-          message: `comment with id:${comment_id} deleted successfully`,
-        });
+      res.status(200).json({
+        success: true,
+        message: `comment with id:${comment_id} deleted successfully`,
+      });
     })
     .catch((err) => {
       res.status(500).json({
@@ -94,7 +92,7 @@ const deleteCommentById = (req, res) => {
 };
 
 module.exports = {
-    addcomment,
-    updateCommentsById,
-    deleteCommentById
+  addcomment,
+  updateCommentsById,
+  deleteCommentById,
 };
