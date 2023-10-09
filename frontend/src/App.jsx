@@ -17,11 +17,10 @@ import Game from "./components/Game/game";
 import GameNavbar from "./components/Game/onlineUser";
 import Notification from "./components/notificationx/index"
 import NavBar from "./components/Navbar/index"
-
+import FrontPage from './components/Front Page/index'
 function App() {
   return (
     <ChakraProvider>
-              <NavBar />
 
       <Routes>
         <Route path="/" element={<Login />} />
@@ -40,6 +39,7 @@ function App() {
         <Route path="/GameNavbar" element={<GameNavbar />} />
         <Route path="/Notification" element={<Notification />} />
         <Route path="/NavBar" element={<NavBar />} />
+        <Route path="/FrontPage" element={<FrontPage />} />
       </Routes>
     </ChakraProvider>
   );

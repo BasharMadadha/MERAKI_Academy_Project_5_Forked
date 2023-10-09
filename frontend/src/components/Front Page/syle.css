@@ -1,0 +1,312 @@
+.background-container {
+    width: 100%;
+    height: 3000px;
+    display: flex;
+    flex-direction: column;
+    scroll-snap-type: y mandatory;
+  }
+  
+  .background-image {
+    flex: 1;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    scroll-snap-align: start;
+    transition: opacity 1s ease-in-out;
+  }
+  .background-imag{
+    
+    height:100px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    scroll-snap-align: start;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .custom-text {
+    margin: 200px;
+    animation-fill-mode: forwards;
+    background-position: 0px 0px;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    block-size: 52.5781px;
+    font-family: 'PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, 微软雅黑, Arial, SimSn, sans-serif';
+    font-size: 0px;
+    text-transform: uppercase;
+  }
+  
+ 
+  .custom-text span:nth-child(1) {
+    animation-delay: 1.3s;
+    font-size: 43.1053px;
+  }
+  .btn-page {
+    margin: 0;
+    align-items: center;
+    background-image: url(https://www.toweroffantasy-global.com/images/fab/backHome.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-block-color: white;
+    border-bottom-color: white;
+    border-inline-color: white;
+    bottom: -81px;
+    box-sizing: content-box;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    font-family: Oxanium;
+    font-size: 16.1622px;
+    height: 50.3594px;
+    justify-content: center;
+    left: 1544.17px;
+    outline-color: white;
+    position: absolute;
+    text-align: left;
+    text-decoration: none solid white;
+    text-transform: uppercase;
+    top: 39.6406px;
+    transition-duration: 0.5s;
+    user-select: none;
+    width: 260.844px;
+}
+
+.languageSelect {
+  margin: 0;
+  width: 41.3594px;
+  height: 41.3594px;
+  bottom: -78.4219px;
+  box-sizing: content-box;
+  font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, 微软雅黑, Arial, SimSn, sans-serif;
+  font-size: 0px;
+  inline-size: 41.3594px; 
+  inset-block-end: -78.4219px; 
+  inset-block-start: 37.0625px;
+  inset-inline-end: 306.875px;
+  inset-inline-start: 1571.77px;
+  left: 1571.77px;
+  perspective-origin: 20.6719px 20.6719px;
+  position: absolute;
+  right: 306.875px;
+  text-align: left;
+  top: 37.0625px;
+  user-select: none;
+  -webkit-locale: en; 
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); 
+}
+.languageSelec{
+  align-items: center;
+  background-image: url(https://www.toweroffantasy-global.com/images/fab/language.png);
+  background-position: 0px 0px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  width: 41.3594px; /* Assuming you want to set the width for this element */
+  height: 41.3594px; /* Assuming you want to set the height for this element */
+  border-block-end-color: rgb(255, 255, 255);
+  border-block-start-color: rgb(255, 255, 255);
+  border-bottom-color: rgb(255, 255, 255);
+  border-inline-end-color: rgb(255, 255, 255);
+  border-inline-start-color: rgb(255, 255, 255);
+  border-left-color: rgb(255, 255, 255);
+  border-right-color: rgb(255, 255, 255);
+  border-top-color: rgb(255, 255, 255);
+  box-sizing: border-box;
+  caret-color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255);
+  column-rule-color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: flex;
+  font-family: Oxanium;
+  font-size: 22.4092px;
+  font-weight: 400;
+  justify-content: center;
+  margin-block-end: 0px;
+  margin-block-start: 0px;
+  margin-bottom: 0px;
+  margin-left: -100px;
+  margin-right: 0;
+  margin-top: 6px;
+  outline-color: rgb(255, 255, 255);
+  padding-block-start: 4.48183px;
+  padding-top: 4.48183px;
+  perspective-origin: 20.6719px 20.6719px;
+  text-align: left;
+  text-decoration: none solid rgb(255, 255, 255);
+  text-decoration-color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  transform-origin: 20.6797px 20.6797px;
+  user-select: none;
+  -webkit-locale: en;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-text-fill-color: rgb(255, 255, 255);
+  -webkit-text-stroke-color: rgb(255, 255, 255);
+  height: 100%
+}
+.logo {
+  margin: 0;
+  block-size: 71.2188px; 
+  border-block-end-color: rgb(51, 51, 51);
+  border-block-start-color: rgb(51, 51, 51);
+  border-bottom-color: rgb(51, 51, 51);
+  border-inline-end-color: rgb(51, 51, 51);
+  border-inline-start-color: rgb(51, 51, 51);
+  border-left-color: rgb(51, 51, 51);
+  border-right-color: rgb(51, 51, 51);
+  border-top-color: rgb(51, 51, 51);
+  bottom: -94.4844px;
+  box-sizing: content-box;
+  caret-color: rgb(51, 51, 51);
+  color: rgb(51, 51, 51);
+  column-rule-color: rgb(51, 51, 51);
+  cursor: pointer;
+  display: block;
+  font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, 微软雅黑, Arial, SimSn, sans-seriuf;
+  font-size: 0px;
+  inline-size: 102.578px;
+  inset-block-end: -94.4844px;
+  inset-block-start: 23.2656px;
+  inset-inline-end: 1730.36px;
+  inset-inline-start: 87.0625px;
+  left: 87.0625px;
+  outline-color: rgb(51, 51, 51);
+  overflow-x: visible;
+  overflow-y: visible;
+  position: absolute;
+  right: 1730.36px;
+  text-align: left;
+  text-decoration: none solid rgb(51, 51, 51);
+  text-decoration-color: rgb(51, 51, 51);
+  text-emphasis-color: rgb(51, 51, 51);
+  top: 23.2656px;
+  user-select: none;
+  z-index: 10;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-text-fill-color: rgb(51, 51, 51);
+  -webkit-text-stroke-color: rgb(51, 51, 51);
+  width: 102.578px;
+  height: 71.2188px;
+}
+.img-container {
+  margin: 0;
+  block-size: 299.984px;
+  bottom: 0px;
+  box-sizing: content-box;
+  font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, 微软雅黑, Arial, SimSn, sans-seriuf;
+  font-size: 0px;
+  left:400px;
+  position: relative;
+  text-align: left;
+  top: 450px;
+  user-select: none;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  width: 1044.78px;
+  height: 299.984px;
+}
+.p1-btns {
+  margin: 0;
+  align-items: center;
+  block-size: 78.4375px;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  font-family: PingFang SC, Helvetica Neue, Hiragino Sans GB, Segoe UI, Microsoft YaHei, 微软雅黑, Arial, SimSn, sans-seriuf;
+  font-size: 0;
+  inline-size: 706px;
+
+  justify-content: center;
+  left: 0;
+  min-block-size: auto;
+  min-height: auto;
+  min-inline-size: auto;
+  min-width: auto;
+  position: relative;
+  right: 0;
+  text-align: left;
+  top: 0;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  width: 706px;
+  height: 78.4375px;
+}
+
+.p1-btns {
+  margin: 0;
+  align-items: center;
+  block-size: 78.4375px;
+  top:500px;
+  box-sizing: border-box;
+  display: flex;
+  font-family: 'PingFang SC', 'Helvetica Neue', 'Hiragino Sans GB', 'Segoe UI', 'Microsoft YaHei', '微软雅黑', 'Arial', 'SimSn', sans-serif;
+  font-size: 0px;
+  justify-content: center;
+  left: 550px;
+  min-block-size: auto;
+  min-height: auto;
+  min-inline-size: auto;
+  min-width: auto;
+  perspective-origin: 353px 39.2188px;
+  position: relative;
+  text-align: left;
+  user-select: none;
+  -webkit-locale: en;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  width: 706px;
+  height: 78.4375px;
+}
+
+.p1-btns a {
+  block-size: 34.5781px;
+  border-block-end-color: rgb(51, 51, 51);
+  border-block-start-color: rgb(51, 51, 51);
+  border-bottom-color: rgb(51, 51, 51);
+  border-inline-end-color: rgb(51, 51, 51);
+  border-inline-start-color: rgb(51, 51, 51);
+  border-left-color: rgb(51, 51, 51);
+  border-right-color: rgb(51, 51, 51);
+  border-top-color: rgb(51, 51, 51);
+  bottom: 0px;
+  box-sizing: content-box;
+  caret-color: rgb(51, 51, 51);
+  color: rgb(51, 51, 51);
+  column-rule-color: rgb(51, 51, 51);
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'PingFang SC', 'Helvetica Neue', 'Hiragino Sans GB', 'Segoe UI', 'Microsoft YaHei', '微软雅黑', 'Arial', 'SimSn', sans-serif;
+  font-size: 0px;
+  inline-size: 115.5px;
+  inset-block-end: 0px;
+  inset-block-start: 0px;
+  inset-inline-end: 0px;
+  inset-inline-start: 0px;
+  left: 0px;
+  margin-block-end: 21.9219px;
+  margin-block-start: 21.9219px;
+  margin-bottom: 21.9219px;
+  margin-inline-end: 6.89871px;
+  margin-inline-start: 6.89871px;
+  margin-left: 6.89871px;
+  margin-right: 6.89871px;
+  margin-top: 21.9219px;
+  min-block-size: auto;
+  min-height: auto;
+  min-inline-size: auto;
+  min-width: auto;
+  outline-color: rgb(51, 51, 51);
+  perspective-origin: 57.75px 17.2812px;
+  position: relative;
+  right: 0px;
+  text-align: left;
+  text-decoration: none;
+  text-decoration-color: rgb(51, 51, 51);
+  text-emphasis-color: rgb(51, 51, 51);
+  top: 0px;
+  transform-origin: 57.75px 17.2891px;
+  user-select: none;
+  -webkit-locale: en;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  -webkit-text-fill-color: rgb(51, 51, 51);
+  -webkit-text-stroke-color: rgb(51, 51, 51);
+}
