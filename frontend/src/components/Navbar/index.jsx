@@ -30,6 +30,8 @@ import axios from "axios";
 const AsyncTypeahead = withAsync(Typeahead);
 
 const NavBar = ({ users, getUserByID, getPostsByUser }) => {
+
+  const [notification, setNotification] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const isLogged = useSelector((state) => state.auth.isLogged);
@@ -72,14 +74,33 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   const nav = useSelector((state) => {
     return state.nav;
   });
-  
+
   const filterBy = (option, props) => {
     // console.log(option, props);
     return option.username.toLowerCase();
   };
 
+
+  const getnotification = ()=>{
+    axios
+      .get(`http://localhost:5000/notif`)
+      .then((response) => {
+        setNotification(response.data.result)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // const test  = notification.map((elem,i)=>{
+  //     console.log(elem);
+  // })
+  
   return (
+  
     <div className="nav">
+
+      
       {/* <SideBar /> */}
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width={"100%"}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
@@ -121,7 +142,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                 </HStack>
               </HStack>
               <>
-           
+
 
                 <AsyncTypeahead
                   filterBy={filterBy}
@@ -136,6 +157,13 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   renderMenuItemChildren={(option) => (
                     <p
                       onClick={() => {
+
+                        navigate("/ProfilePage")
+                        dispatch(setToggleProf(true));
+                        dispatch(setUser_id(option?.id));
+                        getUserByID(option?.id);
+                        getPostsByUser(option?.id);
+
                         if (toggleProf === true) {
                           navigate("/ProfilePage");
                           dispatch(setToggleProf(true));
@@ -146,6 +174,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                           dispatch(setToggleProf(true));
                           dispatch(setUser_id(option?.id));
                         }
+
                       }}
                     >
                       <Avatar

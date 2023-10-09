@@ -225,9 +225,13 @@ io.on("connection", (socket) => {
   });
   // Handle disconnection
   socket.on("disconnect", () => {
+
     console.log("A user disconnected");
   });
 });
+
+
+
 
 const allowedOrigins = ["http://localhost:5173"];
 const corsOptions = {
