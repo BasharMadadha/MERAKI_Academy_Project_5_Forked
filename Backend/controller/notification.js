@@ -23,33 +23,87 @@ const {pool}= require("../models/db")
       });
   };
 
-  const getNotificationByUserId = (req, res) => {
+;
 
-    const id = req.params.id
-    const query = `SELECT * FROM notification LEFT JOIN comments ON notification.comment_id = comments.comment_id LEFT JOIN likes ON notification.like_id = likes.like_id LEFT JOIN friend_list ON notification.friend_request = friend_list.id WHERE notification.receiver_id=${id}`;
-    
-    pool
-      .query(query)
-      .then((result) => {
-        res.status(200).json({
-          success: true,
-          message:` All the notification for ${id}`,
-          result: result.rows,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json({
-          success: false,
-          message: "Server error",
-          err: err.message,
-        });
+  const getNotificationsWithLikeId = async (req, res) => {
+    try {
+      const query = `
+        SELECT *
+        FROM notification
+        WHERE like_id IS NOT NULL;
+      `;
+  
+      const result = await pool.query(query);
+  
+      res.status(200).json({
+        success: true,
+        message: "Notifications with like_id retrieved successfully",
+        notifications: result.rows,
       });
+    } catch (error) {
+      console.error("Error retrieving notifications:", error.message);
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve notifications",
+        error: error.message,
+      });
+    }
   };
-
-
+  
+  const getNotificationsWithFriendRequest = async (req, res) => {
+    try {
+      const query = `
+        SELECT *
+        FROM notification
+        WHERE friend_request IS NOT NULL;
+      `;
+  
+      const result = await pool.query(query);
+  
+      res.status(200).json({
+        success: true,
+        message: "Notifications with friend_request retrieved successfully",
+        notifications: result.rows,
+      });
+    } catch (error) {
+      console.error("Error retrieving notifications:", error.message);
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve notifications",
+        error: error.message,
+      });
+    }
+  };
+  const getNotificationsWithCommentId = async (req, res) => {
+    try {
+      const query = `
+        SELECT *
+        FROM notification
+        WHERE comment_id IS NOT NULL;
+      `;
+  
+      const result = await pool.query(query);
+  
+      res.status(200).json({
+        success: true,
+        message: "Notifications with comment_id retrieved successfully",
+        notifications: result.rows,
+      });
+    } catch (error) {
+      console.error("Error retrieving notifications:", error.message);
+      res.status(500).json({
+        success: false,
+        message: "Failed to retrieve notifications",
+        error: error.message,
+      });
+    }
+  };
+  
   
   module.exports={
-    getNotificationByUserId,
-    getAllnotification
+    // notification,
+    getAllnotification,getNotificationsWithLikeId,
+    getNotificationsWithFriendRequest,
+    getNotificationsWithCommentId,
+
   }

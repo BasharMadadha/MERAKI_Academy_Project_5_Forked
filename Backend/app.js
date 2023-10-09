@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
     connectedUsers.add(userId);
     console.log("connected", Array.from(connectedUsers));
     connectedPlayers.set(userId, socket.id);
-
+    console.log("connected", Array.from(connectedPlayers));
     io.emit("online-users", Array.from(connectedUsers));
   });
   socket.on("user-logout", (userId) => {
@@ -106,32 +106,32 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("select-card1", async (card, player) => {
+  socket.on("select-card1", async (card1, player1) => {
     try {
-      console.log("card", player);
-      selectedCards.set(player, card);
+      console.log("card", player1);
+      selectedCards.set(card1, player1);
       const roomName = "room-24";
       const room = playRooms[roomName];
       let player2Data = null;
-      if (room.player2 && room.player2 !== player) {
+      if (room.player2 && room.player2 !== player1) {
         player2Data = room.player2;
       }
-      io.to(player2Data).emit("card-selected1", card);
+      io.to(player2Data).emit("card-selected1", card1);
     } catch (err) {
       console.log(err.message);
     }
   });
-  socket.on("select-card2", async (card, player) => {
+  socket.on("select-card2", async (card2, player2) => {
     try {
-      console.log("card", player);
-      selectedCards.set(player, card);
+      console.log("card", player2);
+      selectedCards.set(card2, player2);
       const roomName = "room-24";
       const room = playRooms[roomName];
       let player1Data = null;
-      if (room.player1 && room.player1 !== player) {
+      if (room.player1 && room.player1 !== player2) {
         player1Data = room.player1;
       }
-      io.to(player1Data).emit("card-selected2", card);
+      io.to(player1Data).emit("card-selected2", card2);
     } catch (err) {
       console.log(err.message);
     }
@@ -145,21 +145,84 @@ io.on("connection", (socket) => {
     let player2Data = null;
     if (room.player1 && room.player1 !== soketId) {
       player1Data = room.player1;
-      console.log("p1",player1Data);
+      console.log("p1", player1Data);
       io.to(player1Data).emit("new-round", true);
     } else {
       player2Data = room.player2;
-      console.log("p2",player2Data);
+      console.log("p2", player2Data);
 
       io.to(player2Data).emit("new-round", true);
     }
+  });
+  socket.on("attack", async (firstCard, secondCard) => {
+    console.log("new attack", firstCard);
+    console.log(selectedCards);
+    let firstplayer = null;
+    let secondplayer = null;
 
+    for (const [key, value] of selectedCards) {
+      if (JSON.stringify(key) === JSON.stringify(firstCard)) {
+        firstplayer = value;
+      }
+    }
+    for (const [key, value] of selectedCards) {
+      if (JSON.stringify(key) === JSON.stringify(secondCard)) {
+        secondplayer = value;
+      }
+    }
+    if (firstCard.attack > secondCard.attack) {
+      let result = firstCard.attack - secondCard.attack;
+      io.to(secondplayer).emit("you-lose", secondCard, result, secondplayer);
+      io.to(firstplayer).emit("you-win", secondCard, result, secondplayer);
+      console.log("win for ", firstplayer);
+    } else if (secondCard.attack > firstCard.attack) {
+      let result = secondCard.attack - firstCard.attack;
+      io.to(firstplayer).emit("you-lose", firstCard, result, firstplayer);
+      io.to(secondplayer).emit("you-win", firstCard, result, firstplayer);
+      console.log("win for ", secondplayer);
+    } else {
+      io.to(secondplayer).emit(
+        "draw",
+        firstCard,
+        secondCard,
+        firstplayer,
+        secondplayer
+      );
+      io.to(firstplayer).emit(
+        "draw",
+        firstCard,
+        secondCard,
+        firstplayer,
+        secondplayer
+      );
+    }
+    console.log("playerSoket", firstplayer, secondplayer);
+  });
+  socket.on("end-game", (player1Hp, player2Hp, soketId1, soketId2) => {
+    if (soketId1 && player1Hp <= 0) {
+      io.to(soketId1).emit("game-over", "you loset");
+    } else if (soketId2 && player1Hp <= 0) {
+      io.to(soketId2).emit("game-done", "you win");
+    } else if (soketId2 && player2Hp <= 0) {
+      io.to(soketId2).emit("game-over", "you loset");
+    } else if (soketId1 && player2Hp <= 0) {
+      io.to(soketId1).emit("game-done", "you win");
+    }
+  });
+  socket.on("image-click", (url, soketId1, soketId2) => {
+    const roomName = "room-24";
+    console.log("imog",playRooms,"s1",soketId1,"s2",soketId2);
+    const room = playRooms[roomName];
 
+    if (room.player1 && room.player1 === soketId1) {
+      io.to(room.player2).emit("get-imoj", url);
+      console.log("we work here1 ");
+    } else {
+      io.to(room.player1).emit("get-imoj", url);
+      console.log("we work here2 ");
 
-
-
-
-*/
+    }
+  });
   // Handle disconnection
   socket.on("disconnect", () => {
 

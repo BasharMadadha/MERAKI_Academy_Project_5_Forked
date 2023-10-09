@@ -23,17 +23,6 @@ const sendFreindReq = async (req, res) => {
     );
     const friendRequestId = rows[0].id;
 
-    const userDataFrom = await pool.query(
-      "SELECT username, image FROM users WHERE id = $1",
-      [reqsFrom]
-    );
-
-    const userDataTo = await pool.query(
-      "SELECT username, image FROM users WHERE id = $1",
-      [reqsTo]
-    );
-
-    console.log(friendRequestId);
 
     const insertNotificationQuery = `INSERT INTO notification (sender_id, receiver_id,friend_request) VALUES ($1,$2,$3);`;
     const notificationData = [reqsFrom, reqsTo, friendRequestId];
@@ -42,24 +31,11 @@ const sendFreindReq = async (req, res) => {
       insertNotificationQuery,
       notificationData
     );
-
-    if (userDataFrom.rows.length > 0 && userDataTo.rows.length > 0) {
-      const { username: usernameFrom, image: imageFrom } = userDataFrom.rows[0];
-      const { username: usernameTo, image: imageTo } = userDataTo.rows[0];
-
+    if (rows) {
       res.status(201).json({
         success: true,
         message: "Friend request sent successfully",
-        result: {
-          usernameFrom,
-          imageFrom,
-          usernameTo,
-          imageTo,
-          userId: reqsTo,
-        },
       });
-    } else {
-      throw new Error("User not found");
     }
   } catch (error) {
     console.error("Error sending friend request:", error.message);
@@ -111,7 +87,7 @@ const getUserFriends = async (req, res) => {
     });
   }
 };
-
+// we can here take userId from token but we can have it from selctro 
 const updateFriendRequest = async (req, res) => {
   try {
     const { reqsFrom, reqsTo, status } = req.body;

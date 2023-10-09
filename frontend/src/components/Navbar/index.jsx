@@ -6,7 +6,6 @@ import { setLogout, setUser_id, setToggleProf } from "../redux/authSlicer/auth";
 import { setUsersSearch } from "../redux/navSlicer/nav";
 import { useNavigate } from "react-router-dom";
 import { Typeahead, withAsync } from "react-bootstrap-typeahead";
-// import SideBar from "../SideBar";
 import {
   Box,
   Flex,
@@ -24,8 +23,7 @@ import {
   useColorModeValue,
   Stack,
 } from "@chakra-ui/react";
-import { TbMoneybag } from "react-icons/Tb";
-import { HiOutlineBell } from "react-icons/Hi";
+
 import io from "socket.io-client";
 const socket = io("http://localhost:5001");
 import axios from "axios";
@@ -140,48 +138,10 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   </Link>
                   {userInfo?.role_id === 2 && <Link to={"/Admin"}>Admin</Link>}
                   <Link to={"/Shop"}>Shop</Link>
-                  <span>
-                    <TbMoneybag
-                      onClick={() => {
-                        navigate("/Shop");
-                      }}
-                    />
-                    &nbsp;{userNav?.crypto_amount || userNav1?.crypto_amount}
-                  </span>
+                
                 </HStack>
               </HStack>
               <>
-
-
-
-            <Menu>
-                <MenuButton onClick={getnotification} as={Button}>
-                <div className="bell">
-                  <HiOutlineBell className="bellicon" />
-                  <div className="counter">
-                    <span>3</span>
-                  </div>
-                </div>
-                </MenuButton>
-                <MenuList>
-                  <p>notification</p>
-                </MenuList>
-            </Menu>
-            
-{/* 
-                <ul className="navUl">
-                  <li>
-                    <HiOutlineBell
-                      onClick={() => {
-                        alert("notification");
-                      }}
-                    />
-                  </li>
-                </ul> */}
-
-
-
-
 
 
                 <AsyncTypeahead

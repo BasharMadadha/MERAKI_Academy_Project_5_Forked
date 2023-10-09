@@ -60,12 +60,12 @@ CREATE TABLE notification (
   is_deleted SMALLINT DEFAULT 0
 );
 
-CREATE TABLE app_cards (
+CREATE TABLE cards (
     card_id serial PRIMARY KEY,
     card_name VARCHAR(255),
     card_description TEXT,
     card_image VARCHAR(255),
-    archetype VARCHAR(255),
+    card_type VARCHAR(255),
     attack INTEGER,
     card_prices INTEGER 
 );

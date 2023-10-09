@@ -2,16 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 
 const notifSlice = createSlice({
-  name: "notif",
+  name: "notification",
   initialState:{
     notification: []
   },
   reducers: {
-    newnotif: (state, action) => {
-      state.usersSearch = action.payload;
+    setNotification: (state, action) => {
+      state.notification = action.payload;
     },
   },
 });
-export const {setUsersSearch} =
+export const {setNotification} =
   notifSlice.actions;
 export default notifSlice.reducer;
