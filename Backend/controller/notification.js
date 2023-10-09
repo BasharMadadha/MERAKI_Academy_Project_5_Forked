@@ -30,7 +30,7 @@ const {pool}= require("../models/db")
       const query = `
         SELECT *
         FROM notification
-        WHERE like_id IS NOT NULL;
+        WHERE like_id IS NOT NULL limit 3;
       `;
   
       const result = await pool.query(query);
@@ -55,7 +55,7 @@ const {pool}= require("../models/db")
       const query = `
         SELECT *
         FROM notification
-        WHERE friend_request IS NOT NULL;
+        WHERE friend_request IS NOT NULL limit 3;
       `;
   
       const result = await pool.query(query);
@@ -79,7 +79,7 @@ const {pool}= require("../models/db")
       const query = `
         SELECT *
         FROM notification
-        WHERE comment_id IS NOT NULL;
+        WHERE comment_id IS NOT NULL limit 3;
       `;
   
       const result = await pool.query(query);
