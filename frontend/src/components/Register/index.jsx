@@ -1,8 +1,12 @@
 import React, { useState } from "react";
+import { GiLetterBomb } from "react-icons/Gi"
+import { FaUserAstronaut } from 'react-icons/fa'
+import { AiFillUnlock } from 'react-icons/Ai'
+import {AiOutlinePicture} from 'react-icons/Ai'
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   setUsername,
   setPassword,
@@ -52,41 +56,132 @@ const Register = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="Form">
-          <p className="title">Register:</p>
-          <br />
-          <input
-            type="text"
-            placeholder="Username"
-            value={inputUsername}
-            onChange={(e) => setInputUsername(e.target.value)}
-          />
-          <br />
-          <input
-            type="email"
-            placeholder="Email"
-            value={inputEmail}
-            onChange={(e) => setInputEmail(e.target.value)}
-          />
-          <br />
-          <input
-            type="password"
-            placeholder="Password"
-            value={inputPassword}
-            onChange={(e) => setInputPassword(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Image URL"
-            value={inputImage}
-            onChange={(e) => setInputImage(e.target.value)}
-          />
-          <br />
-          <button onClick={addNewUser}>Register</button>
-          <br />
-        </div>
+
+<form class="form_container">
+      <div class="logo_container">
+        <img src="https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/05/98dac202-90f1-477e-8a7a-5f346a11ae10.jpg?auto=format&q=60&fit=max&w=930" />
       </div>
+      <div class="title_container">
+        <p class="title">Login to your Account</p>
+        <span class="subtitle">
+          Get started with our app, just create an account and enjoy the
+          experience.
+        </span>
+      </div>
+      <br />
+      <div class="input_container">
+        <label class="input_label" for="email_field">
+          User Name
+        </label>
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          height="24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+        >
+          <FaUserAstronaut className="auto-icon"/>
+        </svg>
+        <input
+          placeholder="@user_name"
+          title="Inpit title"
+          name="input-name"
+          type="text"
+          class="input_field"
+          id="email_field"
+          onChange={(e) => setInputEmail(e.target.value)}
+        />
+      </div>
+      <div class="input_container">
+        <label class="input_label" for="email_field">
+          Email
+        </label>
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          height="24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+        >
+        <GiLetterBomb className="auto-icon"/>
+        
+        </svg>
+        <input
+          placeholder="name@mail.com"
+          title="Inpit title"
+          name="input-name"
+          type="text"
+          class="input_field"
+          id="email_field"
+          onChange={(e) => setInputEmail(e.target.value)}
+        />
+      </div>
+      <div class="input_container">
+        <label class="input_label" for="password_field">
+          Password
+        </label>
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          height="24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon"
+        >
+   <AiFillUnlock className="auto-icon"/>
+
+        </svg>
+        <input
+          placeholder="Password"
+          title="Inpit title"
+          name="input-name"
+          type="password"
+          class="input_field"
+          id="password_field"
+          onChange={(e) => setInputPassword(e.target.value)}
+        />
+      </div>
+      <div class="input_container">
+        <label class="input_label" for="password_field">
+        Photo
+        </label>
+        <svg
+          fill="none"
+          viewBox="0 0 24 24"
+          height="24"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="icon">
+           
+<AiOutlinePicture className="auto-icon"/>
+        </svg>
+        <input
+          placeholder="photo url"
+          title="Inpit title"
+          name="input-name"
+          type="text"
+          class="input_field"
+          id="password_field"
+          onChange={(e) => setInputImage(e.target.value)}
+        />
+      </div>
+      <button title="Sign In" type="submit" class="sign-in_btn" onClick={addNewUser}>
+        <span>Create new account</span>
+      </button>
+      <div class="separator">
+        <span>
+          <Link to="/">already have an account</Link>
+        </span>
+      </div>
+      <div class="separator">
+        <hr class="line" />
+        <span>Or</span>
+        <hr class="line" />
+      </div>
+      <p class="note">Terms of use &amp; Conditions</p>
+    </form>
     </>
   );
 };

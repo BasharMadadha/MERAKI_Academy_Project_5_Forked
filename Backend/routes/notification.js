@@ -1,8 +1,6 @@
 const express = require("express");
+const notificationRouter=express.Router()
 const {
-
-  getNotificationByUserId,
-  getAllnotification,
   getAllnotification,
   getNotificationsWithLikeId,
   getNotificationsWithFriendRequest,
@@ -12,7 +10,6 @@ const {
 
 
 notificationRouter.get("/", getAllnotification);
-notificationRouter.get("/:id", getNotificationByUserId);
 notificationRouter.get("/withlikeId", getNotificationsWithLikeId);
 notificationRouter.get("/withFriendRequest",getNotificationsWithFriendRequest);
 notificationRouter.get("/withCommentId", getNotificationsWithCommentId);

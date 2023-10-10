@@ -65,3 +65,9 @@ body {
 .link:hover {
   text-decoration: underline;
 }
+
+
+.auto-icon {
+  font-size: 24px;
+  color: rgb(255, 173, 173);
+}
