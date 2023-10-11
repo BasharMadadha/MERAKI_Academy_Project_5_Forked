@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import setCards from "../redux/cardSlicer/card"
 import io from "socket.io-client";
 import {
   Box,
@@ -29,6 +30,7 @@ const Map = () => {
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const textColor = useColorModeValue("black", "white");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     socket.on("room-invite", (selectedUserId, room) => {
@@ -43,7 +45,17 @@ const Map = () => {
       console.log("test", roomIdInput);
       navigate("/game");
     });
-
+    const getCards = async () => {
+      await axios
+        .get(`http://localhost:5000/card`)
+        .then((res) => {
+          dispatch(setCards(res.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }; 
+    getCards()
     return () => {
       socket.off("room-invite");
       socket.off("game-start");

@@ -1,102 +1,180 @@
-import React, { useEffect } from "react";
-import AddPost from "../AddPost/index";
-import Post from "../Post/index";
-import Users from "../Friends/usres";
-import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
-import {
-  Box,
-  Heading,
-  Container,
-  Divider,
-  VStack,
-  Flex,
-  Grid,
-  GridItem,
-} from "@chakra-ui/react";
-import { setToggleProf, setUsers } from "../redux/authSlicer/auth";
-import { getUserFriends } from "../redux/frinedSlicer/friends";
+import React, { useEffect, useState, useRef } from "react";
+import "./style.css";
 import NavBar from "../Navbar";
-import { setCards } from "../redux/cardSlicer/card";
-
+import { useSelector, useDispatch } from "react-redux";
+import {
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from "@chakra-ui/react";
+import axios from "axios";
+import Notification from "../notificationx/index";
+import { setPosts } from "../redux/postSlicer/post";
 const HomePage = () => {
-  const userId = useSelector((state) => state.auth.userId);
-  const online = useSelector((state) => state.auth.onlineUsers);
-  const isLogged = useSelector((state) => state.auth.isLogged);
   const dispatch = useDispatch();
-  dispatch(setToggleProf(false));
-  const setUserH = async () => {
-    try {
-      const result = await axios.get("http://localhost:5000/users/getAllUser");
-      if (result.data) {
-        dispatch(setUsers(result.data));
-      }
-    } catch (error) {
-      console.error(error.message);
-    }
+  const [isOpen, setIsOpen] = useState(false);
+  const posts = useSelector((state) => state.posts.posts);
+  const token = useSelector((state) => state.auth.token);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const btnRef = useRef();
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
   };
 
-  const getUserFriend = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:5000/userFriends/${userId}`
-      );
-
-      if (response.status === 200) {
-        dispatch(getUserFriends(response.data.userFriends));
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  
-  const getCards = async () => {
-    await axios
-      .get(`http://localhost:5000/card`)
-      .then((res) => {
-        dispatch(setCards(res.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const onOpen = () => {
+    setIsOpen(true);
   };
 
+  const onClose = () => {
+    setIsOpen(false);
+  };
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % posts.length);
+  };
 
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex === 0 ? posts.length - 1 : prevIndex - 1
+    );
+  };
   useEffect(() => {
-    setUserH();
-    getCards()
-    getUserFriend();
-    if (!isLogged) {
-      navigate("/login");
-    }
-  }, []);
-
+    const getPosts = async () => {
+      await axios
+        .get(`http://localhost:5000/posts/`, config)
+        .then((res) => {
+          const rever = res.data.result;
+          dispatch(setPosts([...rever].reverse()));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    const interval = setInterval(nextImage, 5000);
+    getPosts()
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentImageIndex]);
   return (
     <>
       <NavBar />
-      <Box p={4}>
-        <Heading as="h1" mb={4}>
-          Home Page
-        </Heading>
-        <GridItem colSpan={1}>
-          <AddPost />
-        </GridItem>
-        <Container maxW="100%">
-          <Grid
-            h="200px"
-            templateRows="repeat(2, 1fr)"
-            templateColumns="repeat(5, 1fr)"
-            gap={4}
+      <Notification />
+      <div className="HomePage-container">
+        <div className="background-vido">
+          <video autoPlay loop muted playsInline>
+            <source
+              src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1696968750/adventure-skyscape-moewalls-com_fxmgd9.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+
+        <div className="message">
+          <ul className="news__tab__list">
+            <li className="news__tab__item news__tab__item--active">message</li>
+          </ul>
+          <ul className="news__list"></ul>
+        </div>
+        <div className="chat">
+          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+            firend
+          </Button>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
           >
-            <GridItem rowSpan={2} colSpan={1}>
-              <Users userId={userId} />
-            </GridItem>
-            <GridItem colSpan={4}>
-              <Post />
-            </GridItem>
-          </Grid>
-        </Container>
-      </Box>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Create your account</DrawerHeader>
+
+              <DrawerBody></DrawerBody>
+
+              <DrawerFooter>
+                <Button variant="outline" mr={3} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="blue">Save</Button>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+            world
+          </Button>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Create your account</DrawerHeader>
+
+              <DrawerBody></DrawerBody>
+
+              <DrawerFooter>
+                <Button variant="outline" mr={3} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="blue">Save</Button>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+        </div>
+        <div className="background-video2">
+          <video autoPlay loop muted playsInline>
+            <source
+              src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1697005514/fantasy-traditional-temples-sakura-moewalls-com_fseoqb.mp4"
+              type="video/mp4"
+            />
+          </video>
+
+          <div className="posts">
+            <ul className="news__tab__list">
+              <li className="news__tab__item news__tab__item--active">News</li>
+            </ul>
+            <ul className="news__list">
+              {posts.slice(0, 5).map((post) => (
+                <li className="new-news" key={post.id}>
+                  <p>{post.content}</p>
+                  <p className="news_date">
+                    {new Date(post.created_at).toLocaleString()}
+                  </p>
+                </li>
+              ))}
+            </ul>
+            
+            <div className="image-slider">
+              <img
+                src={posts[currentImageIndex]?.image_url}
+                alt={`Image ${currentImageIndex}`}
+              />
+              <button onClick={prevImage}>---</button>
+              <button onClick={nextImage}>---</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="background-video3">
+          <video autoPlay loop muted playsInline>
+            <source
+              src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1697005486/fantasy-world-full-of-cherry-blossom-trees-moewalls-com_hhqymf.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+      </div>
     </>
   );
 };

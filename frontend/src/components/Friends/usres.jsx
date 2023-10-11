@@ -37,7 +37,6 @@ const Users = () => {
   };
 
 
-
   const filteredUsers = users?.filter(
     (user) => !friends.some((friend) => friend.friend_id === user.id)
   );

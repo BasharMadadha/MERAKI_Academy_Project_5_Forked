@@ -1,16 +1,102 @@
-import React from "react";
+import React, { useState } from "react";
+
 import "./syle.css";
 
 const FrontPage = () => {
+  const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState(null);
+
+  const characters = [
+    {
+      id: 1,
+      title: "Yami",
+      image:
+        "https://i.pinimg.com/736x/5f/89/a4/5f89a444da5715e3a67a0f650037f764.jpg",
+      subImages: [
+        "https://i.pinimg.com/564x/9a/e4/84/9ae484b019cf34d99b66fdb888dc5721.jpg",
+        "https://i.pinimg.com/564x/cc/51/06/cc51062ce68f83b98339eba9c596b77a.jpg",
+        "https://i.pinimg.com/564x/e6/39/96/e63996c3015c5329d1b2a9d924f49935.jpg",
+      ],
+    },
+    {
+      id: 2,
+      title: "Kaiba",
+      image:
+        "https://i.pinimg.com/564x/a7/e5/88/a7e5883b403fb07144e14ea97e9c3d7f.jpg",
+      subImages: [
+        "https://i.pinimg.com/236x/20/25/28/2025286ee434083903d99666e5910d36.jpg",
+        "https://example.com/image5.jpg",
+        "https://example.com/image6.jpg",
+      ],
+    },
+    {
+      id: 3,
+      title: "Joey",
+      image:
+        "https://i.pinimg.com/564x/e2/4a/a5/e24aa581c83f7afb408f90ad10720ccb.jpg",
+      subImages: [
+        "https://example.com/image7.jpg",
+        "https://example.com/image8.jpg",
+        "https://example.com/image9.jpg",
+      ],
+    },
+    {
+      id: 4,
+      title: "Marik",
+      image:
+        "https://i.pinimg.com/236x/07/8b/a8/078ba82fd501f18bbe647a2130f4dec8.jpg",
+      subImages: [
+        "https://example.com/image10.jpg",
+        "https://example.com/image11.jpg",
+        "https://example.com/image12.jpg",
+      ],
+    },
+  ];
+  const options = [
+    {
+      id: 1,
+      title: "NEW AREA",
+      videoUrl: [
+        "https://res.cloudinary.com/dmhvb05w3/video/upload/v1696960958/project-fiora-league-of-legends-moewalls-com_uqe4ol.mp4",
+      ],
+    },
+    {
+      id: 2,
+      title: "NEW CHARACTER",
+      videoUrl: [
+        "https://res.cloudinary.com/dmhvb05w3/video/upload/v1696961135/project-fiora-league-of-legends-1-moewalls-com_hhrkl7.mp4",
+      ],
+    },
+    {
+      id: 3,
+      title: "NEW CHALLANGE",
+      videoUrl: [
+        "https://res.cloudinary.com/dmhvb05w3/video/upload/v1696961135/project-fiora-league-of-legends-1-moewalls-com_hhrkl7.mp4",
+      ],
+    },
+  ];
+
+  const handleCharacterClick = (character) => {
+    setSelectedCharacter(character);
+  };
+  const handleOptionClick = (option) => {
+    setSelectedOptions(null)
+    setSelectedOptions(option);
+    console.log("work");
+  };
   return (
     <div className="background-container">
-      <div
-        className="background-image"
-        style={{
-          backgroundImage:
-            'url("https://r4.wallpaperflare.com/wallpaper/1009/711/692/trading-card-games-yu-gi-oh-hd-wallpaper-a9c03591b63a3bc03fea4d984b124d99.jpg")',
-        }}
-      >
+      <div className="background-image">
+        <div className="background-video">
+          <video autoPlay loop muted playsInline>
+            <source
+              src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1696913469/boss-fight-fantasy-dragon-moewalls-com_zpc774.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
         <div className="btn-page">OFFICIAL WEBSITE</div>
         <div className="languageSelect">
           <h1 className="languageSelec">en</h1>
@@ -81,14 +167,38 @@ const FrontPage = () => {
           </a>
         </div>
       </div>
-      <div
-        className="background-image"
-        style={{
-          backgroundImage:
-            'url("https://c4.wallpaperflare.com/wallpaper/1020/1/213/world-of-warcraft-battle-for-azeroth-video-games-warcraft-alliance-wallpaper-preview.jpg")',
-        }}
-      >
-        {" "}
+      <div className="background-image">
+        <div className="background-video2">
+          <video autoPlay loop muted playsInline>
+            <source
+              src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1696941648/fantasy-world-moewalls-com_fqhwqx.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+        <div className="charcter">
+          {characters.map((character) => (
+            <div className="character-item" key={character.id}>
+              <a onClick={() => handleCharacterClick(character)}>
+                <img src={character.image} alt={character.title} />
+              </a>
+            </div>
+          ))}
+        </div>
+        {selectedCharacter && (
+          <div className="selected-character">
+            <h2>{selectedCharacter.title}</h2>
+            <div className="sub-images">
+              {selectedCharacter?.subImages?.map((subImage, index) => (
+                <img
+                  key={index}
+                  src={subImage}
+                  alt={`Sub Image ${index + 1}`}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
       <div
         className="background-image"
@@ -97,13 +207,42 @@ const FrontPage = () => {
             'url("http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696834590/hhbinzveeoenlsqnepe4.jpg")',
         }}
       ></div>
-       <div
+      <div
         className="background-imag"
         style={{
           backgroundImage:
             'url("http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696864219/sejtxbs8eka6nllai00u.png")',
         }}
-      ></div>
+      >
+        
+        <div className="options">
+          {options?.map((option) => (
+            <div className="options-item" key={option.id}>
+              <button className="button-49" role="button" onClick={() => handleOptionClick(option)}>
+               {option.title}
+              </button>
+            </div>
+          ))}
+        </div>
+        {selectedOptions && (
+          <div className="selected-option">
+            <div className="sub-videoUrl">
+              {selectedOptions?.videoUrl?.map((videoUrl, index) => (
+                <video
+                  key={index}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="video-container"
+                >
+                  <source src={videoUrl} type="video/mp4" />
+                </video>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

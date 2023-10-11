@@ -2,21 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Box,
-  Heading,
-  List,
-  ListItem,
-  Text,
-  VStack,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Button,
-
 } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import { ChevronDownIcon } from "@chakra-ui/icons";
-
+import './style.css'
 const Notification = () => {
   const [notifications, setNotifications] = useState([]);
   const users = useSelector((state) => state.auth.users);
@@ -27,13 +15,11 @@ const Notification = () => {
         const response = await axios.get("http://localhost:5000/notif");
         if (response && response.data) {
           setNotifications(response.data.result);
-          console.log(response);
         }
       } catch (err) {
         console.error(err.message);
       }
     };
-
     fetchNotifications();
   }, []);
   notifications.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
@@ -48,37 +34,36 @@ const Notification = () => {
 
   return (
     <Box p="4">
-      <Heading as="h1" mb="4">
-        Notifications
-      </Heading>
-      <Menu>
-        {({ isOpen }) => (
-          <>
-            <MenuButton
-              isActive={isOpen}
-              as={Button}
-            >
-              {isOpen ? "Close" : "Open"}
-            </MenuButton>
-            <MenuList>
-              {notifications.map((notification) => (
-                <MenuItem key={notification.id} onClick={() => alert("Kagebunshin")}>
-                  <VStack align="start" spacing="1">
-                    <Text> {getSenderUsername(notification.sender_id)}</Text>
-                    {notification.comment_id !== null && (
-                      <Text>Comment {notification.comment_id}</Text>
-                    )}
-                    {notification.like_id !== null && (
-                      <Text>Like {notification.like_id}</Text>
-                    )}
-                    <Text>{new Date(notification.created_at).toLocaleString()}</Text>
-                  </VStack>
-                </MenuItem>
-              ))}
-            </MenuList>
-          </>
-        )}
-      </Menu>
+      <div className="noticaction">
+        <ul className="news__tab__list">
+          <li className="news__tab__item news__tab__item--active">
+          Notification
+          </li>
+        </ul>
+        <ul className="news__list">
+          {notifications.slice(0, 5).map((notification) => (
+            <li  class="news__item" key={notification.id}>
+              <p>{getSenderUsername(notification.sender_id)}</p>
+              {notification.comment_id !== null && (
+                <p class="news__title ellipsis">Comment </p>
+              )}
+              {notification.like_id !== null && (
+                <p class="news__title ellipsis">Like </p>
+              )}
+              <p class="news__date">{new Date(notification.created_at).toLocaleString()}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="background-video">
+        <video autoPlay loop muted playsInline>
+          <source
+            src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1696915569/tokyo-dreaming-moewalls-com_lzsyc1.mp4"
+            type="video/mp4"
+          />
+        </video>
+      </div>
     </Box>
   );
 };
