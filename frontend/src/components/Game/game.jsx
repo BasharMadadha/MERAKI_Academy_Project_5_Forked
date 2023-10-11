@@ -177,7 +177,6 @@ const Game = () => {
       }
     });
     if (gameEndmessage) {
-      
       navigate("/map");
     }
     if ((currentRound > 1 && player1Hp <= 0) || player2Hp <= 0) {
@@ -197,19 +196,15 @@ const Game = () => {
         setGameEndMessage(message);
       }
     });
-    
 
     socket.on("get-imoj", (url) => {
       setImogj([...imogj, url]);
       console.log("hree work");
-      
-        setTimeout(function () {
-          setImogj([])
-          console.log("pver");
-        }, 3000);
 
-      
-     
+      setTimeout(function () {
+        setImogj([]);
+        console.log("pver");
+      }, 3000);
     });
 
     return () => {
@@ -217,7 +212,6 @@ const Game = () => {
       socket.off("receive-cards");
       socket.off("you-win");
       socket.off("new-round");
-      
     };
   }, [
     currentRound,
@@ -226,7 +220,7 @@ const Game = () => {
     player1Hp,
     player2Hp,
     selectedCards,
-    gameEndmessage
+    gameEndmessage,
   ]);
 
   const removeCardFromSelcted = (cardToRemove) => {
@@ -286,7 +280,9 @@ const Game = () => {
     socket.emit("image-click", url, soketId1, soketId2);
   };
   return (
+
     <Box w="100%" h="100%" style={{ backgroundImage: `url('https://static.invenglobal.com/upload/image/2020/01/22/i1579710522631687.png')` }}>
+
       <GameNavbar />
       <div> {gameEndmessage}</div>
       <Grid>
@@ -316,16 +312,16 @@ const Game = () => {
         >
           <GridItem
             pl="4"
-            fontSize = '30px'
-            fontWeight= 'bold'
-            lineHeight= '80%'
+            fontSize="30px"
+            fontWeight="bold"
+            lineHeight="80%"
             style={{
               cursor: "pointer",
               padding: "10px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               textAlign: "center",
-              color:'#F0F8FF'
+              color: "#F0F8FF",
             }}
           >
             {`player1: ${player1Hp}`}
@@ -333,16 +329,16 @@ const Game = () => {
           <Grid></Grid>
           <GridItem
             pl="4"
-            fontSize = '30px'
-            fontWeight= 'bold'
-            lineHeight= '80%'
+            fontSize="30px"
+            fontWeight="bold"
+            lineHeight="80%"
             style={{
               cursor: "pointer",
               padding: "10px",
               border: "1px solid #ccc",
               borderRadius: "5px",
               textAlign: "center",
-              color:'#F0F8FF'
+              color: "#F0F8FF",
             }}
           >{`player2: ${player2Hp}`}</GridItem>
         </Grid>
@@ -365,8 +361,10 @@ const Game = () => {
 
               }}
             >
-              <Image src={card?.card_image} maxW="200px" maxH="200px" />
+
+              <Image src={card?.card_image} maxW="150px" maxH="150px" />
               <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'>
+
                 {card.attack}
               </Text>
             </Box>
@@ -393,9 +391,9 @@ const Game = () => {
               <Image
                 src={card.card_image}
                 alt={card.card_name}
-                maxW="200px" maxH="200px"
+               maxW="150px" maxH="150px"
               />
-              <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'> 
+              <Text fontSize="lg" fontWeight="bold" mt={2} color="#F0F8FF">
                 {card.attack}
               </Text>
             </Box>
@@ -417,13 +415,14 @@ const Game = () => {
                 opacity: clickedCards.includes(card) ? 0.5 : 1,
                 border: selectedCards.includes(card) ? "2px solid red" : "none",
                 padding: "10px",
-                border: "1px solid #ccc",
                 borderRadius: "5px",
                 textAlign: "center",
               }}
             >
-              <Image src={card && card.card_image}  maxW="200px" maxH="200px" />
+
+              <Image src={card && card.card_image}  maxW="150px" maxH="150px" />
               <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'>
+
                 {card && card.attack}
               </Text>
             </Box>
@@ -460,8 +459,8 @@ const Game = () => {
               textAlign: "center",
               position: "relative",
               left: "-500px",
-              top:"-300px",
-              color:'#F0F8FF'
+              top: "-300px",
+              color: "#F0F8FF",
             }}
           >
             Open menu

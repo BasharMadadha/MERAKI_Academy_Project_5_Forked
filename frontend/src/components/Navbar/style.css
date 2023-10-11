@@ -1,46 +1,106 @@
-.counter {
-  width: 14px;
-  height: 14px;
-  background-color: red;
-  border-radius: 50%;
-  position: absolute;
-  bottom: 11px;
-  left: 10px;
+body {
+  padding: 0.6px;
 }
-.counter span {
-  border-radius: 50%;
-  color: white;
-  font-size: 10px;
+
+.img {
+  width: 300px;
+  height: 120px;
+  border-radius: 40px;
   position: relative;
-  left: 4.4px;
-  bottom: 7.5px;
+  left: 100px;
 }
-
-.bell {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  position: relative;
-}
-.bellicon {
-  font-size: 20px;
-}
-
-.navUl li {
-  text-decoration: none;
-}
-
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 999;
-  color: white;
+/* background-color: rgba(17,17,17,0.85); */
+#id {
   background-color: rgba(17, 17, 17, 0.75);
   box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+  height: 85px;
+  border-bottom: 0.1px solid gray;
+  position: sticky;
+  z-index: 999;
 }
 
-.navbar.scrolled {
-  background-color: rgba(17, 17, 17, 0.85);
+.font {
+  font-size: 20px;
+  position: relative;
+  right: 500px;
+  margin: 25px;
+  color: white;
+}
+
+.font:hover {
+  text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff;
+  color: white;
+}
+
+.font:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(248, 132, 117);
+  transform-origin: bottom right;
+  transition: transform 0.5s ease-out;
+}
+
+.font:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.logfont {
+  font-size: 20px;
+  position: relative;
+  right: 5px;
+  top: 23px;
+  color: white;
+}
+
+.logfont:hover {
+  text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff;
+  color: white;
+}
+
+#button {
+  width: 10em;
+  position: relative;
+  right: -13px;
+  height: 84px;
+  width: 250px;
+  background-color: rgb(248, 132, 117);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.8s;
+  border-radius: 1px;
+}
+#button:hover {
+  background-color: transparent;
+  color: rgb(248, 132, 117);
+}
+
+/* responsive */
+@media screen and (max-width: 769px) {
+  .font {
+    position: relative;
+    left: 1px;
+  }
+  .logfont {
+    display: none;
+  }
+
+  .img {
+    position: relative;
+    left: -75px;
+    top: -10px;
+  }
+  .game {
+    display: none;
+  }
+
+  .font:hover:after {
+    display: none;
+  }
 }
