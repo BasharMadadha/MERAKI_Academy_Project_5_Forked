@@ -3,6 +3,7 @@ import AddPost from "../AddPost/index";
 import Post from "../Post/index";
 import Users from "../Friends/usres";
 import { useDispatch, useSelector } from "react-redux";
+import "./style.css";
 import axios from "axios";
 import {
   Box,
