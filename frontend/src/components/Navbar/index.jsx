@@ -31,6 +31,7 @@ const AsyncTypeahead = withAsync(Typeahead);
 
 const NavBar = ({ users, getUserByID, getPostsByUser }) => {
 
+  const [scrolled, setScrolled] = useState(false);
   const [notification, setNotification] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,6 +68,19 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
     if (!isLogged) {
       navigate("/");
     }
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [isLogged]);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -97,12 +111,9 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   // })
   
   return (
-  
-    <div className="nav">
-
-      
+    <div className={scrolled ? 'navbar scrolled' : 'navbar'}>
       {/* <SideBar /> */}
-      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4} width={"100%"}>
+      <Box px={4} width={"100%"}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           {isLogged ? (
             <>

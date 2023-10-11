@@ -206,6 +206,7 @@ const getCardById = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
 // ----------------------------------------------------------------------
 const moreCard = async (req, res) => {
   try {
@@ -238,6 +239,7 @@ const moreCard = async (req, res) => {
     res.status(500).json(error.message);
   }
 };
+
 const getRandomCards = async (req, res) => {
   try {
     const { lootPrice, userId } = req.body;
