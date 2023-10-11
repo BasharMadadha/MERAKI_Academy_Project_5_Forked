@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
-import Swal from "sweetalert2";
-import video from "../../assets/videoB.webm";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 import {
@@ -159,7 +157,7 @@ const Shope = () => {
   return (
     <div className="shopC">
       <div className="overlay">
-        <video className="video" src={video} autoPlay loop muted></video>
+        <video className="video" src="https://res.cloudinary.com/dv7ygzpv8/video/upload/v1697065075/videoB_zoubn9.webm" autoPlay loop muted></video>
         <NavBar />
         <div className="slider-container">
           <div
