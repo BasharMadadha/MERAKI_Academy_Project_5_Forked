@@ -57,12 +57,7 @@ const Notification = () => {
       </div>
 
       <div className="background-video">
-        <video autoPlay loop muted playsInline>
-          <source
-            src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1696915569/tokyo-dreaming-moewalls-com_lzsyc1.mp4"
-            type="video/mp4"
-          />
-        </video>
+        
       </div>
     </Box>
   );

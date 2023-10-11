@@ -350,8 +350,7 @@
   overflow: hidden;
   background-color: blue;
   position: relative;
-  animation: circularMove 2s linear infinite alternate, colorChange 2s linear infinite alternate;}
-
+}
  
 .character-item:hover {
   transform: scale(1.1); 
