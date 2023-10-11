@@ -16,6 +16,47 @@ const GameNavbar = () => {
     socket.emit("user-login", userId);
     console.log(userId);
   };
+  // const userId = useSelector((state) => state.auth.userId);
+  // const online = useSelector((state) => state.auth.onlineUsers);
+  // const isLogged = useSelector((state) => state.auth.isLogged);
+  // const dispatch = useDispatch();
+  // dispatch(setToggleProf(false));
+  // const setUserH = async () => {
+  //   try {
+  //     const result = await axios.get("http://localhost:5000/users/getAllUser");
+  //     if (result.data) {
+  //       dispatch(setUsers(result.data));
+  //     }
+  //   } catch (error) {
+  //     console.error(error.message);
+  //   }
+  // };
+
+  // const getUserFriend = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:5000/userFriends/${userId}`
+  //     );
+
+  //     if (response.status === 200) {
+  //       dispatch(getUserFriends(response.data.userFriends));
+  //     }
+  //   } catch (error) {
+  //     console.log(error.message);
+  //   }
+  // };
+  
+  const getCards = async () => {
+    await axios
+      .get(`http://localhost:5000/card`)
+      .then((res) => {
+        dispatch(setCards(res.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   return (
     <div className="wrapper">

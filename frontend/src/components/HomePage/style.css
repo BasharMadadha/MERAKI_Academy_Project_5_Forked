@@ -1,0 +1,129 @@
+
+  .HomePage-container {
+    width: 100%;
+    height: 3000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .background-vido{
+    position: absolute; 
+  top: -50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+   }
+   .background-video3{
+    position: absolute;
+    z-index: -2;
+    top:2000px
+   }
+.noticaction {
+    margin: 0;
+    background-color: rgba(38, 18, 12, 0.62);
+    block-size: 400px;
+    width: 400px;
+    position:absolute;
+    left:1470px;
+    top:100px;
+    border-block-end-color: rgb(255, 255, 255);
+    border-block-start-color: rgb(255, 255, 255);
+  }
+  .message{
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.62);
+    block-size: 400px;
+    width: 400px;
+    position:absolute;
+    left:1470px;
+    top:540px;
+    border-block-end-color: rgb(255, 255, 255);
+    border-block-start-color: rgb(255, 255, 255);
+  }
+  .chat{
+position: absolute;
+left:1700px;
+display: flex;
+top:875px;
+margin: 10px;
+z-index: 21;
+  }
+  .posts{
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.62);
+    block-size: 400px;
+    width: 700px;
+    position:absolute;
+    left:1100px;
+    top:340px;
+    border-block-end-color: rgb(255, 255, 255);
+    border-block-start-color: rgb(255, 255, 255);
+  }
+
+  
+  .new-news {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgb(255, 255, 255);
+    font-size: 16px;
+    height: 50px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    width: 30px;
+  }
+  
+
+  .news_date {
+    line-height: 50px;
+    color: rgba(255, 255, 255, 0.35);
+    padding: 0 11px;
+    position: absolute;
+    right: 11px;
+    
+  }
+ 
+  .image-slider {
+    position: relative;
+    width: 100%;
+    height:400px;
+    margin: 0 auto;
+    overflow: hidden;
+    right:800px;
+    top:-350px;
+    border: 1px solid black;
+  }
+  
+ 
+  .image-slider img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .image-slider button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .image-slider button:hover {
+    background: rgba(0, 0, 0, 0.7);
+  }
+  
+  .image-slider button:first-child {
+    left: 0;
+  }
+  
+  .image-slider button:last-child {
+    right: 0;
+  }
+  

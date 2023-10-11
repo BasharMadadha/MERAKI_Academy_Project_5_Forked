@@ -70,6 +70,15 @@ CREATE TABLE cards (
     card_prices INTEGER 
 );
 
+CREATE TABLE YAMI_CARDS (
+    card_id serial PRIMARY KEY,
+    card_name VARCHAR(255),
+    card_description TEXT,
+    card_image VARCHAR(255),
+    card_type VARCHAR(255),
+    attack INTEGER,
+    card_prices INTEGER 
+);
 CREATE TABLE user_cards (
     user_card_id serial PRIMARY KEY,
     user_id integer REFERENCES users(id),

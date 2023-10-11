@@ -1,5 +1,6 @@
 const { pool } = require("../models/db");
 const axios = require("axios");
+const cardData = require("../set1-en_us");
 const addCardsFromApi = (req, res) => {
   const api_url =
     "https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=metal%20raiders&attribute=dark";
@@ -66,7 +67,7 @@ const addCard = (req, res) => {
     card_prices,
   } = req.body;
 
-  const query = `INSERT INTO app_cards (card_name, card_description, card_image, archetype, attack, card_prices) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`;
+  const query = `INSERT INTO YAMI_CARDS (card_name, card_description, card_image, archetype, attack, card_prices) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;`;
   const data = [
     card_name,
     card_description,
@@ -96,7 +97,7 @@ const addCard = (req, res) => {
 const getAllCards = async (req, res) => {
   try {
     const response = await pool.query(`SELECT * FROM cards`);
-
+    console.log(cardData);
     if (response) {
       res.status(200).json(response.rows);
     } else {
@@ -210,25 +211,14 @@ const getCardById = async (req, res) => {
 // ----------------------------------------------------------------------
 const moreCard = async (req, res) => {
   try {
-    const response = await axios.get(
-      "https://db.ygoprodeck.com/api/v7/cardinfo.php?rarity=Ultimate%20Rare&type=Effect%20Monster"
-    );
-    const cardsData = response.data.data;
-
-    for (const card of cardsData) {
-      const { name, desc, card_images, archetype, atk, card_prices } = card;
-
-      await pool.query(
-        "INSERT INTO cards (card_name, card_description, card_image, card_type, attack, card_prices) VALUES ($1, $2, $3, $4, $5, $6)",
-        [
-          name,
-          desc,
-          card_images[0].image_url,
-          archetype,
-          atk,
-          Math.round(parseFloat(card_prices[0].amazon_price) * 100),
-        ]
-      );
+    for (const card of cardData) {
+      const { name, regions, assets, type, attack } = card;
+      if ( type === "Unit") {
+        await pool.query(
+          "INSERT INTO Cards  (card_name, card_regions, card_image, card_type, attack) VALUES ($1, $2, $3, $4, $5)",
+          [name, regions, assets[0].gameAbsolutePath, type, attack]
+        );
+      }
     }
 
     res
