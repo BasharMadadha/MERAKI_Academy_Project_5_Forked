@@ -75,10 +75,7 @@ const HomePage = () => {
     <>
       <NavBar />
       <Box p={4}>
-        <Heading as="h1" mb={4}>
-          Home Page
-        </Heading>
-        <GridItem colSpan={1}>
+        <GridItem colSpan={1} marginTop="60px">
           <AddPost />
         </GridItem>
         <Container maxW="100%">
