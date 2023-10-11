@@ -19,7 +19,6 @@ import {
   GridItem,
   Container,
 } from "@chakra-ui/react";
-import axios from "axios";
 import Notification from "../notificationx/index";
 import { setPosts } from "../redux/postSlicer/post";
 import { setUsers } from "../redux/authSlicer/auth";
