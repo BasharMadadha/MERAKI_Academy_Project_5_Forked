@@ -87,7 +87,6 @@ const HomePage = () => {
   return (
     <>
       <NavBar />
-
       <Notification />
       <div className="HomePage-container">
         <div className="background-vido">
@@ -137,18 +136,6 @@ const HomePage = () => {
             placement="right"
             onClose={onClose}
             finalFocusRef={btnRef}
-
-      <Box p={4}>
-        <GridItem colSpan={1} marginTop="60px">
-          <AddPost />
-        </GridItem>
-        <Container maxW="100%">
-          <Grid
-            h="200px"
-            templateRows="repeat(2, 1fr)"
-            templateColumns="repeat(5, 1fr)"
-            gap={4}
-
           >
             <DrawerOverlay />
             <DrawerContent>
