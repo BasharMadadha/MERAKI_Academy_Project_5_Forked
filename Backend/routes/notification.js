@@ -1,5 +1,4 @@
 const express = require("express");
-const notificationRouter=express.Router()
 const {
   getAllnotification,
   getNotificationsWithLikeId,
