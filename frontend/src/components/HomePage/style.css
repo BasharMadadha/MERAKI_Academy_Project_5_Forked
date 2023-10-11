@@ -1,24 +1,31 @@
 
   .HomePage-container {
     width: 100%;
-    height: 3000px;
+    height: 2000px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
   }
-  .background-vido{
-    position: absolute; 
-  top: -50px;
+  .background-vido1{
+  position: absolute;
+  top: -150px;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: -1;
+   }
+   .background-video2{
+    position: absolute;
+    top: 900px;
+    left: 0;
+    width: 100%;
+    height: 100%;
    }
    .background-video3{
     position: absolute;
-    z-index: -2;
-    top:2000px
+    top:1970px
+    
    }
 .noticaction {
     margin: 0;
@@ -27,7 +34,8 @@
     width: 400px;
     position:absolute;
     left:1470px;
-    top:100px;
+    top:0;
+    z-index: 2;
     border-block-end-color: rgb(255, 255, 255);
     border-block-start-color: rgb(255, 255, 255);
   }
@@ -72,7 +80,7 @@ z-index: 21;
     height: 50px;
     text-decoration: none;
     text-overflow: ellipsis;
-    width: 30px;
+    width: 490px;
   }
   
 
@@ -93,7 +101,6 @@ z-index: 21;
     overflow: hidden;
     right:800px;
     top:-350px;
-    border: 1px solid black;
   }
   
  
@@ -126,4 +133,91 @@ z-index: 21;
   .image-slider button:last-child {
     right: 0;
   }
+  .areas {
+    display: grid;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+    grid-template-columns: 1fr 1fr 1fr;
+    position: absolute;
+    top:100px;
+    gap: 50px;
+    left:350px
   
+  }
+  
+
+  
+  .area1 {
+    background-color: #878787;
+    width: 400px;
+    height: 200px;
+    top: 200px;
+    cursor: pointer;
+
+  }
+  
+  .area2 {
+    background-color: #7c3030;
+    width: 400px;
+    height: 200px;
+    top: 300px;
+    cursor: pointer;
+
+  }
+  
+  .area3 {
+    background-color: #bfff00;
+    width: 400px;
+    height: 200px;
+    top: 400px;
+    cursor: pointer;
+
+  }
+  
+  .area4 {
+    background-color: #00ff59;
+    width: 400px;
+    height: 200px;
+    top: 600px;
+    cursor: pointer;
+
+  }
+  
+  .area5 {
+    background-color: #ff0073;
+    width: 400px;
+    height: 200px;
+    top: 800px;
+    cursor: pointer;
+
+  }
+  
+  .area6 {
+    background-color: #c41212;
+    width: 400px;
+    height: 200px;
+    top: 1000px;
+    cursor: pointer;
+  }
+
+  div.area1:hover,
+  div.area2:hover,
+  div.area3:hover,
+  div.area4:hover,
+  div.area5:hover,
+  div.area6:hover {
+    transform: scale(1.1); 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+    transition: .4s;
+  }
+  div.area1:hover .ireal{
+    display: block;
+  }
+  .ireal{
+    position: absolute;
+    height: 300px;
+    top:-55px;
+    display: none;
+    transition: .5s;
+  }

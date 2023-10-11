@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import NavBar from "../Navbar";
+import AddPost from "../AddPost/index";
 const Admin = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
   const [formData, setFormData] = useState({
@@ -46,6 +47,7 @@ const Admin = () => {
   if (userInfo && userInfo.role_id === 2) {
     return (
       <>
+      <AddPost/>
         <NavBar />
         <Box>
           <Container maxW="100%" marginTop={"70px"}>

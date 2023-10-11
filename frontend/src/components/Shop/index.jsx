@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import video from "../../assets/videoB.webm";
 import {
   Card,
   CardBody,

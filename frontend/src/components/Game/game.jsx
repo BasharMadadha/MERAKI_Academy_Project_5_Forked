@@ -286,7 +286,7 @@ const Game = () => {
     socket.emit("image-click", url, soketId1, soketId2);
   };
   return (
-    <Box w="100%" h="100%" style={{ backgroundImage: `url('http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696874523/jlfhb4v2va5a7qylklq0.jpg')` }}>
+    <Box w="100%" h="100%" style={{ backgroundImage: `url('https://static.invenglobal.com/upload/image/2020/01/22/i1579710522631687.png')` }}>
       <GameNavbar />
       <div> {gameEndmessage}</div>
       <Grid>
@@ -361,9 +361,11 @@ const Game = () => {
                 border: "1px solid #ccc",
                 borderRadius: "5px",
                 textAlign: "center",
+              
+
               }}
             >
-              <Image src={card?.card_image} maxW="100px" maxH="100px" />
+              <Image src={card?.card_image} maxW="200px" maxH="200px" />
               <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'>
                 {card.attack}
               </Text>
@@ -391,8 +393,7 @@ const Game = () => {
               <Image
                 src={card.card_image}
                 alt={card.card_name}
-                maxW="100px"
-                maxH="100px"
+                maxW="200px" maxH="200px"
               />
               <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'> 
                 {card.attack}
@@ -421,7 +422,7 @@ const Game = () => {
                 textAlign: "center",
               }}
             >
-              <Image src={card && card.card_image} maxW="100px" maxH="100px" />
+              <Image src={card && card.card_image}  maxW="200px" maxH="200px" />
               <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'>
                 {card && card.attack}
               </Text>

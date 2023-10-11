@@ -87,81 +87,70 @@ const HomePage = () => {
 
       <Notification />
       <div className="HomePage-container">
-        <div className="background-vido">
+        <div className="background-vido1">
           <video autoPlay loop muted playsInline>
             <source
               src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1696968750/adventure-skyscape-moewalls-com_fxmgd9.mp4"
               type="video/mp4"
             />
           </video>
+
+          <div className="message">
+            <ul className="news__tab__list">
+              <li className="news__tab__item news__tab__item--active">
+                message
+              </li>
+            </ul>
+            <ul className="news__list"></ul>
+          </div>
+          <div className="chat">
+            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+              friend
+            </Button>
+            <Drawer
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Create your account</DrawerHeader>
+                <DrawerBody></DrawerBody>
+                <DrawerFooter>
+                  <Button variant="outline" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button colorScheme="blue">Save</Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+
+            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+              world
+            </Button>
+            <Drawer
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Create your account</DrawerHeader>
+                <DrawerBody></DrawerBody>
+                <DrawerFooter>
+                  <Button variant="outline" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button colorScheme="blue">Save</Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </div>
-
-        <div className="message">
-          <ul className="news__tab__list">
-            <li className="news__tab__item news__tab__item--active">message</li>
-          </ul>
-          <ul className="news__list"></ul>
-        </div>
-        <div className="chat">
-          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-            friend
-          </Button>
-          <Drawer
-            isOpen={isOpen}
-            placement="right"
-            onClose={onClose}
-            finalFocusRef={btnRef}
-          >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-              <DrawerBody></DrawerBody>
-              <DrawerFooter>
-                <Button variant="outline" mr={3} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button colorScheme="blue">Save</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-
-          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-            world
-          </Button>
-          <Drawer
-            isOpen={isOpen}
-            placement="right"
-            onClose={onClose}
-            finalFocusRef={btnRef}
-
-      <Box p={4}>
-        <GridItem colSpan={1} marginTop="60px">
-          <AddPost />
-        </GridItem>
-        <Container maxW="100%">
-          <Grid
-            h="200px"
-            templateRows="repeat(2, 1fr)"
-            templateColumns="repeat(5, 1fr)"
-            gap={4}
-
-          >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-              <DrawerBody></DrawerBody>
-              <DrawerFooter>
-                <Button variant="outline" mr={3} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button colorScheme="blue">Save</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-        </div>
-
         <div className="background-video2">
           <video autoPlay loop muted playsInline>
             <source
@@ -190,19 +179,63 @@ const HomePage = () => {
                 src={posts[currentImageIndex]?.image_url}
                 alt={`Image ${currentImageIndex}`}
               />
-              <button onClick={prevImage}>---</button>
-              <button onClick={nextImage}>---</button>
+              <button onClick={prevImage}>Previous</button>
+              <button onClick={nextImage}>Next</button>
             </div>
           </div>
         </div>
-
         <div className="background-video3">
-          <video autoPlay loop muted playsInline>
+          <video className="video3" autoPlay loop muted playsInline>
             <source
               src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1697005486/fantasy-world-full-of-cherry-blossom-trees-moewalls-com_hhqymf.mp4"
               type="video/mp4"
             />
           </video>
+
+          <div className="areas">
+            <div className="area1">
+              <img
+                src={
+                  "https://i.pinimg.com/564x/92/d0/3d/92d03d0950503513c78bb9a559e80229.jpg"
+                }
+              />
+            </div>
+            <div className="area2">
+              <img
+                src={
+                  "https://i.pinimg.com/564x/47/99/8d/47998d7dd1c6631ec0c34cbcac3ca672.jpg"
+                }
+              />
+            </div>
+            <div className="area3">
+              <img
+                src={
+                  "https://i.pinimg.com/564x/41/18/4c/41184c5ab0f032de51da84c06dcb104c.jpg"
+                }
+              />
+            </div>
+            <div className="area4">
+              <img
+                src={
+                  "https://i.pinimg.com/564x/4b/bb/ea/4bbbeaca0d9b6b30f9e9c5a2dd0e01c0.jpg"
+                }
+              />
+            </div>
+            <div className="area5">
+              <img
+                src={
+                  "https://i.pinimg.com/564x/1a/6c/aa/1a6caa78202c778e46eb19ca7e9c3236.jpg"
+                }
+              />
+            </div>
+            <div className="area6">
+              <img
+                src={
+                  "https://i.pinimg.com/564x/97/b0/c7/97b0c7e9714698538ab1fa5f3ea714d1.jpg"
+                }
+              />
+            </div>
+          </div>
         </div>
       </div>
     </>
