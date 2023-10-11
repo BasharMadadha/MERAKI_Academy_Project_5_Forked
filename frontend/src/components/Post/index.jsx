@@ -78,7 +78,7 @@ const Post = ({getPostsByUser}) => {
   return (
     <div className="post">
       <div className="containerP">
-        {posts.map((post) => {
+        {posts?.map((post) => {
           const userPost = users.find((user1) => post.user_id === user1.id);
           return (
             <div key={post.post_id} className="postA">
