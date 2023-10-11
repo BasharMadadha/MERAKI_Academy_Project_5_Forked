@@ -2,22 +2,22 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
-import { RxDotFilled } from "react-icons/rx";
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  Text,
-  Image,
-  Heading,
-  Button,
-  Stack,
-  Divider,
-  ButtonGroup,
-  Input,
-  Box,
-  Img,
-} from "@chakra-ui/react";
+// import { RxDotFilled } from "react-icons/rx";
+// import {
+//   Card,
+//   CardBody,
+//   CardFooter,
+//   Text,
+//   Image,
+//   Heading,
+//   Button,
+//   Stack,
+//   Divider,
+//   ButtonGroup,
+//   Input,
+//   Box,
+//   Img,
+// } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCards } from "../redux/cardSlicer/card";
 import NavBar from "../Navbar";
