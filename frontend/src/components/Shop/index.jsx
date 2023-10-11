@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import "./style.css";
 import axios from "axios";
 import Swal from "sweetalert2";
+import video from "../../assets/videoB.webm";
 import {
   Card,
   CardBody,
@@ -59,22 +61,22 @@ const Shope = () => {
       .catch((error) => {
         console.log(error);
       });
-  }; 
+  };
   const buyCommenCard = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/card/getRandomCards", {
-        lootPrice:500,
-        userId
-      });
-
+      const response = await axios.post(
+        "http://localhost:5000/card/getRandomCards",
+        {
+          lootPrice: 500,
+          userId,
+        }
+      );
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-
-  }
+  };
 
   const setUser = async () => {
-   
     try {
       const result = await axios.get("http://localhost:5000/users/getAllUser");
       if (result.data) {
@@ -84,17 +86,49 @@ const Shope = () => {
       console.error(error.message);
     }
   };
-
+  console.log(users);
   return (
-    <div>
+    <div className="shopC">
+      <div className="overlay"></div>
+      <video  className="video" src={video} autoPlay loop muted />
+      <NavBar />
       <Box
         display="flex"
         justifyContent="center"
         alignItems="center"
         height="100vh" // You can adjust the height as needed
+        position="absolute"
+        top="0"
+        left="10%"
       >
         <Card
-          direction={{ base: "column", sm: "row" }}
+          overflow="hidden"
+          variant="outline"
+          maxW="800px" // Adjust the max width as needed
+          marginRight="20px"
+        >
+          <Image
+            objectFit="cover"
+            maxW={{ base: "100%", sm: "200px" }}
+            src="http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696741224/dr9kfazuluihrft4zb1f.png"
+          />
+          <Stack>
+            <CardBody>
+              <Heading size="md">commen cards</Heading>
+            </CardBody>
+            <CardFooter>
+              <Button
+                onClick={() => buyCommenCard()}
+                variant="solid"
+                colorScheme="blue"
+              >
+                Buy "500"
+              </Button>
+            </CardFooter>
+          </Stack>
+        </Card>
+
+        <Card
           overflow="hidden"
           variant="outline"
           maxW="800px" // Adjust the max width as needed
@@ -104,20 +138,16 @@ const Shope = () => {
             maxW={{ base: "100%", sm: "200px" }}
             src="http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696741224/dr9kfazuluihrft4zb1f.png"
           />
-
           <Stack>
             <CardBody>
-              <Heading size="md">commen cards</Heading>
-
-              <Text py="2">
-                *****************************************************
-              </Text>
+              <Heading size="md">YAMI cards</Heading>
             </CardBody>
-
             <CardFooter>
               <Button
-              onClick={() => buyCommenCard()}
-               variant="solid" colorScheme="blue">
+                onClick={() => buyCommenCard()}
+                variant="solid"
+                colorScheme="blue"
+              >
                 Buy "500"
               </Button>
             </CardFooter>

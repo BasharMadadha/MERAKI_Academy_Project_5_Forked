@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import setCards from "../redux/cardSlicer/card"
+import { setCards } from "../redux/cardSlicer/card";
+import { setUsers } from "../redux/authSlicer/auth";
 import io from "socket.io-client";
 import {
   Box,
@@ -54,8 +55,21 @@ const Map = () => {
         .catch((error) => {
           console.log(error);
         });
-    }; 
-    getCards()
+    };
+    const setUser = async () => {
+      try {
+        const result = await axios.get(
+          "http://localhost:5000/users/getAllUser"
+        );
+        if (result.data) {
+          setUsers(result.data);
+        }
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    setUser();
+    getCards();
     return () => {
       socket.off("room-invite");
       socket.off("game-start");
@@ -120,10 +134,8 @@ const Map = () => {
               onClick={() => handleSelectUser(selectedUserId)} // Make the whole ListItem clickable
               style={{ cursor: "pointer" }} // Add a pointer cursor on hover
             >
-             
-              <VStack  alignItems='center'>
-              <Avatar src={user?.image} alt={user?.username} size='xl' />
-                
+              <VStack alignItems="center">
+                <Avatar src={user?.image} alt={user?.username} size="xl" />
               </VStack>
             </ListItem>
           );
