@@ -44,7 +44,7 @@ const Game = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isRoundEnded, setIsRoundEnded] = useState(true);
   const [gameEndmessage, setGameEndMessage] = useState("");
-  const [imogj, setImogj] = useState([])
+  const [imogj, setImogj] = useState([]);
   const userId = useSelector((state) => state.auth.userId);
   const users = useSelector((state) => state.auth.users);
   const cards = useSelector((state) => state.cards.cards);
@@ -96,26 +96,23 @@ const Game = () => {
     return shuffledArray;
   };
   const getRandomCardNotInHand = () => {
-   
-  
     let randomCard;
     do {
       const randomIndex = Math.floor(Math.random() * UserCards.length);
       randomCard = UserCards[randomIndex];
     } while (playerHand.includes(randomCard));
-    
+
     playerHand.push(randomCard);
     return randomCard;
   };
- 
 
   useEffect(() => {
     socket.on("game_started", (socket_id) => {
       const shuffledUserCards = shuffleArray(UserCards);
       const initialHand = shuffledUserCards.slice(0, 2);
-      console.log("Game has started!");
       setGameEndMessage("");
       setPlayerHand(initialHand);
+      console.log("Game has started!");
     });
 
     socket.on("you-one", (data) => {
@@ -179,11 +176,9 @@ const Game = () => {
         removeCardFromSelcted(firstCard);
       }
     });
-    if (gameEndmessage === "you loset" || gameEndmessage === "you win") {
-      setTimeout(function () {
-        console.log("pver");
-        navigate("/map");
-      }, 1000);
+    if (gameEndmessage) {
+      
+      navigate("/map");
     }
     if ((currentRound > 1 && player1Hp <= 0) || player2Hp <= 0) {
       socket.emit("end-game", player1Hp, player2Hp, soketId1, soketId2);
@@ -202,28 +197,27 @@ const Game = () => {
         setGameEndMessage(message);
       }
     });
-    let timeoutId = null;
+    
 
     socket.on("get-imoj", (url) => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    
-      timeoutId = setTimeout(() => {
-        setImogj((prevImogj) => {
-          const updatedImogj = [...prevImogj, url];
-          return updatedImogj;
-        });
-    
-        timeoutId = null;
-      }, 3000);
+      setImogj([...imogj, url]);
+      console.log("hree work");
+      
+        setTimeout(function () {
+          setImogj([])
+          console.log("pver");
+        }, 3000);
+
+      
+     
     });
-   
+
     return () => {
       socket.off("game-started");
       socket.off("receive-cards");
       socket.off("you-win");
       socket.off("new-round");
+      
     };
   }, [
     currentRound,
@@ -232,6 +226,7 @@ const Game = () => {
     player1Hp,
     player2Hp,
     selectedCards,
+    gameEndmessage
   ]);
 
   const removeCardFromSelcted = (cardToRemove) => {
@@ -288,26 +283,26 @@ const Game = () => {
   };
   const handleImageClick = (url) => {
     console.log("Image clicked", url);
-    socket.emit("image-click", url,soketId1,soketId2)
+    socket.emit("image-click", url, soketId1, soketId2);
   };
   return (
-    <Box>
+    <Box w="100%" h="100%" style={{ backgroundImage: `url('http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696874523/jlfhb4v2va5a7qylklq0.jpg')` }}>
       <GameNavbar />
       <div> {gameEndmessage}</div>
       <Grid>
-    
-  {Array.isArray(imogj) && imogj.map((url) => (
-    <Box key={url.length}>
-      <Image
-        src={url}
-        boxSize="200px"
-        objectFit="cover"
-        borderRadius="md"
-        boxShadow="md"
-      />
-    </Box>
-  ))}
-</Grid>
+        {Array.isArray(imogj) &&
+          imogj.map((url) => (
+            <Box key={url.length}>
+              <Image
+                src={url}
+                boxSize="150px"
+                objectFit="cover"
+                borderRadius="md"
+                boxShadow="md"
+              />
+            </Box>
+          ))}
+      </Grid>
       <Box
         backgroundImage="url('http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696379431/qpavqpkecmeisxfpnsjr.png')"
         backgroundPosition="center"
@@ -319,9 +314,37 @@ const Game = () => {
           gap={80}
           css={{ gridAutoFlow: "column" }}
         >
-          <GridItem pl="4">{`player1: ${player1Hp}`}</GridItem>
+          <GridItem
+            pl="4"
+            fontSize = '30px'
+            fontWeight= 'bold'
+            lineHeight= '80%'
+            style={{
+              cursor: "pointer",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              textAlign: "center",
+              color:'#F0F8FF'
+            }}
+          >
+            {`player1: ${player1Hp}`}
+          </GridItem>
           <Grid></Grid>
-          <GridItem pl="4">{`player2: ${player2Hp}`}</GridItem>
+          <GridItem
+            pl="4"
+            fontSize = '30px'
+            fontWeight= 'bold'
+            lineHeight= '80%'
+            style={{
+              cursor: "pointer",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              textAlign: "center",
+              color:'#F0F8FF'
+            }}
+          >{`player2: ${player2Hp}`}</GridItem>
         </Grid>
         <Grid
           templateColumns={`repeat(auto-fill, minmax(px, 1fr))`}
@@ -334,21 +357,20 @@ const Game = () => {
               onClick={() => selectedCardsForAttacks(card)}
               style={{
                 cursor: "pointer",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                textAlign: "center",
               }}
             >
-              <Image
-                src={card.card_image}
-                alt={card.card_name}
-                maxW="100px"
-                maxH="100px"
-              />
-              <Text fontSize="lg" fontWeight="bold" mt={2}>
+              <Image src={card?.card_image} maxW="100px" maxH="100px" />
+              <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'>
                 {card.attack}
               </Text>
             </Box>
           ))}
         </Grid>
-
+        <Box height="150px" />
         <Grid
           templateColumns={`repeat(auto-fill, minmax(px, 1fr))`}
           gap={5}
@@ -360,6 +382,10 @@ const Game = () => {
               onClick={() => selectedCardsForAttacks(card)}
               style={{
                 cursor: "pointer",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                textAlign: "center",
               }}
             >
               <Image
@@ -368,7 +394,7 @@ const Game = () => {
                 maxW="100px"
                 maxH="100px"
               />
-              <Text fontSize="lg" fontWeight="bold" mt={2}>
+              <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'> 
                 {card.attack}
               </Text>
             </Box>
@@ -376,67 +402,89 @@ const Game = () => {
         </Grid>
 
         <Text fontWeight="bold">Current Round: {currentRound}</Text>
-          <Grid
-            templateColumns={`repeat(auto-fill, minmax(px, 1fr))`}
-            gap={2}
-            css={{ gridAutoFlow: "column" }}
-          >
-            {playerHand?.map((card) => (
-              <Box
-                key={card && card.card_id}
-                onClick={() => handleCardSelect(card)}
-                style={{
-                  cursor: clickedCards.includes(card)
-                    ? "not-allowed"
-                    : "pointer",
-                  opacity: clickedCards.includes(card) ? 0.5 : 1,
-                  border: selectedCards.includes(card)
-                    ? "2px solid red"
-                    : "none",
-                }}
-              >
-                <Image
-                  src={card && card.card_image}
-                  maxW="100px"
-                  maxH="100px"
-                />
-                <Text fontSize="lg" fontWeight="bold" mt={2}>
-                  {card && card.attack}
-                </Text>
-              </Box>
-            ))}
-          </Grid>
-          <Button mt={4} onClick={toggleReady}>
-            {"Ready"}
-          </Button>
-          {((player1 === userId && currentRound % 2 === 1) ||
-            (player2 === userId && currentRound % 2 === 0)) && (
-            <Button mt={4} onClick={toggleReady2}>
-              {"End Round"}
-            </Button>
-          )}
-        <Menu>
-      <MenuButton>Open menu</MenuButton>
-      <MenuList>
         <Grid
-          templateColumns={`repeat(${emoi.length}, 200px)`}
-          gap={4}
-          justifyContent="flex-end" 
+          templateColumns={`repeat(auto-fill, minmax(px, 1fr))`}
+          gap={2}
+          css={{ gridAutoFlow: "column" }}
         >
-          {emoi.map((url) => (
-            <MenuItem onClick={() => handleImageClick(url)}>
-              <Image
-                src={url}
-                boxSize="200px"
-                objectFit="cover"
-                borderRadius="md"
-                boxShadow="md"
-              />
-            </MenuItem>
+          {playerHand?.map((card) => (
+            <Box
+              key={card && card.card_id}
+              onClick={() => handleCardSelect(card)}
+              style={{
+                cursor: clickedCards.includes(card) ? "not-allowed" : "pointer",
+                opacity: clickedCards.includes(card) ? 0.5 : 1,
+                border: selectedCards.includes(card) ? "2px solid red" : "none",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "5px",
+                textAlign: "center",
+              }}
+            >
+              <Image src={card && card.card_image} maxW="100px" maxH="100px" />
+              <Text fontSize="lg" fontWeight="bold" mt={2}  color='#F0F8FF'>
+                {card && card.attack}
+              </Text>
+            </Box>
           ))}
         </Grid>
-      </MenuList>
-    </Menu>
+        <Button mt={4} onClick={toggleReady}>
+          {"Ready"}
+        </Button>
+        <Box height="10px" />
+        {((player1 === userId && currentRound % 2 === 1) ||
+          (player2 === userId && currentRound % 2 === 0)) && (
+          <Button
+            mt={4}
+            onClick={toggleReady2}
+            style={{
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              margin: "10px",
+              position: "relative",
+              left: "-300px",
+            }}
+          >
+            End Round
+          </Button>
+        )}
+        <Menu>
+          <Box height="10px" />
+          <MenuButton
+            style={{
+              cursor: "pointer",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "10px",
+              textAlign: "center",
+              position: "relative",
+              left: "-500px",
+              top:"-300px",
+              color:'#F0F8FF'
+            }}
+          >
+            Open menu
+          </MenuButton>
+          <MenuList>
+            <Grid
+              templateColumns={`repeat(${emoi.length}, 200px)`}
+              gap={10}
+              justifyContent="flex-end"
+            >
+              {emoi.map((url) => (
+                <MenuItem onClick={() => handleImageClick(url)}>
+                  <Image
+                    src={url}
+                    boxSize="200px"
+                    objectFit="cover"
+                    borderRadius="md"
+                    boxShadow="md"
+                  />
+                </MenuItem>
+              ))}
+            </Grid>
+          </MenuList>
+        </Menu>
       </Center>
     </Box>
   );

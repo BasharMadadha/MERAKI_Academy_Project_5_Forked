@@ -90,7 +90,9 @@ const Shope = () => {
   return (
     <div className="shopC">
       <div className="overlay"></div>
-      <video src={video} autoPlay loop muted />
+
+      <video  className="video" src={video} autoPlay loop muted />
+
       <NavBar />
       <Box
         display="flex"
