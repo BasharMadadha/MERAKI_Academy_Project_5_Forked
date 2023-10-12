@@ -19,6 +19,7 @@ import GameNavbar from "./components/Game/onlineUser";
 import Notification from "./components/notificationx/index"
 import NavBar from "./components/Navbar/index"
 import FrontPage from './components/Front Page/index'
+import Loot from "./components/Shop/loot";
 function App() {
   return (
     <ChakraProvider>
@@ -34,13 +35,14 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/Admin" element={<Admin />} />
-        <Route path="/card" element={<CardList />} />
+        <Route path="/cards" element={<CardList />} />
         <Route path="/map" element={<Map />} />
         <Route path="/game" element={<Game />} />
         <Route path="/GameNavbar" element={<GameNavbar />} />
         <Route path="/Notification" element={<Notification />} />
         <Route path="/NavBar" element={<NavBar />} />
         <Route path="/FrontPage" element={<FrontPage />} />
+        <Route path="/shop/loot" element={<Loot />} />
       </Routes>
     </ChakraProvider>
   );
