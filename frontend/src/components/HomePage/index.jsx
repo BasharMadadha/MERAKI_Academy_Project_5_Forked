@@ -1,10 +1,8 @@
-
 import React, { useEffect, useState, useRef } from "react";
 import "./style.css";
 import NavBar from "../Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-
 import {
   Button,
   Drawer,
@@ -95,15 +93,9 @@ const HomePage = () => {
               type="video/mp4"
             />
           </video>
-          <div className="message">
-            <ul className="news__tab__list">
-              <li className="news__tab__item news__tab__item--active">
-                message
-              </li>
-            </ul>
-            <ul className="news__list"></ul>
-          </div>
-        
+
+  
+ 
         <div className="message">
           <ul className="news__tab__list">
             <li className="news__tab__item news__tab__item--active">message</li>
@@ -157,6 +149,54 @@ const HomePage = () => {
             </DrawerContent>
           </Drawer>
 
+
+          <div className="chat">
+            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+              friend
+            </Button>
+            <Drawer
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Create your account</DrawerHeader>
+                <DrawerBody></DrawerBody>
+                <DrawerFooter>
+                  <Button variant="outline" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button colorScheme="blue">Save</Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+
+            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+              world
+            </Button>
+            <Drawer
+              isOpen={isOpen}
+              placement="right"
+              onClose={onClose}
+              finalFocusRef={btnRef}
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Create your account</DrawerHeader>
+                <DrawerBody></DrawerBody>
+                <DrawerFooter>
+                  <Button variant="outline" mr={3} onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button colorScheme="blue">Save</Button>
+                </DrawerFooter>
+              </DrawerContent>
+            </Drawer>
+          </div>
         </div>
         </div>
         <div className="background-video2">

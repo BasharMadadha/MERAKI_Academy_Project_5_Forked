@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,8 +40,8 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   return (
     <>
       {["xxl"].map((expand) => (
-        <Navbar key={expand} expand={expand} id="id" className="mb-3">
-          <Container fluid>
+        <Navbar key={expand} expand={expand} id="id" >
+          <Container fluid >
             <Navbar.Brand href="#">
               <img className="img" src={YourImage} alt="" />
             </Navbar.Brand>
@@ -61,14 +61,14 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   <Nav.Link href="/HomePage" className="font">
                     HOME
                   </Nav.Link>
-                  <Nav.Link href="#" className="font">
+                  <Nav.Link href="" className="font">
                     NEWS
                   </Nav.Link>
                   <Nav.Link href="" className="font">
                     TOP-UP
                   </Nav.Link>
                   {userInfo?.role_id === 2 && (
-                    <Nav.Link className="font" to={"/Admin"}>
+                    <Nav.Link className="font" href={"/Admin"}>
                       Admin
                     </Nav.Link>
                   )}
@@ -84,6 +84,24 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   >
                     PROFILE
                   </Nav.Link>
+
+
+                  <Link
+                    href="map"
+                    className="font"
+                    onClick={() => {
+                      dispatch(setToggleProf(true));
+                      dispatch(setUser_id(userInfo?.id));
+                      getUserByID(userInfo?.id);
+                      getPostsByUser(userInfo?.id);
+                    }}
+                  >
+                    MAP
+                  </Link>
+                  <Nav.Link href="shop" className="font">
+                    Shop
+                  </Nav.Link>
+
                   {isLogged ? (
                     <Nav.Link onClick={handleLogout} className="logfont">
                       Logout

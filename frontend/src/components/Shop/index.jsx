@@ -1,8 +1,19 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   Card,
   CardBody,
@@ -25,6 +36,8 @@ import { useNavigate } from "react-router-dom";
 const Shope = () => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [scrolly, setScrolly] = useState(false);
   const [card, setCard] = useState({
     card_name: "",
     card_description: "",
@@ -37,18 +50,37 @@ const Shope = () => {
   const cards = useSelector((state) => state.cards.cards);
   const user = useSelector((state) => state.auth.userInfo);
   const userId = useSelector((state) => state.auth.userId);
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
   const config = {
     headers: { Authorization: `Bearer ${token}` },
   };
-
-  const userShop = users?.find((user1) => user?.id === user1.id);
+  const userShop = users?.find((user1) => user?.id === user1?.id);
 
   useEffect(() => {
-    getCards();
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+      if (window.scrollY > 350) {
+        setScrolly(true);
+      } else {
+        setScrolly(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scrolly", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scrolly", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     setUser();
   }, []);
 
@@ -62,12 +94,12 @@ const Shope = () => {
         console.log(error);
       });
   };
-  const buyCommenCard = async () => {
+  const buyCommenCard = async (price) => {
     try {
       const response = await axios.post(
         "http://localhost:5000/card/getRandomCards",
         {
-          lootPrice: 500,
+          lootPrice: price,
           userId,
         }
       );
@@ -153,100 +185,256 @@ const Shope = () => {
   const goToSlide = (slideIndex) => {
     setCurrentIndex(slideIndex);
   };
+
   return (
     <div className="shopC">
       <div className="overlay">
-        <video className="video" src="https://res.cloudinary.com/dv7ygzpv8/video/upload/v1697065075/videoB_zoubn9.webm" autoPlay loop muted></video>
+        <video
+          className="video"
+          src="https://res.cloudinary.com/dv7ygzpv8/video/upload/v1697065075/videoB_zoubn9.webm"
+          autoPlay
+          loop
+          muted
+        ></video>
         <NavBar />
-        <div className="slider-container">
+        <div className={`subNav ${scrolled ? "scrolled" : ""}`}>
+          <button className="btnSub" onClick={() => navigate("/shop")}>
+            FEATURED
+          </button>
+          <button className="btnSub" onClick={() => navigate("/cards")}>
+            CARDS
+          </button>
+          <button className="btnSub" onClick={() => navigate("/shop/loot")}>
+            LOOT
+          </button>
+          <button className="btnSub">ACCESSORIES</button>
           <div
-            style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
-            className="slider-image"
+            style={{
+              right: "3%",
+              position: "absolute",
+              display: "flex",
+              padding: "6px",
+            }}
           >
-            <img className="iconImg" src={slides[currentIndex].image} />
-            <p className="pName">{slides[currentIndex].name}</p>
-            <p className="pTitle">{slides[currentIndex].title}</p>
-          </div>
-          <div className="slider-arrow left">
-            <BsChevronCompactLeft onClick={prevSlide} size={30} />
-          </div>
-          <div className="slider-arrow right">
-            <BsChevronCompactRight onClick={nextSlide} size={30} />
-          </div>
-          <div className="slider-dots">
-            {slides.map((slide, slideIndex) => (
-              <div
-                key={slideIndex}
-                onClick={() => goToSlide(slideIndex)}
-                className={slideIndex === currentIndex ?"currentIndex":"slider-number"}
-              >
-                {slideIndex + 1}
-              </div>
-            ))}
+            <img
+              style={{ width: "60px", height: "30px" }}
+              src="https://res.cloudinary.com/dv7ygzpv8/image/upload/e_background_removal/f_png/v1697103856/edfcb052357e8600e18d06f501f6be186d8c_1232xr706_Q100_pg18ht_-_Logo_xqyve4.png"
+            />
+            <span
+              style={{
+                color: "white",
+                alignSelf: "center",
+                fontSize: "22px",
+              }}
+            >
+              {userShop?.crypto_amount}
+            </span>
           </div>
         </div>
-        {/* <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          height="100vh" // You can adjust the height as needed
-          position="absolute"
-          top="0"
-          left="60%"
-        >
-          <Card
-            overflow="hidden"
-            variant="outline"
-            maxW="800px" // Adjust the max width as needed
-            marginRight="20px"
-          >
-            <Image
-              objectFit="cover"
-              maxW={{ base: "100%", sm: "200px" }}
-              src="http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696741224/dr9kfazuluihrft4zb1f.png"
-            />
-            <Stack>
-              <CardBody>
-                <Heading size="md">commen cards</Heading>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  onClick={() => buyCommenCard()}
-                  variant="solid"
-                  colorScheme="blue"
+        <div className="firstSc">
+          <div className="slider-large">
+            <div
+              style={{ backgroundImage: `url(${slides[currentIndex].url})` }}
+              className="slider-image"
+            >
+              <img className="iconImg" src={slides[currentIndex].image} />
+              <p className="pName">{slides[currentIndex].name}</p>
+              <p className="pTitle">{slides[currentIndex].title}</p>
+            </div>
+            <div className="slider-arrow left">
+              <BsChevronCompactLeft onClick={prevSlide} size={30} />
+            </div>
+            <div className="slider-arrow right">
+              <BsChevronCompactRight onClick={nextSlide} size={30} />
+            </div>
+            <div className="slider-dots">
+              {slides.map((slide, slideIndex) => (
+                <div
+                  key={slideIndex}
+                  onClick={() => goToSlide(slideIndex)}
+                  className={
+                    slideIndex === currentIndex
+                      ? "currentIndex"
+                      : "slider-number"
+                  }
                 >
-                  Buy "500"
-                </Button>
-              </CardFooter>
-            </Stack>
-          </Card>
-
-          <Card
-            overflow="hidden"
-            variant="outline"
-            maxW="800px" // Adjust the max width as needed
+                  {slideIndex + 1}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="slider-container1">
+            <div className="slider-small">
+              <div
+                style={{
+                  backgroundImage: `url(https://res.cloudinary.com/dv7ygzpv8/image/upload/v1697099697/ionia-frame-35_zyzxbj.jpg)`,
+                }}
+                className="slider-image"
+                onClick={onOpen}
+              >
+                <p className="pName1">Bandles Cards</p>
+                <img
+                  className="iconImg1"
+                  src="https://res.cloudinary.com/dv7ygzpv8/image/upload/e_background_removal/f_png/v1697103856/edfcb052357e8600e18d06f501f6be186d8c_1232xr706_Q100_pg18ht_-_Logo_xqyve4.png"
+                />
+                <span className="price">1000</span>
+              </div>
+            </div>
+            <div className="slider-small">
+              <div
+                style={{
+                  backgroundImage: `url(https://res.cloudinary.com/dv7ygzpv8/image/upload/v1697100386/frel-lor-6_gquck6.jpg)`,
+                }}
+                className="slider-image"
+              >
+                <p className="pName1">Freljord Pack</p>
+                <img
+                  className="iconImg1"
+                  src="https://res.cloudinary.com/dv7ygzpv8/image/upload/e_background_removal/f_png/v1697103856/edfcb052357e8600e18d06f501f6be186d8c_1232xr706_Q100_pg18ht_-_Logo_xqyve4.png"
+                />
+                <span className="price">500</span>
+              </div>
+            </div>
+            <div className="slider-small">
+              <div
+                style={{
+                  backgroundImage: `url(https://res.cloudinary.com/dv7ygzpv8/image/upload/v1697100398/runeterra-demacia-03_me3rbs.jpg)`,
+                }}
+                className="slider-image"
+              >
+                <p className="pName1">Damacia Pack</p>
+                <img
+                  className="iconImg1"
+                  src="https://res.cloudinary.com/dv7ygzpv8/image/upload/e_background_removal/f_png/v1697103856/edfcb052357e8600e18d06f501f6be186d8c_1232xr706_Q100_pg18ht_-_Logo_xqyve4.png"
+                />
+                <span className="price">500</span>
+              </div>
+            </div>
+            <div className="slider-small">
+              <div
+                style={{
+                  backgroundImage: `url(https://res.cloudinary.com/dv7ygzpv8/image/upload/v1697100378/faction-shadowisles-frame-1_ekcekm.jpg)`,
+                }}
+                className="slider-image"
+              >
+                <p className="pName1">Shadowisles Pack</p>
+                <img
+                  className="iconImg1"
+                  src="https://res.cloudinary.com/dv7ygzpv8/image/upload/e_background_removal/f_png/v1697103856/edfcb052357e8600e18d06f501f6be186d8c_1232xr706_Q100_pg18ht_-_Logo_xqyve4.png"
+                />
+                <span className="price">500</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <Modal onClose={onClose} isOpen={isOpen} isCentered>
+          <ModalOverlay />
+          <ModalContent
+            style={{
+              backgroundImage: `url(https://res.cloudinary.com/dv7ygzpv8/image/upload/v1697100398/runeterra-demacia-03_me3rbs.jpg)`,
+            }}
           >
-            <Image
-              objectFit="cover"
-              maxW={{ base: "100%", sm: "200px" }}
-              src="http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696741224/dr9kfazuluihrft4zb1f.png"
-            />
-            <Stack>
-              <CardBody>
-                <Heading size="md">YAMI cards</Heading>
-              </CardBody>
-              <CardFooter>
-                <Button
-                  onClick={() => buyCommenCard()}
-                  variant="solid"
-                  colorScheme="blue"
-                >
-                  Buy "500"
-                </Button>
-              </CardFooter>
-            </Stack>
-          </Card>
-        </Box> */}
+            <ModalHeader>Bandles Cards</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Image
+                src="https://res.cloudinary.com/dv7ygzpv8/image/upload/v1697065666/kwtrcfvd6p19tzgqxwxh.jpg"
+                fallbackSrc=""
+              />
+              <Divider /> 5 Random Cards
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                mr={40}
+                variant="ghost"
+                onClick={() => {
+                  buyCommenCard(1000);
+                  setUser();
+                  onClose();
+                }}
+              >
+                <img
+                  className="iconRp"
+                  src="https://res.cloudinary.com/dv7ygzpv8/image/upload/e_background_removal/f_png/v1697103856/edfcb052357e8600e18d06f501f6be186d8c_1232xr706_Q100_pg18ht_-_Logo_xqyve4.png"
+                />
+                <span style={{ color: "rgb(255, 217, 0)" }}>1000</span>
+              </Button>
+              <Button colorScheme="blue" px={6} py={6} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </div>
+      <div className="overlay">
+        <video
+          className="video"
+          src="https://res.cloudinary.com/dv7ygzpv8/video/upload/v1697065075/videoB_zoubn9.webm"
+          autoPlay
+          loop
+          muted
+        ></video>
+        <div className="midSc">
+          <div className="headerMid">
+            <h4 style={{ fontSize: "12px", marginTop: "8px" }}>CATEGORY</h4>
+            <h2>COMPETITIVE</h2>
+          </div>
+          <Divider w={"70%"} />
+          <div className="list-item-M">
+            <div className={`custom-list-item ${scrolly ? "scrolly" : ""}`}>
+              <img
+                src="https://images.contentstack.io/v3/assets/blta38dcaae86f2ef5c/blte6a6154d1e0276e7/643f3956a4989052e033750e/Kinkou-Student-Banner.jpg"
+                alt="The First Runeterra Open"
+              />
+              <div className="item-details">
+                <span className="date">4/19/23 09:00 PM</span>
+                <span className="category">Competitive</span>
+                <h3 className="title">The First Runeterra Open</h3>
+                <p className="description">
+                  This is a rundown of the first Runeterra Open, where we talk
+                  about how we plan on improving tournaments for the future.
+                </p>
+              </div>
+            </div>
+            <div className={`custom-list-item ${scrolly ? "scrolly" : ""}`}>
+              <picture className="card-banner-wrapper">
+                <img
+                  className="card-banner"
+                  src="https://images.contentstack.io/v3/assets/blta38dcaae86f2ef5c/blt5c2b01a6a12f765d/64c190174855e94f9df9ac9a/HEADER_-_glory-in-navori_world-points.jpg"
+                  alt="LoR Runeterra Points"
+                />
+              </picture>
+              <div className="content-details">
+                <span className="date">8/1/23 09:00 PM</span>
+                <span className="category">Competitive</span>
+                <h3 className="title">LoR Runeterra Points</h3>
+                <p className="description">
+                  Get a look at the current qualified players and point
+                  standings for the Legends of Runeterra World Championship!
+                </p>
+              </div>
+            </div>
+            <div className={`custom-list-item ${scrolly ? "scrolly" : ""}`}>
+              <picture className="card-banner-wrapper">
+                <img
+                  className="card-banner"
+                  src="https://images.contentstack.io/v3/assets/blta38dcaae86f2ef5c/blt74988c7da460c720/63d1c6319d7bcb5422350296/013123_LoR_LS2023_Article_Banner.jpg"
+                  alt="LoR Runeterra Points"
+                />
+              </picture>
+              <div className="content-details">
+                <span className="date">1/31/23 09:00 PM</span>
+                <span className="category">Competitive</span>
+                <h3 className="title">COMPETITIVE IN 2023</h3>
+                <p className="description">
+                  With our Refocus on PVP we’ve been hard at work designing and
+                  refining new ways to make Competitive engaging. Check out this
+                  Article to see how it will change in 2023!
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
