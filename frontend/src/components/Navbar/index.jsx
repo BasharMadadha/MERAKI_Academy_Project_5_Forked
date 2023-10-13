@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout, setUser_id, setToggleProf } from "../redux/authSlicer/auth";
 import { useNavigate } from "react-router-dom";
-import YourImage from "../Navbar/bg-removebg-preview.png";
+import YourImage from "../Navbar/logoo-removebg-preview.png";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -84,7 +84,9 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   >
                     PROFILE
                   </Nav.Link>
-                  <Nav.Link
+
+
+                  <Link
                     href="map"
                     className="font"
                     onClick={() => {
@@ -95,10 +97,11 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                     }}
                   >
                     MAP
-                  </Nav.Link>
+                  </Link>
                   <Nav.Link href="shop" className="font">
                     Shop
                   </Nav.Link>
+
                   {isLogged ? (
                     <Nav.Link onClick={handleLogout} className="logfont">
                       Logout
@@ -110,8 +113,14 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
               </Offcanvas.Body>
             </Navbar.Offcanvas>
             {/* button */}
-            <button id="button" className="game">
-              Hover me
+            <button id="button" className="game"  onClick={() => {
+                      dispatch(setToggleProf(true));
+                      dispatch(setUser_id(userInfo?.id));
+                      getUserByID(userInfo?.id);
+                      getPostsByUser(userInfo?.id);
+                      navigate("/map")
+                    }}>
+                      PLAY NOW
             </button>
             {/* button */}
           </Container>
