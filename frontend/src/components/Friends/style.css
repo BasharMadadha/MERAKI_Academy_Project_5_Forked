@@ -1,1 +1,48 @@
+.frienddiv{
+    width: 500px;
+    margin-bottom: 100px;
+}
+.frienddiv .name{
+    font-size: 15px;
+    position: relative;
+    top: 5px;
+    margin: 10px;
+    left: -10px;
+}
+.frienddiv .img{
+    position: relative;
+    left: -10px;
+}
+.frienddiv .removefrind{
+    margin: 10px;
+    padding: 10px;
+    height: 25px;
+    position: relative;
+    left: -12px;
+    border-radius: 20px;
+    background-color: rgba(229, 222, 222, 0.96);
+}
+.frienddiv .inside{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    position: relative;
+    left: -40px;
+}
+.p{
+    position: relative;
+    left: 41px;
+}
+
+.p2{
+    width: 190px;
+}
+
+@media screen and (max-width: 769px){
+.test{
+    width: 500px;
+    margin: 5px;
+    padding: 5px;
+}
+
+}
 

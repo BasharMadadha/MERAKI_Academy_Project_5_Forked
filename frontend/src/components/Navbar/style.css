@@ -3,20 +3,22 @@ body {
 }
 
 .img {
-  width: 300px;
-  height: 120px;
-  border-radius: 40px;
+  width: 100px;
+  height: 60px;
+  border-radius: 50px;
   position: relative;
   left: 100px;
+  top: 4px;
 }
 /* background-color: rgba(17,17,17,0.85); */
 #id {
-  background-color: rgba(17, 17, 17, 0.75);
+  background-color: rgba(0,0,0,0.3);
   box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
+  width: 100%;
   height: 85px;
-  border-bottom: 0.1px solid gray;
-  position: sticky;
+  border-bottom: 0.1px solid rgba(172, 172, 172, 0.114);
   z-index: 999;
+  position: fixed;
 }
 
 .font {
@@ -40,7 +42,7 @@ body {
   height: 3px;
   bottom: 0;
   left: 0;
-  background-color: rgb(248, 132, 117);
+  background-color: gold;
   transform-origin: bottom right;
   transition: transform 0.5s ease-out;
 }
@@ -69,7 +71,7 @@ body {
   right: -13px;
   height: 84px;
   width: 250px;
-  background-color: rgb(248, 132, 117);
+  background-color: goldenrod;
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -78,14 +80,17 @@ body {
 }
 #button:hover {
   background-color: transparent;
-  color: rgb(248, 132, 117);
+  color: goldenrod;
 }
 
 /* responsive */
 @media screen and (max-width: 769px) {
+
+
   .font {
     position: relative;
     left: 1px;
+    color: rgb(30, 24, 24);
   }
   .logfont {
     display: none;
@@ -93,8 +98,7 @@ body {
 
   .img {
     position: relative;
-    left: -75px;
-    top: -10px;
+    left: -20px;
   }
   .game {
     display: none;
@@ -102,5 +106,12 @@ body {
 
   .font:hover:after {
     display: none;
+  }
+  #id {
+    height: 110px;
+  }
+  .font:hover {
+    text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff;
+    color:rgb(30, 24, 24) ;
   }
 }

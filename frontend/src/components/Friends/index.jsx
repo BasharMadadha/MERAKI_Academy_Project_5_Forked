@@ -98,65 +98,39 @@ const Friends = () => {
   };
 
   return (
-    <div className="firendpage">
-      <div className="">
-        <h1>firend</h1>
-        <Center py={6}>
-          <Box
-            maxW={"270px"}
-            w={"full"}
-            bg={useColorModeValue("white", "gray.800")}
-            boxShadow={"2xl"}
-            rounded={"md"}
-            overflow={"hidden"}
-          >
+
+    <div>
+      {/*  friend list */}
+
+      <div className="frienddiv">
+      <p className="p">friends</p>
+        <Center>
+         
+          <Box className="inside">
             {friends.map((friend) => (
-              <Box 
-              key={friend.friend_id}
-              mt={"50px"}
-              >   
-                <Flex justify={"center"} mt={-12}>
-                  <Avatar
-                    size={"xl"}
-                    src={friend.friend_image}
-                    css={{
-                      border: "2px solid white",
-                    }}
-                  />
+              <Box key={friend.friend_id}>   
+                <Flex>
+                  <Avatar src={friend.friend_image} className="img"/>
                 </Flex>
-                <Box p={6}>
-                  <Stack spacing={0} align={"center"} mb={5}>
-                    <Heading
-                      fontSize={"2xl"}
-                      fontWeight={500}
-                      fontFamily={"body"}
-                    >
+                <Box>
+                  <Stack>
+                    <Heading className="name">
                       {friend.friend_username}
                     </Heading>
                   </Stack>
-                  <Button
-                    w={"full"}
-                    mt={8}
-                    bg={useColorModeValue("#151f21", "gray.900")}
-                    color={"white"}
-                    rounded={"md"}
-                    _hover={{
-                      transform: "translateY(-2px)",
-                      boxShadow: "lg",
-                    }}
-                    onClick={() => removeFriend(friend.friend_id)}
-                  >
-                    Remove
-                  </Button>
+                  <Button onClick={() => removeFriend(friend.friend_id)} className="removefrind">Remove</Button>
                 </Box>
               </Box> 
             ))}
           </Box>
         </Center>
       </div>
+      {/* friend list */}
+
       <UnorderedList listStyleType="none">
+      <p className="p2">friend request</p>
     {pendingRequests.map((request) => (
-      <ListItem key={request.id} borderBottom="1px solid #ccc" py={3} display="flex" alignItems="center">
+      <ListItem key={request.id} borderBottom="1px solid #ccc" py={3} display="flex" alignItems="center" className="test">
         <Box marginRight="20px">
           <Image src={request.image} alt="image" boxSize="50px" borderRadius="50%" />
         </Box>

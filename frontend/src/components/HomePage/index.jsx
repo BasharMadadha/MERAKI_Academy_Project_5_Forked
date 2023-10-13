@@ -87,7 +87,7 @@ const HomePage = () => {
     <>
       <NavBar />
       <Notification />
-      <div className="HomePage-container">
+    <div className="HomePage-container">
         <div className="background-vido1">
           <video autoPlay loop muted playsInline>
             <source
@@ -95,8 +95,6 @@ const HomePage = () => {
               type="video/mp4"
             />
           </video>
-
-
           <div className="message">
             <ul className="news__tab__list">
               <li className="news__tab__item news__tab__item--active">
@@ -105,54 +103,7 @@ const HomePage = () => {
             </ul>
             <ul className="news__list"></ul>
           </div>
-          <div className="chat">
-            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-              friend
-            </Button>
-            <Drawer
-              isOpen={isOpen}
-              placement="right"
-              onClose={onClose}
-              finalFocusRef={btnRef}
-            >
-              <DrawerOverlay />
-              <DrawerContent>
-                <DrawerCloseButton />
-                <DrawerHeader>Create your account</DrawerHeader>
-                <DrawerBody></DrawerBody>
-                <DrawerFooter>
-                  <Button variant="outline" mr={3} onClick={onClose}>
-                    Cancel
-                  </Button>
-                  <Button colorScheme="blue">Save</Button>
-                </DrawerFooter>
-              </DrawerContent>
-            </Drawer>
-
-            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-              world
-            </Button>
-            <Drawer
-              isOpen={isOpen}
-              placement="right"
-              onClose={onClose}
-              finalFocusRef={btnRef}
-            >
-              <DrawerOverlay />
-              <DrawerContent>
-                <DrawerCloseButton />
-                <DrawerHeader>Create your account</DrawerHeader>
-                <DrawerBody></DrawerBody>
-                <DrawerFooter>
-                  <Button variant="outline" mr={3} onClick={onClose}>
-                    Cancel
-                  </Button>
-                  <Button colorScheme="blue">Save</Button>
-                </DrawerFooter>
-              </DrawerContent>
-            </Drawer>
-          </div>
-
+        
         <div className="message">
           <ul className="news__tab__list">
             <li className="news__tab__item news__tab__item--active">message</li>
@@ -206,6 +157,7 @@ const HomePage = () => {
             </DrawerContent>
           </Drawer>
 
+        </div>
         </div>
         <div className="background-video2">
           <video autoPlay loop muted playsInline>
@@ -293,8 +245,9 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+    </div>
+</> 
+  
   );
 };
 

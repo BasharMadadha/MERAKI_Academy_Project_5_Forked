@@ -1,61 +1,283 @@
+.backg {
+  background-image: url(https://gumlet.assettype.com/afkgaming%2F2022-01%2Fc0466673-4ff1-405a-8745-5ba38b41fe6d%2FOrnn.jpeg?w=1200&auto=format%2Ccompress&ogImage=true&enlarge=true);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 910px;
+}
+.cardname {
+  position: relative;
+  top: 25px;
+  font-size: 25px;
+  font-family: sans-serif;
+}
+.cardimg {
+  height: 100%;
+  width: 100%;
+}
+.dis {
+  color: gray;
+  position: relative;
+  top: 25px;
+  text-align: center;
+}
 
-.profile-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+.grid-container {
+  position: relative;
+  top: 100px;
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  padding: 10px;
+  height: 70%;
+}
+
+.div1 {
+  width: 500px;
+  height: 800px;
+  background-color: rgba(208, 206, 206, 0.084);
+}
+.div2 {
+  width: 1385px;
+  color: white;
+}
+
+.profile-picture {
+  border-top: white solid 4px;
+  border-radius: 50px;
+  height: 90px;
+  width: 90px;
+  position: relative;
+  left: 39.3%;
+}
+.profile-picture img {
+  border-radius: 60px;
+  height: 90px;
+  width: 90px;
+  position: relative;
+  bottom: 2px;
+}
+
+.cover-photo img {
+  border-radius: 10px;
+}
+
+.spinner {
+  height: 40px;
+  width: max-content;
+  font-size: 15px;
+  font-weight: 600;
+  font-family: monospace;
+  letter-spacing: 1em;
+  color: #092db3;
+  filter: drop-shadow(0 0 10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 183px;
+  top: 20px;
+}
+
+@keyframes loading6454 {
+  0%,
+  100% {
+    transform: translateY(0);
   }
- .cover {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
+
+  50% {
+    transform: translateY(-10px);
   }
-  
-  .profile-info {
-    display: flex;
-    align-items: center;
-    margin-top: -60px;
+}
+
+.parent {
+  padding: 25px;
+  position: relative;
+  top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: aliceblue;
+}
+
+.child {
+  width: 150px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+  transition: all 0.5s ease-in-out;
+  border-radius: 50%;
+  padding: 5px;
+  margin: 0 5px;
+}
+
+.child:hover {
+  background-color: rgb(181, 181, 181);
+  background-position: -100px 100px, -100px 100px;
+  transform: rotate3d(0.5, 1, 0, 30deg);
+  transform: perspective(180px) rotateX(60deg) translateY(2px);
+  box-shadow: 0px 10px 10px rgb(1, 49, 182);
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+}
+
+.button:hover {
+  width: inherit;
+  height: inherit;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg)
+    translateY(2px);
+  border-radius: 50%;
+}
+
+.setting {
+  font-size: 35px;
+  position: relative;
+  top: 10px;
+  right: 10px;
+  float: right;
+}
+
+.hide-show {
+  border: blue solid 1px;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  left: 44%;
+  top: 50px;
+  margin: 10px;
+}
+
+.grid-container2 {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  text-align: center;
+  font-size: 30px;
+  gap: 20px;
+}
+
+.grid-item2 {
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  position: relative;
+  top: 90%;
+  left: 100px;
+}
+
+.center {
+  position: relative;
+  top: 70px;
+  right: 44%;
+  float: right;
+}
+
+@media screen and (max-width: 769px) {
+  .backg {
+    background-image: url(https://gumlet.assettype.com/afkgaming%2F2022-01%2Fc0466673-4ff1-405a-8745-5ba38b41fe6d%2FOrnn.jpeg?w=1200&auto=format%2Ccompress&ogImage=true&enlarge=true);
+    height: 1910px;
+    width: 600px;
   }
-  
-  .profile-picture img {
+  .grid-container2 {
+    display: grid;
+    grid-template-columns: auto;
+    text-align: center;
+    font-size: 30px;
+    gap: 20px;
+  }
+  .grid-container {
+    position: relative;
+    top: 100px;
+    display: grid;
+    grid-template-columns: auto;
+    gap: 10px;
+    padding: 10px;
+    height: 70%;
+  }
+  .div1 {
+    width: 500px;
+    height: 630px;
+    position: relative;
+    left: 45px;
+    top: 40px;
+    border-radius: 20px;
+  }
+  .div2 {
+    margin-top: 100px;
+    width: 1px;
+  }
+
+  .grid-container2 {
+    display: grid;
+    grid-template-columns: auto auto;
+    text-align: center;
+    font-size: 30px;
+    gap: 20px;
+  }
+
+  .grid-item2 {
     width: 150px;
-    height: 150px;
-    border: 5px solid #fff;
-    border-radius: 50%;
-    margin-right: 20px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    height: 180px;
+    padding: 10px;
+    position: relative;
+    top: 230px;
+    left: 140px;
   }
-  
-  .user-details h1 {
-    font-size: 24px;
-    margin: 0;
+
+  .center {
+    position: relative;
+    top: 110px;
+    left: 380px;
+    width: 160px;
   }
-  
-  .user-details p {
-    font-size: 16px;
-    color: #555;
+  .cardname {
+    position: relative;
+    top: 2px;
+    font-size: 19px;
+    font-family: sans-serif;
   }
-  
-  .user-stats {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-  }
-  
-  .stat {
+  .dis {
+    color: gray;
+    position: relative;
+    top: 10px;
     text-align: center;
   }
-  
-  .stat h2 {
-    font-size: 18px;
-    margin: 0;
+
+  .profile-picture {
+    border-top: white solid 4px;
+    border-radius: 50px;
+    height: 90px;
+    width: 90px;
+    position: relative;
+    top: -45px;
+    left: 42%;
   }
-  
-  .stat p {
-    font-size: 16px;
-    color: #555;
+  .profile-picture img {
+    border-radius: 60px;
+    height: 90px;
+    width: 90px;
+    position: relative;
+    bottom: 2px;
   }
-  
-  
+  .spinner {
+    position: relative;
+    left: 206px;
+    top: -10px;
+  }
+  .dis {
+    position: relative;
+    left: 17px;
+  }
+  .parent {
+    position: relative;
+    left: 5px;
+    height: 10px;
+  }
+}
