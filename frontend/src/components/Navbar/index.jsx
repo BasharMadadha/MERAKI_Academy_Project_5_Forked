@@ -21,9 +21,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   const userss = useSelector((state) => state.auth.users);
 
   // none used
-  const userNav = users?.find((user1) => userInfo?.id === user1.id);
-  const userNav1 = userss?.find((user1) => userInfo?.id === user1.id);
-  const toggleProf = useSelector((state) => state.auth.toggleProf);
+
   const handleLogout = () => {
     if (userId) {
       socket.emit("user-logout", userId);
@@ -53,7 +51,13 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                  <img className="img" src={YourImage} alt="" />
+                  <img
+                    className="img"
+                    src={
+                      "https://th.bing.com/th/id/OIP.GS_C63CDnQliyAmKAQEatwHaGD?pid=ImgDet&rs=1"
+                    }
+                    alt=""
+                  />
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
@@ -61,7 +65,10 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   <Nav.Link href="/HomePage" className="font">
                     HOME
                   </Nav.Link>
-                  <Nav.Link href="#" className="font">
+                  <Nav.Link href="/CHARACTER" className="font">
+                    CHARACTER
+                  </Nav.Link>
+                  <Nav.Link href="/News" className="font">
                     NEWS
                   </Nav.Link>
                   <Nav.Link href="" className="font">
@@ -79,23 +86,13 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                       dispatch(setToggleProf(true));
                       dispatch(setUser_id(userInfo?.id));
                       getUserByID(userInfo?.id);
-                      getPostsByUser(userInfo?.id);
                     }}
                   >
                     PROFILE
                   </Nav.Link>
-                  <Nav.Link
-                    href="map"
-                    className="font"
-                    onClick={() => {
-                      dispatch(setToggleProf(true));
-                      dispatch(setUser_id(userInfo?.id));
-                      getUserByID(userInfo?.id);
-                      getPostsByUser(userInfo?.id);
-                    }}
-                  >
+                  <Link to="/map" className="font">
                     MAP
-                  </Nav.Link>
+                  </Link>
                   {isLogged ? (
                     <Nav.Link onClick={handleLogout} className="logfont">
                       Logout
@@ -106,11 +103,9 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
-            {/* button */}
             <button id="button" className="game">
-              Hover me
+              Play Now
             </button>
-            {/* button */}
           </Container>
         </Navbar>
       ))}

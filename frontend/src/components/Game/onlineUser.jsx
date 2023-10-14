@@ -45,7 +45,77 @@ const GameNavbar = () => {
   //     console.log(error.message);
   //   }
   // };
-  
+  // <footer style={{ backgroundColor: '#45524e', color: 'black' }}>
+  //     <div className="container py-4">
+  //       <div className="row">
+  //         <div className="col-md-3">
+  //           <h6 className="font-weight-bold">Company name</h6>
+  //           <p>
+  //             Here you can use rows and columns to organize your footer content.
+  //             Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+  //           </p>
+  //         </div>
+
+  //         <div className="col-md-2">
+  //           <h6 className="font-weight-bold">Products</h6>
+  //           <ul className="list-unstyled">
+  //             <li>MDBootstrap</li>
+  //             <li>MDWordPress</li>
+  //             <li>BrandFlow</li>
+  //             <li>Bootstrap Angular</li>
+  //           </ul>
+  //         </div>
+
+  //         <div className="col-md-3">
+  //           <h6 className="font-weight-bold">Useful links</h6>
+  //           <ul className="list-unstyled">
+  //             <li>Your Account</li>
+  //             <li>Become an Affiliate</li>
+  //             <li>Shipping Rates</li>
+  //             <li>Help</li>
+  //           </ul>
+  //         </div>
+
+  //         <div className="col-md-4">
+  //           <h6 className="font-weight-bold">Contact</h6>
+  //           <ul className="list-unstyled">
+  //             <li><i className="fas fa-home mr-3"></i> New York, NY 10012, US</li>
+  //             <li><i className="fas fa-envelope mr-3"></i> info@gmail.com</li>
+  //             <li><i className="fas fa-phone mr-3"></i> + 01 234 567 88</li>
+  //             <li><i className="fas fa-print mr-3"></i> + 01 234 567 89</li>
+  //           </ul>
+  //         </div>
+  //       </div>
+  //     </div>
+
+  //     <hr className="my-3" />
+
+  //     <div className="container">
+  //       <div className="row align-items-center">
+  //         <div className="col-md-7 text-center text-md-start">
+  //           <div className="p-3">
+  //             © 2023 Copyright:
+  //             <a className="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  //           </div>
+  //         </div>
+
+  //         <div className="col-md-5 ml-lg-0 text-center text-md-end">
+  //           <a className="btn btn-outline-light btn-floating m-1">
+  //             <i className="fab fa-facebook-f"></i>
+  //           </a>
+  //           <a className="btn btn-outline-light btn-floating m-1">
+  //             <i className="fab fa-twitter"></i>
+  //           </a>
+  //           <a className="btn btn-outline-light btn-floating m-1">
+  //             <i className="fab fa-google"></i>
+  //           </a>
+  //           <a className="btn btn-outline-light btn-floating m-1">
+  //             <i className="fab fa-instagram"></i>
+  //           </a>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   </footer>
   const getCards = async () => {
     await axios
       .get(`http://localhost:5000/card`)

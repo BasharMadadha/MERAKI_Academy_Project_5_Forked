@@ -19,6 +19,9 @@ import GameNavbar from "./components/Game/onlineUser";
 import Notification from "./components/notificationx/index"
 import NavBar from "./components/Navbar/index"
 import FrontPage from './components/Front Page/index'
+import Character from './components/Character/index'
+import Post from './components/Post/index'
+import Footer from "./components/Navbar/footer"
 function App() {
   return (
     <ChakraProvider>
@@ -41,7 +44,12 @@ function App() {
         <Route path="/Notification" element={<Notification />} />
         <Route path="/NavBar" element={<NavBar />} />
         <Route path="/FrontPage" element={<FrontPage />} />
+        <Route path="/Character" element={<Character />} />
+        <Route path="/News" element={<Post />} />
+        <Route path="/Footer" element={<Footer />} />
+
       </Routes>
+      <Footer />
     </ChakraProvider>
   );
 }
