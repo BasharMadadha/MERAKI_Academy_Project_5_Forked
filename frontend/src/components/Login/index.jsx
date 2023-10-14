@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { GiLetterBomb } from "react-icons/Gi"
-import { AiFillUnlock } from 'react-icons/Ai'
+
 import "./style.css";
 import {
   setLogin,
@@ -98,7 +97,6 @@ const Login = () => {
           xmlns="http://www.w3.org/2000/svg"
           class="icon"
         >
-         <GiLetterBomb className="auto-icon"/>
 
         </svg>
         <input
@@ -123,7 +121,6 @@ const Login = () => {
           xmlns="http://www.w3.org/2000/svg"
           class="icon"
         >
-          <AiFillUnlock className="auto-icon"/>
         </svg>
         <input
           placeholder="Password"
