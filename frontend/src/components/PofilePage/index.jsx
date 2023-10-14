@@ -6,7 +6,6 @@ import axios from "axios";
 import "./style.css";
 import NavBar from "../Navbar";
 import { setPosts } from "../redux/postSlicer/post";
-import { AiFillSetting } from "react-icons/Ai";
 import Friends from "../Friends";
 
 const ProfilePage = () => {
@@ -113,8 +112,8 @@ const ProfilePage = () => {
           <div className="div2">
             <Link to="/EditePage">
               <button className="setting">
-                <AiFillSetting />
-              </button>
+                Sitting            
+                  </button>
             </Link>
 
             {div1Visible && (
