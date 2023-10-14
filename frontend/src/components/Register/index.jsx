@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { GiLetterBomb } from "react-icons/Gi"
-import { FaUserAstronaut } from 'react-icons/fa'
-import { AiFillUnlock } from 'react-icons/Ai'
-import {AiOutlinePicture} from 'react-icons/Ai'
+
 import { useDispatch, useSelector } from "react-redux";
 import "./style.css";
 import axios from "axios";
@@ -76,7 +73,6 @@ const Register = () => {
           xmlns="http://www.w3.org/2000/svg"
           class="icon"
         >
-          <FaUserAstronaut className="auto-icon"/>
         </svg>
         <input
           placeholder="@user_name"
@@ -100,7 +96,6 @@ const Register = () => {
           xmlns="http://www.w3.org/2000/svg"
           class="icon"
         >
-        <GiLetterBomb className="auto-icon"/>
         
         </svg>
         <input
@@ -125,7 +120,6 @@ const Register = () => {
           xmlns="http://www.w3.org/2000/svg"
           class="icon"
         >
-   <AiFillUnlock className="auto-icon"/>
 
         </svg>
         <input
@@ -150,7 +144,6 @@ const Register = () => {
           xmlns="http://www.w3.org/2000/svg"
           class="icon">
            
-<AiOutlinePicture className="auto-icon"/>
         </svg>
         <input
           placeholder="photo url"

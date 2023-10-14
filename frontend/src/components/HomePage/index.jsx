@@ -3,7 +3,7 @@ import "./style.css";
 import NavBar from "../Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import Footer from "../Navbar/footer"
+import Footer from "../Navbar/footer";
 import {
   Button,
   Drawer,
@@ -70,6 +70,7 @@ const HomePage = () => {
       console.error(error.message);
     }
   };
+
   const getPosts = async () => {
     try {
       const res = await axios.get(`http://localhost:5000/posts/`, config);
@@ -79,6 +80,7 @@ const HomePage = () => {
       console.log(error);
     }
   };
+
   useEffect(() => {
     const interval = setInterval(nextImage, 5000);
     getPosts();
@@ -87,9 +89,11 @@ const HomePage = () => {
       clearInterval(interval);
     };
   }, [currentImageIndex, posts, chatMessages]);
+
   const handleMessageChange = (e) => {
     setMessage(e.target.value);
   };
+
   useEffect(() => {
     socket.on("chatMessage", (message, sender) => {
       console.log(message, sender);
@@ -101,6 +105,7 @@ const HomePage = () => {
       socket.off("chatMessage");
     };
   });
+
   const sendMessage = () => {
     if (message) {
       console.log(message, userInfo["username"]);
@@ -108,14 +113,16 @@ const HomePage = () => {
       setMessage("");
     }
   };
-  const  formatTimestamp=()=> {
+
+  const formatTimestamp = () => {
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const minutes = currentTime.getMinutes();
     return `${hours}:${minutes}`;
-  }
+  };
+
   return (
-    <>
+    <div>
       <NavBar />
       <Notification />
       <div className="HomePage-container">
@@ -126,37 +133,36 @@ const HomePage = () => {
               type="video/mp4"
             />
           </video>
-
+        </div>
         <div className="message">
           <ul className="news__tab__list">
             <li className="news__tab__item news__tab__item--active">message</li>
           </ul>
           <ul className="news__list"></ul>
         </div>
-          <div className="chat">
-            <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-              friend
-            </Button>
-            <Drawer
-              isOpen={isOpen}
-              placement="right"
-              onClose={onClose}
-              finalFocusRef={btnRef}
-            >
-              <DrawerOverlay />
-              <DrawerContent>
-                <DrawerCloseButton />
-                <DrawerHeader>Create your account</DrawerHeader>
-                <DrawerBody></DrawerBody>
-                <DrawerFooter>
-                  <Button variant="outline" mr={3} onClick={onClose}>
-                    Cancel
-                  </Button>
-                  <Button colorScheme="blue">Save</Button>
-                </DrawerFooter>
-              </DrawerContent>
-            </Drawer>
-
+        <div className="chat">
+          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
+            friend
+          </Button>
+          <Drawer
+            isOpen={isOpen}
+            placement="right"
+            onClose={onClose}
+            finalFocusRef={btnRef}
+          >
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerCloseButton />
+              <DrawerHeader>Create your account</DrawerHeader>
+              <DrawerBody></DrawerBody>
+              <DrawerFooter>
+                <Button variant="outline" mr={3} onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button colorScheme="blue">Save</Button>
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
           <div className="message">
             <ul className="news__tab__list">
               <li className="news__tab__item news__tab__item--active">
@@ -165,8 +171,6 @@ const HomePage = () => {
             </ul>
             <ul className="news__list"></ul>
           </div>
-
-
           <div className="chat">
             <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
               world
@@ -241,7 +245,6 @@ const HomePage = () => {
             <button onClick={prevImage} style={{ cursor: "pointer" }}>
               Previous
             </button>
-
             <button onClick={nextImage}>Next</button>
           </div>
         </div>
@@ -259,6 +262,7 @@ const HomePage = () => {
                 src={
                   "https://i.pinimg.com/564x/92/d0/3d/92d03d0950503513c78bb9a559e80229.jpg"
                 }
+                alt="Area 1"
               />
             </div>
             <div className="area2">
@@ -266,6 +270,7 @@ const HomePage = () => {
                 src={
                   "https://i.pinimg.com/564x/47/99/8d/47998d7dd1c6631ec0c34cbcac3ca672.jpg"
                 }
+                alt="Area 2"
               />
             </div>
             <div className="area3">
@@ -273,6 +278,7 @@ const HomePage = () => {
                 src={
                   "https://i.pinimg.com/564x/41/18/4c/41184c5ab0f032de51da84c06dcb104c.jpg"
                 }
+                alt="Area 3"
               />
             </div>
             <div className="area4">
@@ -280,6 +286,7 @@ const HomePage = () => {
                 src={
                   "https://i.pinimg.com/564x/4b/bb/ea/4bbbeaca0d9b6b30f9e9c5a2dd0e01c0.jpg"
                 }
+                alt="Area 4"
               />
             </div>
             <div className="area5">
@@ -287,6 +294,7 @@ const HomePage = () => {
                 src={
                   "https://i.pinimg.com/564x/1a/6c/aa/1a6caa78202c778e46eb19ca7e9c3236.jpg"
                 }
+                alt="Area 5"
               />
             </div>
             <div className="area6">
@@ -294,16 +302,14 @@ const HomePage = () => {
                 src={
                   "https://i.pinimg.com/564x/97/b0/c7/97b0c7e9714698538ab1fa5f3ea714d1.jpg"
                 }
+                alt="Area 6"
               />
             </div>
           </div>
         </div>
-
+        <Footer />
+      </div>
     </div>
-   
-<Footer />
-</> 
-  
   );
 };
 
