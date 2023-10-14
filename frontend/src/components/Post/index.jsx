@@ -18,8 +18,9 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { HamburgerIcon, RepeatIcon, EditIcon } from "@chakra-ui/icons";
+import NavBar from "../Navbar";
 
-const Post = ({getPostsByUser}) => {
+const Post = ({}) => {
   const dispatch = useDispatch();
   const [postId, setPostId] = useState("");
   const [commentUP, setCommentUP] = useState(false);
@@ -35,9 +36,9 @@ const Post = ({getPostsByUser}) => {
   };
 
   useEffect(() => {
-    toggleProf ? getPostsByUser(user_id) : getPosts();
+    getPosts();
+    console.log(posts);
   }, []);
-
   const getPosts = async () => {
     await axios
       .get(`http://localhost:5000/posts/`, config)
@@ -50,13 +51,12 @@ const Post = ({getPostsByUser}) => {
       });
   };
 
-  
   const DeletePost = async (id) => {
     await axios
       .delete(`http://localhost:5000/posts/${id}`)
-      .then((res) => {
-        toggleProf ? getPostsByUser(user_id) : getPosts();
-      })
+      // .then((res) => {
+      //   toggleProf ? getPostsByUser(user_id) : getPosts();
+      // })
       .catch((error) => {
         console.log(error);
       });
@@ -67,29 +67,103 @@ const Post = ({getPostsByUser}) => {
       .put(`http://localhost:5000/posts/${id}`, {
         content,
       })
-      .then((res) => {
-        toggleProf ? getPostsByUser(user_id) : getPosts();
-      })
+      // .then((res) => {
+      //   toggleProf ? getPostsByUser(user_id) : getPosts();
+      // })
       .catch((error) => {
         console.log(error);
       });
   };
 
   return (
-    <div className="post">
-      <div className="containerP">
-        {posts?.map((post) => {
+    <div className="pot">
+      <NavBar />
+
+      <div
+        className="contanerP"
+        style={{
+          backgroundImage:
+            'url("http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696834590/hhbinzveeoenlsqnepe4.jpg")',
+        }}
+      >
+        <div className="news">
+          {posts.slice(0, 3).map((post) => (
+            <div className="neews" key={post.id}>
+              <p >{post.content}</p>
+              
+              <img src={post.image_url} />
+            </div>
+          ))}
+        </div>
+      </div>
+      <ul class="btns">
+  <li class="category__1">Latest</li>
+  <li class="category__2">Info</li>
+  <li class="category__3">Updates</li>
+  <li class="category__4">Events</li>
+</ul>
+<ul class="news-list">
+        <li class="news-item">
+            <a href="https://genshin.hoyoverse.com/en/news/detail/113142">
+                <img src="https://fastcdn.hoyoverse.com/content-v2/hk4e/113142/42ee58e358dcc11c0d345828849f9455_3807686355477813330.jpg" alt="News Image" class="news-image"/>
+                <div class="news-info">
+                    <h3 class="news-title">"To the Stars Shining in the Depths" Version 4.1 Update Details</h3>
+                    <p class="news-summary">Dear Travelers, Below are the details of the Version 4.1 update "To the Stars Shining in the Depths" and the update compensation.</p>
+                </div>
+            </a>
+            <div class="news-meta">
+                <div class="news-date">Sep 27, 2023</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="news-list2">
+        <li class="news-item">
+            <a href="https://genshin.hoyoverse.com/en/news/detail/113142">
+                <img src="https://fastcdn.hoyoverse.com/content-v2/hk4e/113142/42ee58e358dcc11c0d345828849f9455_3807686355477813330.jpg" alt="News Image" class="news-image"/>
+                <div class="news-info">
+                    <h3 class="news-title">"To the Stars Shining in the Depths" Version 4.1 Update Details</h3>
+                    <p class="news-summary">Dear Travelers, Below are the details of the Version 4.1 update "To the Stars Shining in the Depths" and the update compensation.</p>
+                </div>
+            </a>
+            <div class="news-meta">
+                <div class="news-date">Sep 27, 2023</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="news-list3">
+        <li class="news-item">
+            <a href="https://genshin.hoyoverse.com/en/news/detail/113142">
+                <img src="https://fastcdn.hoyoverse.com/content-v2/hk4e/113142/42ee58e358dcc11c0d345828849f9455_3807686355477813330.jpg" alt="News Image" class="news-image"/>
+                <div class="news-info">
+                    <h3 class="news-title">"To the Stars Shining in the Depths" Version 4.1 Update Details</h3>
+                    <p class="news-summary">Dear Travelers, Below are the details of the Version 4.1 update "To the Stars Shining in the Depths" and the update compensation.</p>
+                </div>
+            </a>
+            <div class="news-meta">
+                <div class="news-date">Sep 27, 2023</div>
+            </div>
+        </li>
+    </ul>
+    <ul class="news-list4">
+        <li class="news-item">
+            <a href="https://genshin.hoyoverse.com/en/news/detail/113142">
+                <img src="https://fastcdn.hoyoverse.com/content-v2/hk4e/113142/42ee58e358dcc11c0d345828849f9455_3807686355477813330.jpg" alt="News Image" class="news-image"/>
+                <div class="news-info">
+                    <h3 class="news-title">"To the Stars Shining in the Depths" Version 4.1 Update Details</h3>
+                    <p class="news-summary">Dear Travelers, Below are the details of the Version 4.1 update "To the Stars Shining in the Depths" and the update compensation.</p>
+                </div>
+            </a>
+            <div class="news-meta">
+                <div class="news-date">Sep 27, 2023</div>
+            </div>
+        </li>
+    </ul>
+    
+      {/* {posts?.map((post) => {
           const userPost = users.find((user1) => post.user_id === user1.id);
           return (
             <div key={post.post_id} className="postA">
               <div className="userP">
-                <Link
-                  to="/ProfilePage"
-                  onClick={() => {
-                    dispatch(setToggleProf(true));
-                    dispatch(setUser_id(post.user_id));
-                  }}
-                >
                   <div className="userInfoP">
                     <img
                       className="userInfoP_img"
@@ -101,7 +175,7 @@ const Post = ({getPostsByUser}) => {
                       <span className="date">{post.created_at}</span>
                     </div>
                   </div>
-                </Link>
+              
               </div>
               <div className="content">
                 <p>{post.content}</p>
@@ -117,7 +191,7 @@ const Post = ({getPostsByUser}) => {
               <div className="itemP">
                 <Like
                   post={post}
-                  getPostsByUser={getPostsByUser}
+                  // getPostsByUser={getPostsByUser}
                   getPosts={getPosts}
                 />
                 <div
@@ -134,7 +208,7 @@ const Post = ({getPostsByUser}) => {
               {commentUP && post.post_id === postId && (
                 <Comment
                   post={post}
-                  getPostsByUser={getPostsByUser}
+                  // getPostsByUser={getPostsByUser}
                   getPosts={getPosts}
                 />
               )}
@@ -206,7 +280,7 @@ const Post = ({getPostsByUser}) => {
             </div>
           );
         })}
-      </div>
+      </div>  */}
     </div>
   );
 };

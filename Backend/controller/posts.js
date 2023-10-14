@@ -155,7 +155,7 @@ const updatePostById = (req, res) => {
 
 const deletePostById = (req, res) => {
   const post_id = req.params.id;
-  const query = `UPDATE posts SET is_deleted=1 WHERE post_id=$1;`;
+  const query = 'DELETE FROM posts WHERE post_id = $1';
   const data = [post_id];
   pool
     .query(query, data)
@@ -163,17 +163,17 @@ const deletePostById = (req, res) => {
       if (result.rowCount !== 0) {
         res.status(200).json({
           success: true,
-          message: `posts with id:  deleted successfully`,
+          message: `Post with id ${post_id} deleted successfully`,
         });
       } else {
-        throw new Error("Error happened while deleting post");
+        throw new Error(`Post with id ${post_id} not found`);
       }
     })
     .catch((err) => {
       res.status(500).json({
         success: false,
         message: "Server error",
-        err: err.message,
+        error: err.message,
       });
     });
 };

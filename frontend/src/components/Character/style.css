@@ -1,0 +1,133 @@
+.chBody{
+  max-width: 100%;
+  max-height: 1000px;
+}
+.main{
+    position: absolute;
+    top: 5px;
+    left:0px;
+    width: 100%;
+    background-color: black;
+}
+.character__sidebar{
+    bottom: 0px;
+    left: 0px;
+    padding-top: 80px;
+    position: absolute;
+    top: 0px;
+    width: 300px;
+    height: 1000px;
+    background-color:rgb(240, 255, 255,0.1);
+    color: black;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+}
+.area{
+    width: 250px;
+    height: 100px;
+}
+.area:hover{
+border-bottom: 2px solid whitesmoke;
+transition: .3;
+transform: scale(1.1); 
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); 
+transition: .1s;
+cursor: pointer;
+color: azure;
+}
+
+
+.area a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .area img {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .selected-area h2 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+  .area-images {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  
+ 
+  .selected-area {
+    text-align: center;
+    margin-top: 629px;
+    margin-left: 300px;
+    position: absolute;
+    height: 200px;
+    width: 1610px;
+  }
+  
+  .selected-area h2 {
+    font-size: 24px;
+    color: #333;
+  }
+
+.image-slider2{
+  position: absolute;
+  width: 200px;
+  height:300px;
+  overflow: hidden;
+  right:650px;
+  top:650px;
+  z-index: 100000;
+}
+
+.image-slider2 img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease-in-out;
+}
+
+.image-slider2 button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.image-slider2 button:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.image-slider2 button:first-child {
+  left: 0;
+}
+
+.image-slider2 button:last-child {
+  right: 0;
+}
+.-area{
+  display: grid;
+  position: absolute;
+  grid-template-columns: repeat(3, 1fr,1fr); 
+  top:60px;
+  left:450px
+}
+.images2{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 10px; /
+}

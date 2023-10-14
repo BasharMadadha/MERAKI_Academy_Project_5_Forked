@@ -19,13 +19,17 @@ import GameNavbar from "./components/Game/onlineUser";
 import Notification from "./components/notificationx/index"
 import NavBar from "./components/Navbar/index"
 import FrontPage from './components/Front Page/index'
+import Character from './components/Character/index'
+import Post from './components/Post/index'
+import Footer from "./components/Navbar/footer"
 import Loot from "./components/Shop/loot";
+
 function App() {
   return (
     <ChakraProvider>
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/sidebar" element={<SideBar />} />
         <Route path="/register" element={<Register />} />
         <Route path="/HomePage" element={<HomePage />} />
@@ -41,9 +45,14 @@ function App() {
         <Route path="/GameNavbar" element={<GameNavbar />} />
         <Route path="/Notification" element={<Notification />} />
         <Route path="/NavBar" element={<NavBar />} />
-        <Route path="/FrontPage" element={<FrontPage />} />
+        <Route path="/" element={<FrontPage />} />
+        <Route path="/Character" element={<Character />} />
+        <Route path="/News" element={<Post />} />
+        <Route path="/Footer" element={<Footer />} />
         <Route path="/shop/loot" element={<Loot />} />
+
       </Routes>
+      <Footer />
     </ChakraProvider>
   );
 }

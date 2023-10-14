@@ -83,6 +83,48 @@ body {
   color: goldenrod;
 }
 
+
+/* Footer */
+footer {
+  background-color: #45526e;
+  color: black;
+}
+
+/* Section: Links */
+section {
+  padding: 20px;
+}
+
+/* Section: Copyright */
+section.p-3 {
+  background-color: #333;
+  color: white;
+}
+
+/* Company name */
+h6.font-weight-bold {
+  font-size: 18px;
+}
+
+/* Links within columns */
+p a.text-white {
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+}
+
+p a.text-white:hover {
+  color: #ffc107; /* Change the color on hover */
+}
+
+/* Social media buttons */
+.btn.btn-outline-light {
+  color: white;
+  border-color: white;
+  margin: 5px;
+}
+
+
 /* responsive */
 @media screen and (max-width: 769px) {
 
@@ -104,8 +146,11 @@ body {
     display: none;
   }
 
-  .font:hover:after {
-    display: none;
+
+/* Center align copyright text on smaller screens */
+@media (max-width: 768px) {
+  section.p-3 {
+    text-align: center;
   }
   #id {
     height: 110px;

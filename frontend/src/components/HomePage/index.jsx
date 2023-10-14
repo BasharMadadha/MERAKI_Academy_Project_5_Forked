@@ -43,12 +43,16 @@ const HomePage = () => {
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % posts.length);
+    console.log("nextImage: "+posts[currentImageIndex]?.image_url);
+
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? posts.length - 1 : prevIndex - 1
+    
     );
+    console.log("prevImage: ");
   };
 
   const setUser = async () => {
@@ -61,7 +65,6 @@ const HomePage = () => {
       console.error(error.message);
     }
   };
-  useEffect(() => {
     const getPosts = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/posts/`, config);
@@ -71,15 +74,16 @@ const HomePage = () => {
         console.log(error);
       }
     };
+  useEffect(() => {
+  
 
     const interval = setInterval(nextImage, 5000);
-
     getPosts();
     setUser();
     return () => {
       clearInterval(interval);
     };
-  }, [currentImageIndex]);
+  },[currentImageIndex,posts]);
 
   return (
     <>
@@ -93,63 +97,13 @@ const HomePage = () => {
               type="video/mp4"
             />
           </video>
-
-  
- 
         <div className="message">
           <ul className="news__tab__list">
             <li className="news__tab__item news__tab__item--active">message</li>
           </ul>
           <ul className="news__list"></ul>
         </div>
-        <div className="chat">
-          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-            friend
-          </Button>
-          <Drawer
-            isOpen={isOpen}
-            placement="right"
-            onClose={onClose}
-            finalFocusRef={btnRef}
-          >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-              <DrawerBody></DrawerBody>
-              <DrawerFooter>
-                <Button variant="outline" mr={3} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button colorScheme="blue">Save</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-
-          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-            world
-          </Button>
-          <Drawer
-            isOpen={isOpen}
-            placement="right"
-            onClose={onClose}
-            finalFocusRef={btnRef}
-          >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-              <DrawerBody></DrawerBody>
-              <DrawerFooter>
-                <Button variant="outline" mr={3} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button colorScheme="blue">Save</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-
-
+    >
           <div className="chat">
             <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
               friend
@@ -197,16 +151,15 @@ const HomePage = () => {
               </DrawerContent>
             </Drawer>
           </div>
-        </div>
-        </div>
-        <div className="background-video2">
+        </div>   
+        <div className="background-vido2">
           <video autoPlay loop muted playsInline>
             <source
               src="https://res.cloudinary.com/dmhvb05w3/video/upload/v1697005514/fantasy-traditional-temples-sakura-moewalls-com_fseoqb.mp4"
               type="video/mp4"
             />
           </video>
-
+          <h1 className="posto">News</h1>
           <div className="posts">
             <ul className="news__tab__list">
               <li className="news__tab__item news__tab__item--active">News</li>
@@ -221,16 +174,18 @@ const HomePage = () => {
                 </li>
               ))}
             </ul>
-
-            <div className="image-slider">
+          </div>
+          <div className="image-slider">
               <img
                 src={posts[currentImageIndex]?.image_url}
                 alt={`Image ${currentImageIndex}`}
               />
-              <button onClick={prevImage}>Previous</button>
+              <button onClick={prevImage} style={{ cursor: "pointer" }}>
+                Previous
+              </button>
+
               <button onClick={nextImage}>Next</button>
             </div>
-          </div>
         </div>
         <div className="background-video3">
           <video className="video3" autoPlay loop muted playsInline>
@@ -239,7 +194,7 @@ const HomePage = () => {
               type="video/mp4"
             />
           </video>
-
+          <h1 className="areass">Area</h1>
           <div className="areas">
             <div className="area1">
               <img

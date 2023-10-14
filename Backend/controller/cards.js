@@ -97,7 +97,6 @@ const addCard = (req, res) => {
 const getAllCards = async (req, res) => {
   try {
     const response = await pool.query(`SELECT * FROM cards`);
-    console.log(cardData);
     if (response) {
       res.status(200).json(response.rows);
     } else {
