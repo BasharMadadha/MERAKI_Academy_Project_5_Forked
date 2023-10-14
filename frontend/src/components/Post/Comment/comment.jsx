@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import "./Comment.css";
+// import "./Comment.css";
 import Swal from "sweetalert2";
 import {
   Menu,
