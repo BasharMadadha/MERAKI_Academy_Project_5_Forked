@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./syle.css";
 
@@ -6,6 +7,7 @@ const FrontPage = () => {
   const [selectedCharacter, setSelectedCharacter] = useState(null);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const audioRef = React.createRef();
+  const navigate = useNavigate();
 
   const characters = [
     {
@@ -90,6 +92,9 @@ const FrontPage = () => {
       setAudioPlaying(false);
     }
   };
+    const navigateToLoginPage = () => {
+      navigate("/login");  };
+
   return (
     <div className="background-container">
       <div className="background-image">
@@ -103,7 +108,7 @@ const FrontPage = () => {
           </video>
         </div>
 
-        <div className="btn-page">OFFICIAL WEBSITE</div>
+        <div className="btn-page" onClick={navigateToLoginPage}>OFFICIAL WEBSITE</div>
         <div className="languageSelect">
           <h1 className="languageSelec">en</h1>
         </div>
