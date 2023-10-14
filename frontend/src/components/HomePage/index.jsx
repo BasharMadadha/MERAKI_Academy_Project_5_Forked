@@ -3,7 +3,6 @@ import "./style.css";
 import NavBar from "../Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-
 import {
   Button,
   Drawer,
@@ -90,7 +89,7 @@ const HomePage = () => {
     <>
       <NavBar />
       <Notification />
-      <div className="HomePage-container">
+    <div className="HomePage-container">
         <div className="background-vido1">
           <video autoPlay loop muted playsInline>
             <source
@@ -98,23 +97,13 @@ const HomePage = () => {
               type="video/mp4"
             />
           </video>
-          <div className="message">
-            <ul className="news__tab__list">
-              <li className="news__tab__item news__tab__item--active">
-                message
-              </li>
-            </ul>
-            <ul className="news__list"></ul>
-          </div>
-
-          <div className="message">
-            <ul className="news__tab__list">
-              <li className="news__tab__item news__tab__item--active">
-                message
-              </li>
-            </ul>
-            <ul className="news__list"></ul>
-          </div>
+        <div className="message">
+          <ul className="news__tab__list">
+            <li className="news__tab__item news__tab__item--active">message</li>
+          </ul>
+          <ul className="news__list"></ul>
+        </div>
+    >
           <div className="chat">
             <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
               friend
@@ -162,7 +151,7 @@ const HomePage = () => {
               </DrawerContent>
             </Drawer>
           </div>
-        </div>
+        </div>   
         <div className="background-vido2">
           <video autoPlay loop muted playsInline>
             <source
@@ -251,8 +240,9 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </div>
-    </>
+    </div>
+</> 
+  
   );
 };
 

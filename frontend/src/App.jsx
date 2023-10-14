@@ -22,12 +22,14 @@ import FrontPage from './components/Front Page/index'
 import Character from './components/Character/index'
 import Post from './components/Post/index'
 import Footer from "./components/Navbar/footer"
+import Loot from "./components/Shop/loot";
+
 function App() {
   return (
     <ChakraProvider>
 
       <Routes>
-        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/sidebar" element={<SideBar />} />
         <Route path="/register" element={<Register />} />
         <Route path="/HomePage" element={<HomePage />} />
@@ -37,16 +39,17 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/shop" element={<Shop />} />
         <Route path="/Admin" element={<Admin />} />
-        <Route path="/card" element={<CardList />} />
+        <Route path="/cards" element={<CardList />} />
         <Route path="/map" element={<Map />} />
         <Route path="/game" element={<Game />} />
         <Route path="/GameNavbar" element={<GameNavbar />} />
         <Route path="/Notification" element={<Notification />} />
         <Route path="/NavBar" element={<NavBar />} />
-        <Route path="/FrontPage" element={<FrontPage />} />
+        <Route path="/" element={<FrontPage />} />
         <Route path="/Character" element={<Character />} />
         <Route path="/News" element={<Post />} />
         <Route path="/Footer" element={<Footer />} />
+        <Route path="/shop/loot" element={<Loot />} />
 
       </Routes>
       <Footer />

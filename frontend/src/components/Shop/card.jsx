@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../Navbar/index";
+import { Link } from "react-router-dom";
 import { UnorderedList, ListItem } from "@chakra-ui/react";
 import { Grid, GridItem, Image, Box } from "@chakra-ui/react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CardList = () => {
   const users = useSelector((state) => state.auth.users);
   const user = useSelector((state) => state.auth.userInfo);
   const [cards, setCards] = useState([]);
+  const [scrolled, setScrolled] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCards();
-    
-  }, []);
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
 
-  useEffect(() => {
-    console.log(cards); // Log the cards state after it has been updated
-  }, [cards]); // Listen to changes in the cards state
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const getCard = async () => {
     try {
@@ -38,7 +49,7 @@ const CardList = () => {
       console.error("Error fetching data:", error);
     }
   };
-   const getCards = async () => {
+  const getCards = async () => {
     await axios
       .get(`http://localhost:5000/card`)
       .then((res) => {
@@ -51,18 +62,38 @@ const CardList = () => {
 
   return (
     <div>
-      <Navbar />
-      <div style={{ marginTop: "70px" }}>
-        <h1>My Cards</h1>
-        <Grid templateColumns="repeat(3, 1fr)" gap={4}>
-          {cards?.map((card) => (
-            <GridItem key={card.card_id}>
-              <Box>
-                <Image src={card.card_image} alt={card.card_name} />
-              </Box>
-            </GridItem>
-          ))}
-        </Grid>
+      <div className="overlay">
+        <video
+          className="video"
+          src="https://res.cloudinary.com/dv7ygzpv8/video/upload/v1697065075/videoB_zoubn9.webm"
+          autoPlay
+          loop
+          muted
+        ></video>
+        <Navbar />
+        <div className={`subNav ${scrolled ? "scrolled" : ""}`}>
+          <button className="btnSub" onClick={() => navigate("/shop")}>
+            FEATURED
+          </button>
+          <button className="btnSub" onClick={() => navigate("/cards")}>
+            CARDS
+          </button>
+          <button className="btnSub" onClick={() => navigate("/shop/loot")}>
+            LOOT
+          </button>
+          <button className="btnSub">ACCESSORIES</button>
+        </div>
+        <div>
+          <Grid templateColumns="repeat(6, 1fr)" gap={3} p="100px">
+            {cards?.map((card) => (
+              <GridItem key={card.card_id} style={{ position: "relative", top: "30%" }}>
+                <Box>
+                  <Image src={card.card_image} alt={card.card_name} />
+                </Box>
+              </GridItem>
+            ))}
+          </Grid>
+        </div>
       </div>
     </div>
   );

@@ -69,7 +69,6 @@ const EditePage = () => {
   const tabs = {
     GENERAL: (
       <div className="tabContent">
-        <NavBar />
         <h2>General Settings</h2>
         <div className="generalOptions">
           <div className="option">
@@ -340,6 +339,7 @@ const EditePage = () => {
 
   return (
     <div className="editePageContainer">
+      <NavBar />
       <div className="sidebars">
         <div className="sidebarWrapper">
           <ul className="sidebarList">

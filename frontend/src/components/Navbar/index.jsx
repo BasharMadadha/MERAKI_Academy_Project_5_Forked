@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setLogout, setUser_id, setToggleProf } from "../redux/authSlicer/auth";
 import { useNavigate } from "react-router-dom";
-import YourImage from "../Navbar/bg-removebg-preview.png";
+import YourImage from "../Navbar/logoo-removebg-preview.png";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -38,8 +38,8 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   return (
     <>
       {["xxl"].map((expand) => (
-        <Navbar key={expand} expand={expand} id="id" className="mb-3">
-          <Container fluid>
+        <Navbar key={expand} expand={expand} id="id" >
+          <Container fluid >
             <Navbar.Brand href="#">
               <img className="img" src={YourImage} alt="" />
             </Navbar.Brand>
@@ -65,17 +65,21 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   <Nav.Link href="/HomePage" className="font">
                     HOME
                   </Nav.Link>
+
                   <Nav.Link href="/CHARACTER" className="font">
                     CHARACTER
                   </Nav.Link>
                   <Nav.Link href="/News" className="font">
+
+                  <Nav.Link href="" className="font">
+
                     NEWS
                   </Nav.Link>
                   <Nav.Link href="" className="font">
                     TOP-UP
                   </Nav.Link>
                   {userInfo?.role_id === 2 && (
-                    <Nav.Link className="font" to={"/Admin"}>
+                    <Nav.Link className="font" href={"/Admin"}>
                       Admin
                     </Nav.Link>
                   )}
@@ -90,9 +94,13 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   >
                     PROFILE
                   </Nav.Link>
-                  <Link to="/map" className="font">
-                    MAP
-                  </Link>
+                  
+            
+                  <Nav.Link href="shop" className="font">
+                    Shop
+                  </Nav.Link>
+
+
                   {isLogged ? (
                     <Nav.Link onClick={handleLogout} className="logfont">
                       Logout
@@ -103,8 +111,17 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
+
             <button id="button" className="game">
               Play Now
+
+            {/* button */}
+            <button id="button" className="game"  onClick={() => {
+                    
+                      navigate("/map")
+                    }}>
+                      PLAY NOW
+
             </button>
           </Container>
         </Navbar>
