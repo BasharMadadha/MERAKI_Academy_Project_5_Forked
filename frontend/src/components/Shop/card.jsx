@@ -83,10 +83,10 @@ const CardList = () => {
           </button>
           <button className="btnSub">ACCESSORIES</button>
         </div>
-        <div style={{ marginTop: "70px" }}>
-          <Grid templateColumns="repeat(6, 1fr)" gap={3}>
+        <div>
+          <Grid templateColumns="repeat(6, 1fr)" gap={3} p="100px">
             {cards?.map((card) => (
-              <GridItem key={card.card_id}>
+              <GridItem key={card.card_id} style={{ position: "relative", top: "30%" }}>
                 <Box>
                   <Image src={card.card_image} alt={card.card_name} />
                 </Box>
