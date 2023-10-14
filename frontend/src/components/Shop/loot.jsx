@@ -69,15 +69,15 @@ const loot = () => {
           </button>
           <button className="btnSub">ACCESSORIES</button>
         </div>
-        <Box position="relative" marginTop="100px">
-          <Divider w="80%" />
+        <Box position="relative" top="20%">
+          <Divider w="80%" m="0"/>
           <AbsoluteCenter bg="#c49250" px="5" py="1" left="10%">
             MASTERWORK CHESTS
           </AbsoluteCenter>
         </Box>
         <div
           className="slider-container1"
-          style={{ gridTemplateColumns: "repeat(4, 1fr)" }}
+          style={{ gridTemplateColumns: "repeat(4, 1fr)" ,position:"relative",top:"16%"}}
         >
           <div
             className="slider-small"
@@ -191,8 +191,8 @@ const loot = () => {
             </div>
           </div>
         </div>
-        <Box position="relative" marginTop="100px">
-          <Divider w="80%" />
+        <Box position="relative" top="28%">
+          <Divider w="80%" m="0"/>
           <AbsoluteCenter bg="#c49250" px="5" py="1" left="10%">
             Primeume Packs
           </AbsoluteCenter>
