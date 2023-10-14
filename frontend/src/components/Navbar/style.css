@@ -185,22 +185,19 @@ p a.text-white:hover {
   .game {
     display: none;
   }
+}
 
+section.p-3 {
+  text-align: center;
+}
 
+#id {
+  height: 110px;
+}
 
-
-@media (max-width: 768px) {
-  section.p-3 {
-    text-align: center;
-  }
-  #id {
-    height: 110px;
-  }
-  .font:hover {
-    text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff;
-    color:rgb(30, 24, 24) ;
-  }
-
-
+.font:hover {
+  text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff;
+  color: rgb(30, 24, 24);
+}
 
 
