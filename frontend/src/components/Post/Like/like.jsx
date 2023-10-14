@@ -1,5 +1,4 @@
 import React from "react";
-import "./Like.css";
 import { useState } from "react";
 import axios from "axios";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
