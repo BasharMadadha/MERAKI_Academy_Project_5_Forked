@@ -1,6 +1,5 @@
 const { pool } = require("../models/db");
 const axios = require("axios");
-const cardData = require("../set1-en_us");
 const addCardsFromApi = (req, res) => {
   const api_url =
     "https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=metal%20raiders&attribute=dark";
@@ -208,26 +207,26 @@ const getCardById = async (req, res) => {
 };
 
 // ----------------------------------------------------------------------
-const moreCard = async (req, res) => {
-  try {
-    for (const card of cardData) {
-      const { name, regions, assets, type, attack } = card;
-      if ( type === "Unit") {
-        await pool.query(
-          "INSERT INTO Cards  (card_name, card_regions, card_image, card_type, attack) VALUES ($1, $2, $3, $4, $5)",
-          [name, regions, assets[0].gameAbsolutePath, type, attack]
-        );
-      }
-    }
+// const moreCard = async (req, res) => {
+//   try {
+//     for (const card of cardData) {
+//       const { name, regions, assets, type, attack } = card;
+//       if ( type === "Unit") {
+//         await pool.query(
+//           "INSERT INTO Cards  (card_name, card_regions, card_image, card_type, attack) VALUES ($1, $2, $3, $4, $5)",
+//           [name, regions, assets[0].gameAbsolutePath, type, attack]
+//         );
+//       }
+//     }
 
-    res
-      .status(200)
-      .json({ message: "Data fetched and inserted successfully." });
-  } catch (error) {
-    console.error("Error fetching and inserting data:", error.message);
-    res.status(500).json(error.message);
-  }
-};
+//     res
+//       .status(200)
+//       .json({ message: "Data fetched and inserted successfully." });
+//   } catch (error) {
+//     console.error("Error fetching and inserting data:", error.message);
+//     res.status(500).json(error.message);
+//   }
+// };
 
 const getRandomCards = async (req, res) => {
   try {
