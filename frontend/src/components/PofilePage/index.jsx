@@ -85,7 +85,7 @@ const ProfilePage = () => {
             </div>
             <div class="spinner">
               <span>
-                <h1>{userPorfile.username}</h1>
+                <h1 className="h1s">{userPorfile.username}</h1>
               </span>
             </div>
             <div>
@@ -136,34 +136,34 @@ const ProfilePage = () => {
                   <div class="grid-item2">
                     <img
                       className="cardimg"
-                      src="https://qph.cf2.quoracdn.net/main-qimg-c39a0c50da1e677c062d1cae7f34d8bf-lq"
+                      src="https://preview.redd.it/3a2o0icg8kb71.jpg?width=804&format=pjpg&auto=webp&s=495afc99324f4f1ca8134a36922d7399e33db579"
                       alt=""
                     />{" "}
-                    <p className="cardname">card name</p>
+                    <p className="cardname">MISS FOTUNE</p>
                   </div>
                   <div class="grid-item2">
                     <img
                       className="cardimg"
-                      src="https://cdn11.bigcommerce.com/s-641uhzxs7j/images/stencil/1280x1280/products/204853/227421/1372887__99062.1587102878.jpg?c=1"
+                      src="https://preview.redd.it/appzgu0tju461.jpg?width=804&format=pjpg&auto=webp&s=188672e8bf14702501ecfa114aa5e3b3e9bfef40"
                       alt=""
                     />{" "}
-                    <p className="cardname">card name</p>
+                    <p className="cardname">MISS FOTUNE</p>
                   </div>
                   <div class="grid-item2">
                     <img
                       className="cardimg"
-                      src="https://media.s-bol.com/grRPZqX5PZY/550x803.jpg"
+                      src="https://preview.redd.it/nyepm6cu8kb71.jpg?width=804&format=pjpg&auto=webp&s=189d29803240f14ce495ef29f9f4b4f17030fdc4"
                       alt=""
                     />{" "}
-                    <p className="cardname">card name</p>
+                    <p className="cardname">GAREN</p>
                   </div>
                   <div class="grid-item2">
                     <img
                       className="cardimg"
-                      src="https://spinnachgaming.files.wordpress.com/2017/10/pumpkingthekingofghosts-mrd-en-c-ue.png?w=640"
+                      src="https://preview.redd.it/etf5tir5lu461.jpg?width=804&format=pjpg&auto=webp&s=3a6371f648ee29f8ea3a680ae2a0446c56d5ff80"
                       alt=""
                     />{" "}
-                    <p className="cardname">card name</p>
+                    <p className="cardname">GANGPLANK</p>
                   </div>
                 </div>
               </div>

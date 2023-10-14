@@ -52,6 +52,7 @@ function App() {
         <Route path="/shop/loot" element={<Loot />} />
 
       </Routes>
+
     </ChakraProvider>
   );
 }

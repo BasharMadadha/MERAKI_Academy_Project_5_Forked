@@ -1,5 +1,46 @@
-body {
-  padding: 0.6px;
+
+
+.footer{
+  position: fixed;
+  height: 100px;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  color: white;
+  }
+.footer p{
+  position: relative;
+  bottom: 15px;
+  text-align: center;
+  color: #858585;
+  }
+.footer ul{
+  list-style: none;
+  display: flex;
+  padding: 10px;
+  margin: 10px;
+}
+.footer ul li{
+  padding: 10px;
+  position: relative;
+  left: 45%;
+}
+.footer ul .li1{
+  color: #ffc107;
+  font-size: 30px;
+}
+.footer ul .li2{
+  color: #ffc107;
+  font-size: 30px;
+}
+.footer ul .li3{
+  color: #ffc107;
+  font-size: 30px;
+}
+.footer ul .li4{
+  color: #ffc107;
+  font-size: 30px;
 }
 
 .img {
@@ -7,10 +48,10 @@ body {
   height: 60px;
   border-radius: 50px;
   position: relative;
-  left: 100px;
+  left: 10px;
   top: 4px;
 }
-/* background-color: rgba(17,17,17,0.85); */
+
 #id {
   background-color: rgba(0,0,0,0.3);
   box-shadow: 0 3px 7px 0 rgba(0, 0, 0, 0.35);
@@ -125,10 +166,9 @@ p a.text-white:hover {
 }
 
 
+
 /* responsive */
 @media screen and (max-width: 769px) {
-
-
   .font {
     position: relative;
     left: 1px;
@@ -140,14 +180,15 @@ p a.text-white:hover {
 
   .img {
     position: relative;
-    left: -20px;
+    left: -15px;
   }
   .game {
     display: none;
   }
 
-}
-/* Center align copyright text on smaller screens */
+
+
+
 @media (max-width: 768px) {
   section.p-3 {
     text-align: center;
@@ -159,4 +200,7 @@ p a.text-white:hover {
     text-shadow: 0 0 10px #69e0ff, 0 0 20px #69e0ff, 0 0 40px #69e0ff;
     color:rgb(30, 24, 24) ;
   }
-}
+
+
+
+

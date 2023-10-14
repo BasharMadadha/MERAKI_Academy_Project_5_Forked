@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import Footer from "../Navbar/footer"
 import { useNavigate } from "react-router-dom";
+
 
 import "./syle.css";
 
@@ -229,42 +231,7 @@ const FrontPage = () => {
        
       </div>
 
-      {/* <div
-        className="background-imag"
-        style={{
-          backgroundImage:
-            'url("http://res.cloudinary.com/dv7ygzpv8/image/upload/v1696864219/sejtxbs8eka6nllai00u.png")',
-        }}
-      >
-        
-        <div className="options">
-          {options?.map((option) => (
-            <div className="options-item" key={option.id}>
-              <button className="button-49" role="button" onClick={() => handleOptionClick(option)}>
-               {option.title}
-              </button>
-            </div>
-          ))}
-        </div>
-        {selectedOptions && (
-          <div className="selected-option">
-            <div className="sub-videoUrl">
-              {selectedOptions?.videoUrl?.map((videoUrl, index) => (
-                <video
-                  key={index}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="video-container"
-                >
-                  <source src={videoUrl} type="video/mp4" />
-                </video>
-              ))}
-            </div>
-          </div>
-        )}
-      </div> */}
+      <Footer />
     </div>
   );
 };
