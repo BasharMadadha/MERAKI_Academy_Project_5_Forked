@@ -21,13 +21,19 @@ import {
 import Notification from "../notificationx/index";
 import { setPosts } from "../redux/postSlicer/post";
 import { setUsers } from "../redux/authSlicer/auth";
+import io from "socket.io-client";
+const socket = io("http://localhost:5001");
+
 const HomePage = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
+  const userInfo = useSelector((state) => state.auth.userInfo);
   const posts = useSelector((state) => state.posts.posts);
   const token = useSelector((state) => state.auth.token);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
+  const [message, setMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([]);
+  const [sendr, setSendr] = useState([]);
   const btnRef = useRef();
 
   const config = {
@@ -44,14 +50,12 @@ const HomePage = () => {
 
   const nextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % posts.length);
-    console.log("nextImage: "+posts[currentImageIndex]?.image_url);
-
+    console.log("nextImage: " + posts[currentImageIndex]?.image_url);
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? posts.length - 1 : prevIndex - 1
-    
     );
     console.log("prevImage: ");
   };
@@ -66,31 +70,55 @@ const HomePage = () => {
       console.error(error.message);
     }
   };
-    const getPosts = async () => {
-      try {
-        const res = await axios.get(`http://localhost:5000/posts/`, config);
-        const rever = res.data.result;
-        dispatch(setPosts([...rever].reverse()));
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const getPosts = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/posts/`, config);
+      const rever = res.data.result;
+      dispatch(setPosts([...rever].reverse()));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-  
-
     const interval = setInterval(nextImage, 5000);
     getPosts();
     setUser();
     return () => {
       clearInterval(interval);
     };
-  },[currentImageIndex,posts]);
+  }, [currentImageIndex, posts, chatMessages]);
+  const handleMessageChange = (e) => {
+    setMessage(e.target.value);
+  };
+  useEffect(() => {
+    socket.on("chatMessage", (message, sender) => {
+      console.log(message, sender);
 
+      setChatMessages([...chatMessages, message]);
+      setSendr([...sendr, sender]);
+    });
+    return () => {
+      socket.off("chatMessage");
+    };
+  });
+  const sendMessage = () => {
+    if (message) {
+      console.log(message, userInfo["username"]);
+      socket.emit("chatMessage", message, userInfo["username"]);
+      setMessage("");
+    }
+  };
+  const  formatTimestamp=()=> {
+    const currentTime = new Date();
+    const hours = currentTime.getHours();
+    const minutes = currentTime.getMinutes();
+    return `${hours}:${minutes}`;
+  }
   return (
     <>
       <NavBar />
       <Notification />
-    <div className="HomePage-container">
+      <div className="HomePage-container">
         <div className="background-vido1">
           <video autoPlay loop muted playsInline>
             <source
@@ -98,6 +126,7 @@ const HomePage = () => {
               type="video/mp4"
             />
           </video>
+
         <div className="message">
           <ul className="news__tab__list">
             <li className="news__tab__item news__tab__item--active">message</li>
@@ -128,6 +157,17 @@ const HomePage = () => {
               </DrawerContent>
             </Drawer>
 
+          <div className="message">
+            <ul className="news__tab__list">
+              <li className="news__tab__item news__tab__item--active">
+                message
+              </li>
+            </ul>
+            <ul className="news__list"></ul>
+          </div>
+
+
+          <div className="chat">
             <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
               world
             </Button>
@@ -140,18 +180,36 @@ const HomePage = () => {
               <DrawerOverlay />
               <DrawerContent>
                 <DrawerCloseButton />
-                <DrawerHeader>Create your account</DrawerHeader>
-                <DrawerBody></DrawerBody>
+                <DrawerHeader>Chat</DrawerHeader>
+                <DrawerBody>
+                  {" "}
+                  <div className="chat-messages">
+                    {chatMessages.map((message, index) => (
+                      <div key={index} className="chat-message">
+                        <span className="sender">{sendr[index]}</span>
+                        <p>{message}</p>
+                        <span className="timestamp">{formatTimestamp()}</span>
+                      </div>
+                    ))}
+                  </div>
+                </DrawerBody>
                 <DrawerFooter>
+                  <input
+                    type="text"
+                    value={message}
+                    onChange={handleMessageChange}
+                  />
                   <Button variant="outline" mr={3} onClick={onClose}>
-                    Cancel
+                    Close
                   </Button>
-                  <Button colorScheme="blue">Save</Button>
+                  <Button colorScheme="blue" onClick={sendMessage}>
+                    Send
+                  </Button>
                 </DrawerFooter>
               </DrawerContent>
             </Drawer>
           </div>
-        </div>   
+        </div>
         <div className="background-vido2">
           <video autoPlay loop muted playsInline>
             <source
@@ -176,16 +234,16 @@ const HomePage = () => {
             </ul>
           </div>
           <div className="image-slider">
-              <img
-                src={posts[currentImageIndex]?.image_url}
-                alt={`Image ${currentImageIndex}`}
-              />
-              <button onClick={prevImage} style={{ cursor: "pointer" }}>
-                Previous
-              </button>
+            <img
+              src={posts[currentImageIndex]?.image_url}
+              alt={`Image ${currentImageIndex}`}
+            />
+            <button onClick={prevImage} style={{ cursor: "pointer" }}>
+              Previous
+            </button>
 
-              <button onClick={nextImage}>Next</button>
-            </div>
+            <button onClick={nextImage}>Next</button>
+          </div>
         </div>
         <div className="background-video3">
           <video className="video3" autoPlay loop muted playsInline>
@@ -240,6 +298,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
+
     </div>
    
 <Footer />

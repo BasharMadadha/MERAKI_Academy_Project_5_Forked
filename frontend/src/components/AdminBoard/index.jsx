@@ -39,7 +39,9 @@ const Admin = () => {
       const response = await axios.put("http://localhost:5000/beAdmin", {
         formData: formData,
       });
-      return response;
+      if (response.statusCode === 200) {
+        console.log("worl");
+      }
     } catch (err) {
       console.log(err.message);
     }

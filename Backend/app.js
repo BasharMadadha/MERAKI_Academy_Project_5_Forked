@@ -223,6 +223,13 @@ io.on("connection", (socket) => {
 
     }
   });
+
+  socket.on('chatMessage', (message,sender) => {
+    console.log(message,sender);
+    io.emit('chatMessage', message,sender);
+  });
+
+
   // Handle disconnection
   socket.on("disconnect", () => {
 
