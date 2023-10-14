@@ -10,14 +10,14 @@
   }
   .background-vido1{
   position: absolute;
-  top: -200px;
+  top: -130px;
   left: 0;
   width: 100%;
   height: 100%;
    }
    .background-vido2{
     position: absolute;
-    top: 850px;
+    top: 930px;
     left: 0;
     width: 100%;
     height: 100%;
@@ -25,7 +25,7 @@
    
    .background-video3{
     position: absolute;
-    top:1850px
+    top:1990px
     
    }
 .noticaction {
@@ -47,13 +47,13 @@
     width: 400px;
     position:absolute;
     left:1470px;
-    top:600px;
+    top:660px;
     border-block-end-color: rgb(255, 255, 255);
     border-block-start-color: rgb(255, 255, 255);
   }
   .chat{
 position: absolute;
-left:1700px;
+left:1300px;
 display: flex;
 top:950px;
 margin: 10px;

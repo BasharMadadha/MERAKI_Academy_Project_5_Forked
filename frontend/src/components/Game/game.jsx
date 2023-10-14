@@ -118,14 +118,14 @@ const Game = () => {
     socket.on("you-one", (data) => {
       setSocletId1(data);
       setPlayer1(userId);
-      setPlayer1HP(4000);
-      setPlayer2HP(4000);
+      setPlayer1HP(20);
+      setPlayer2HP(20);
     });
     socket.on("you-two", (data) => {
       setSocletId2(data);
       setPlayer2(userId);
-      setPlayer2HP(4000);
-      setPlayer1HP(4000);
+      setPlayer2HP(20);
+      setPlayer1HP(20);
     });
     if (userId === player1 && currentRound === 1) {
       setPlayerHand([...playerHand, getRandomCardNotInHand()]);
