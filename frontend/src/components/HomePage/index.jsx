@@ -3,6 +3,7 @@ import "./style.css";
 import NavBar from "../Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import Footer from "../Navbar/footer"
 import {
   Button,
   Drawer,
@@ -103,7 +104,6 @@ const HomePage = () => {
           </ul>
           <ul className="news__list"></ul>
         </div>
-    >
           <div className="chat">
             <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
               friend
@@ -241,6 +241,8 @@ const HomePage = () => {
           </div>
         </div>
     </div>
+   
+<Footer />
 </> 
   
   );

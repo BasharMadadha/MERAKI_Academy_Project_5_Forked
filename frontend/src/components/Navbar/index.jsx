@@ -38,8 +38,8 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
   return (
     <>
       {["xxl"].map((expand) => (
-        <Navbar key={expand} expand={expand} id="id" >
-          <Container fluid >
+        <Navbar key={expand} expand={expand} id="id">
+          <Container fluid>
             <Navbar.Brand href="#">
               <img className="img" src={YourImage} alt="" />
             </Navbar.Brand>
@@ -70,9 +70,6 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                     CHARACTER
                   </Nav.Link>
                   <Nav.Link href="/News" className="font">
-
-                  <Nav.Link href="" className="font">
-
                     NEWS
                   </Nav.Link>
                   <Nav.Link href="" className="font">
@@ -80,7 +77,7 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   </Nav.Link>
                   {userInfo?.role_id === 2 && (
                     <Nav.Link className="font" href={"/Admin"}>
-                      Admin
+                      ADMIN
                     </Nav.Link>
                   )}
                   <Nav.Link
@@ -94,12 +91,10 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                   >
                     PROFILE
                   </Nav.Link>
-                  
-            
-                  <Nav.Link href="shop" className="font">
-                    Shop
-                  </Nav.Link>
 
+                  <Nav.Link href="shop" className="font">
+                    SHOP
+                  </Nav.Link>
 
                   {isLogged ? (
                     <Nav.Link onClick={handleLogout} className="logfont">
@@ -111,17 +106,15 @@ const NavBar = ({ users, getUserByID, getPostsByUser }) => {
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
-
-            <button id="button" className="game">
-              Play Now
-
             {/* button */}
-            <button id="button" className="game"  onClick={() => {
-                    
-                      navigate("/map")
-                    }}>
-                      PLAY NOW
-
+            <button
+              id="button"
+              className="game"
+              onClick={() => {
+                navigate("/map");
+              }}
+            >
+              PLAY NOW
             </button>
           </Container>
         </Navbar>
