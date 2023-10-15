@@ -138,39 +138,20 @@ const HomePage = () => {
           <ul className="news__tab__list">
             <li className="news__tab__item news__tab__item--active">message</li>
           </ul>
-          <ul className="news__list"></ul>
+          <ul className="news__list">
+          <div className="chat-messages">
+                    {chatMessages.slice(0, 5).map((message, index) => (
+                      <div key={index} className="chat-message">
+                        <span className="sender">{sendr[index]}</span>
+                        <p>{message}</p>
+                        <span className="timestamp">{formatTimestamp()}</span>
+                      </div>
+                    ))}
+                  </div>
+          </ul>
         </div>
         <div className="chat">
-          <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-            friend
-          </Button>
-          <Drawer
-            isOpen={isOpen}
-            placement="right"
-            onClose={onClose}
-            finalFocusRef={btnRef}
-          >
-            <DrawerOverlay />
-            <DrawerContent>
-              <DrawerCloseButton />
-              <DrawerHeader>Create your account</DrawerHeader>
-              <DrawerBody></DrawerBody>
-              <DrawerFooter>
-                <Button variant="outline" mr={3} onClick={onClose}>
-                  Cancel
-                </Button>
-                <Button colorScheme="blue">Save</Button>
-              </DrawerFooter>
-            </DrawerContent>
-          </Drawer>
-          <div className="message">
-            <ul className="news__tab__list">
-              <li className="news__tab__item news__tab__item--active">
-                message
-              </li>
-            </ul>
-            <ul className="news__list"></ul>
-          </div>
+
           <div className="chat">
             <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
               world

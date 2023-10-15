@@ -47,15 +47,35 @@
     width: 400px;
     position:absolute;
     left:1470px;
-    top:660px;
+    top:500px;
+    color: azure;
     border-block-end-color: rgb(255, 255, 255);
     border-block-start-color: rgb(255, 255, 255);
   }
+  .sender {
+    flex: 1; 
+    font-weight: bold;
+    margin-right: 10px; 
+  }
+  
+  .chat-message {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 5px;
+  }
+  
+  .timestamp {
+    font-size: 12px;
+    color: gray;
+  }
   .chat{
 position: absolute;
-left:1300px;
+left:650px;
 display: flex;
-top:950px;
+top:400px;
 margin: 10px;
 z-index: 21;
   }
