@@ -7,6 +7,7 @@ import "./style.css";
 import NavBar from "../Navbar";
 import { setPosts } from "../redux/postSlicer/post";
 import Friends from "../Friends";
+import { FaCog as SettingsIcon } from 'react-icons/fa';
 
 const ProfilePage = () => {
   const [userPorfile, setUserPorfile] = useState({});
@@ -112,7 +113,7 @@ const ProfilePage = () => {
           <div className="div2">
             <Link to="/EditePage">
               <button className="setting">
-                Sitting            
+              <SettingsIcon/>            
                   </button>
             </Link>
 
